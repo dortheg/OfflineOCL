@@ -40,7 +40,7 @@
 #include <stdint.h>
 #include <stdlib.h>
 
-#define FISSION 0
+#define FISSION 1
 
 static bool set_par(Parameters& parameters, std::istream& ipar,
                     const std::string& name, int size)
@@ -326,6 +326,10 @@ void UserSort::CreateSpectra()
     sprintf(tmp2, "t_{PPAC} - t_{LaBr nr. 1}");
     ppac_align_time = Mat(tmp, tmp2, 3000, -1500, 1500, "t_{PPAC} - t_{LaBr nr. 1} [ns]", NUM_PPAC, 0, NUM_PPAC, "PPAC id.");
 
+    sprintf(tmp, "ppac_align_time_all");
+    sprintf(tmp2, "t_{PPAC} - t_{LaBr}");
+    ppac_align_time_all = Mat(tmp, tmp2, 3000, -1500, 1500, "t_{PPAC} - t_{LaBr} [ns]", NUM_PPAC, 0, NUM_PPAC, "PPAC id.");
+
     sprintf(tmp, "energy_time_labr_all");
     sprintf(tmp2, "E_{LaBr} : t_{LaBr} - t_{dE ANY}, all");
     energy_time_labr_all = Mat(tmp, tmp2, 2000, 0, 16000, "Energy LaBr [keV]", 2000, -50, 50, "t_{LaBr} - t_{DE} [ns]");
@@ -444,7 +448,7 @@ bool UserSort::Sort(const Event &event)
     if ( n_de_words == 1){
 
         word_t e_word = event.trigger;
-        word_t de_word = de_words[0];
+        word_t de_word = de_words[0]; //noe skjer i dE-detector
 
         // The ring number and telescope number.
         unsigned int ring = GetDetector(de_word.address).detectorNum % 8; // Later we should define what we divide by somewhere else...
@@ -454,6 +458,7 @@ bool UserSort::Sort(const Event &event)
         e_de_time[tel]->Fill(tdiff, ring);
 
         // Align the dE times...
+
         if ( event.n_labr[0] == 1){
             tdiff = CalcTimediff(event.w_labr[0][0], de_word);
             de_align_time->Fill(tdiff, GetDetector(de_word.address).detectorNum);
@@ -461,9 +466,11 @@ bool UserSort::Sort(const Event &event)
                 for (int j = 0 ; j < event.n_ppac[i] ; ++j){
                     tdiff = CalcTimediff(event.w_labr[0][0], event.w_ppac[i][j]);
                     ppac_align_time->Fill(tdiff, i);
+                    ppac_align_time_all->Fill(tdiff, i);
                 }
             }
         }
+
 
         // Fill DE - E matrices.
         ede_raw[tel][ring]->Fill(e_word.adcdata, de_word.adcdata);
@@ -592,12 +599,17 @@ void UserSort::AnalyzeGammaPPAC(const word_t &de_word, const double &excitation,
             bool ppac_prompt =  false;
 
             for (int n = 0 ; n < NUM_PPAC ; ++n){
-                for (int m = 0 ; m < event.n_ppac[m] ; ++m){
+                //Number of PPAC
+                for (int m = 0 ; m < event.n_ppac[n] ; ++m){
+                    //All events in ppacs
 
+                    //double tdiff_ppac = CalcTimediff(event.w_labr[0][0], event.w_ppac[n][m]);
                     double tdiff_ppac = CalcTimediff(event.w_labr[i][j], event.w_ppac[n][m]);
-                    energy_time_ppac[i]->Fill(energy, tdiff_ppac);
+                    ppac_align_time_all->Fill(tdiff_ppac, n);
+                    energy_time_ppac[i]->Fill(energy, tdiff_ppac); //if aligned, can use this for PFG/PFN separations
 
                     switch ( CheckTimeStatus(tdiff_ppac, ppac_time_cuts) ) {
+                        //tdiff_ppac: time diff between ppac and Labr3
                         case is_prompt : {
                             ppac_prompt = true;
                             break;
@@ -615,6 +627,7 @@ void UserSort::AnalyzeGammaPPAC(const word_t &de_word, const double &excitation,
 
             // Check time gate.
             switch ( CheckTimeStatus(tdiff, labr_time_cuts) ) {
+                //tdiff, time diff between de and labr
                 case is_prompt : {
                     alfna->Fill(energy, excitation);
                     if (ppac_prompt)

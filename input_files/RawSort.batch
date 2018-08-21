@@ -1,6 +1,6 @@
 # Importing the gain shit information.
-Gain file /home/fabiobz/Desktop/Masterthesis/240Pu/preexperiment/OfflineOCL/input_files/gain_shift.dat
-range /home/fabiobz/Desktop/Masterthesis/240Pu/preexperiment/OfflineOCL/input_files/zrange_p.dat
+Gain file /Applications/OfflineOCL/Mine/OfflineOCL/Gain_shift_Si.dat
+range /Applications/OfflineOCL/Mine/OfflineOCL/zrange_p.dat
 
 # Parameters for the range curve, 3He or alpha
 #rangefile zrange_he3.dat
@@ -59,7 +59,7 @@ parameter ppac_time_cuts = 190 200 \
 ############################################################################
 
 # Now we will need to read files... There is a lot of the :O
-data directory /home/fabiobz/Desktop/Masterthesis/240Pu/preexperiment/OfflineOCL/data
+data directory /Applications/OfflineOCL/Mine/OfflineOCL/data
 data file sirius-20180406-124747.data
 
-export root  /home/fabiobz/Desktop/Masterthesis/240Pu/preexperiment/OfflineOCL/output_files/28Si_test.root
+export root  /Applications/OfflineOCL/Mine/OfflineOCL/output_files/Pu_test.root
