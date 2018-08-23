@@ -381,7 +381,7 @@ void UserSort::CreateSpectra()
 }
 
 
-bool UserSort::Sort(const Event &event)
+bool UserSort::Sort(const Event &event) //det som sorterer
 {
     int i, j;
     double energy;
@@ -398,7 +398,7 @@ bool UserSort::Sort(const Event &event)
     // First fill some 'singles' spectra.
     for ( i = 0 ; i < NUM_LABR_DETECTORS ; ++i ){
         for ( j = 0 ; j < event.n_labr[i] ; ++j ){
-            energy_labr_raw[i]->Fill(event.w_labr[i][j].adcdata);
+            energy_labr_raw[i]->Fill(event.w_labr[i][j].adcdata); //comment out this if gating on event with given energy
             energy = CalibrateE(event.w_labr[i][j]);
             energy_labr[i]->Fill(energy);
         }
@@ -474,6 +474,23 @@ bool UserSort::Sort(const Event &event)
 
         // Fill DE - E matrices.
         ede_raw[tel][ring]->Fill(e_word.adcdata, de_word.adcdata);
+
+
+        //Comment in this when gating on events with specific e energies
+        /*
+        //Gating on event in e-de with given energy, only filling labr energy raw with these events
+        double E = e_word.adcdata;
+        double E1 = 9100.0;
+        double E2 = 9600.0;
+        if (E>E1 && E<E2){
+            ede_raw[tel][ring]->Fill(e_word.adcdata, de_word.adcdata);
+            for ( i = 0 ; i < NUM_LABR_DETECTORS ; ++i ){
+                for ( j = 0 ; j < event.n_labr[i] ; ++j ){
+                        energy_labr_raw[i]->Fill(event.w_labr[i][j].adcdata);
+                }
+            }
+        }
+        */
 
         double e_energy = CalibrateE(e_word);
         double de_energy = CalibrateE(de_word);

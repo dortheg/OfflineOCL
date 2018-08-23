@@ -1,5 +1,5 @@
 # Importing the gain shit information.
-Gain file /Applications/OfflineOCL/Mine/OfflineOCL/Gain_shift_Si.dat
+Gain file /Applications/OfflineOCL/Mine/OfflineOCL/input_files/gain_shift_dorthea.dat
 range /Applications/OfflineOCL/Mine/OfflineOCL/zrange_p.dat
 
 # Parameters for the range curve, 3He or alpha
@@ -60,6 +60,13 @@ parameter ppac_time_cuts = 190 200 \
 
 # Now we will need to read files... There is a lot of the :O
 data directory /Applications/OfflineOCL/Mine/OfflineOCL/data
-data file sirius-20180406-124747.data
 
-export root  /Applications/OfflineOCL/Mine/OfflineOCL/output_files/Pu_test.root
+data file sirius-20180416-142401_A.data
+data file sirius-20180416-142401-big-000_A.data
+
+data file sirius-20180416-145040_A.data
+data file sirius-20180416-145040-big-001.data
+data file sirius-20180416-145040-big-002_A.data
+data file sirius-20180416-145040-big-003_A.data
+
+export root  /Applications/OfflineOCL/Mine/OfflineOCL/output_files/Si_wo_gating.root
