@@ -476,7 +476,7 @@ bool UserSort::Sort(const Event &event) //det som sorterer
         ede_raw[tel][ring]->Fill(e_word.adcdata, de_word.adcdata);
 
 
-        //Comment in this when gating on events with specific e energies
+        //Comment in this when gating on events with specific e energies -> does not work here, see in AnalyseGammaPPAC
         /*
         //Gating on event in e-de with given energy, only filling labr energy raw with these events
         double E = e_word.adcdata;
@@ -509,7 +509,7 @@ bool UserSort::Sort(const Event &event) //det som sorterer
         h_thick->Fill(thick);
 
         // Check if correct particle.
-        if ( thick >= thick_range[0] && thick <= thick_range[1] ){
+        //if ( thick >= thick_range[0] && thick <= thick_range[1] ){
 
             ede_gate->Fill(e_energy, de_energy);
 
@@ -538,7 +538,7 @@ bool UserSort::Sort(const Event &event) //det som sorterer
             AnalyzeGamma(de_word, ex, event);
         #endif // FISSION
 
-        }
+       // }
     }
 
     return true;
@@ -563,7 +563,7 @@ void UserSort::AnalyzeGamma(const word_t &de_word, const double &excitation,cons
             energy_time_labr[i]->Fill(energy, tdiff);
             energy_time_labr_all->Fill(energy, tdiff);
 
-            if ( excitation > 8473.60 )
+            if ( excitation > 8473.60 ) //Insert Sn for Pu!
                 energy_time_labr_above[i]->Fill(energy, tdiff);
 
 
@@ -571,11 +571,23 @@ void UserSort::AnalyzeGamma(const word_t &de_word, const double &excitation,cons
             switch ( CheckTimeStatus(tdiff, labr_time_cuts) ) {
                 case is_prompt : {
                     exgam->Fill(energy, excitation);
+
+                    //Gating on event in e-de with given energy, only filling labr energy raw with these events
+                    word_t e_word = event.trigger;
+                    double E = e_word.adcdata;
+                    double E1 = 8500.0;
+                    double E2 = 8900.0;
+
+                    if (E>E1 && E<E2){
+                        //energy_labr_raw[i]->Fill(event.w_labr[i][j].adcdata);
+                    }
+
                     break;
                 }
                 case is_background : {
                     exgam->Fill(energy, excitation, -1);
                     exgam_bg->Fill(energy, excitation);
+                    //energy_labr_raw[i]->Fill(event.w_labr[i][j].adcdata,-1);
                     break;
                 }
                 case ignore : {
@@ -629,6 +641,7 @@ void UserSort::AnalyzeGammaPPAC(const word_t &de_word, const double &excitation,
                     switch ( CheckTimeStatus(tdiff_ppac, ppac_time_cuts) ) {
                         //tdiff_ppac: time diff between ppac and Labr3
                         case is_prompt : {
+
                             ppac_prompt = true;
                             break;
                         }
@@ -647,6 +660,17 @@ void UserSort::AnalyzeGammaPPAC(const word_t &de_word, const double &excitation,
             switch ( CheckTimeStatus(tdiff, labr_time_cuts) ) {
                 //tdiff, time diff between de and labr
                 case is_prompt : {
+
+                    //Gating on event in e-de with given energy, only filling labr energy raw with these events
+                    word_t e_word = event.trigger;
+                    double E = e_word.adcdata;
+                    double E1 = 8500.0;
+                    double E2 = 8900.0;
+
+                    if (E>E1 && E<E2){
+                        //energy_labr_raw[i]->Fill(event.w_labr[i][j].adcdata);
+                    }
+
                     exgam->Fill(energy, excitation);
                     if (ppac_prompt)
                         exgam_ppac->Fill(energy, excitation);
@@ -655,6 +679,7 @@ void UserSort::AnalyzeGammaPPAC(const word_t &de_word, const double &excitation,
                     break;
                 }
                 case is_background : {
+                    //energy_labr_raw[i]->Fill(event.w_labr[i][j].adcdata,-1);
                     exgam->Fill(energy, excitation, -1);
                     exgam_bg->Fill(energy, excitation);
                     if (ppac_prompt){
