@@ -1,6 +1,6 @@
 # Importing the gain shit information.
 Gain file /Applications/OfflineOCL/Mine/OfflineOCL/input_files/gain_shift_dorthea.dat
-range /Applications/OfflineOCL/Mine/OfflineOCL/zrange_p.dat
+range /Applications/OfflineOCL/Mine/OfflineOCL/input_files/zrange_p.dat
 
 # Parameters for the range curve, 3He or alpha
 #rangefile zrange_he3.dat
@@ -44,7 +44,7 @@ parameter ex_from_ede    = 14.5 -1.0436 -0.001220 \
 # as the ones that are filled, and make sure you "hit" a top!
 # parameter = lower cut of prompt ,     higher gate of prompt peak,  \
 #             lower cut on backgr.,     higher cut backgr.
-parameter labr_time_cuts = -330 -337 \
+parameter labr_time_cuts = -337 -330 \
                           -291 -285                     
 
 parameter shift_time_de = \
@@ -78,9 +78,9 @@ data directory /Applications/OfflineOCL/Mine/OfflineOCL/data
 data file sirius-20180416-142401_A.data
 data file sirius-20180416-142401-big-000_A.data
 
-data file sirius-20180416-145040_A.data
-data file sirius-20180416-145040-big-001.data
-data file sirius-20180416-145040-big-002_A.data
-data file sirius-20180416-145040-big-003_A.data
+#data file sirius-20180416-145040_A.data
+#data file sirius-20180416-145040-big-001.data
+#data file sirius-20180416-145040-big-002_A.data
+#data file sirius-20180416-145040-big-003_A.data
 
-export root  /Applications/OfflineOCL/Mine/OfflineOCL/output_files/Si_wo_gating.root
+export root  /Applications/OfflineOCL/Mine/OfflineOCL/output_files/Si_w_gate_gs.root

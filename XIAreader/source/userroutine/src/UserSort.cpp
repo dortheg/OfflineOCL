@@ -40,7 +40,10 @@
 #include <stdint.h>
 #include <stdlib.h>
 
+//If calculate with PPACS
 #define FISSION 1
+//If gating on specified energies
+#define GATING 0
 
 static bool set_par(Parameters& parameters, std::istream& ipar,
                     const std::string& name, int size)
@@ -398,7 +401,14 @@ bool UserSort::Sort(const Event &event) //det som sorterer
     // First fill some 'singles' spectra.
     for ( i = 0 ; i < NUM_LABR_DETECTORS ; ++i ){
         for ( j = 0 ; j < event.n_labr[i] ; ++j ){
-            energy_labr_raw[i]->Fill(event.w_labr[i][j].adcdata); //comment out this if gating on event with given energy
+
+            if(GATING==1){
+                //energy_labr_raw[i]->Fill(event.w_labr[i][j].adcdata); //comment out this if gating on event with given energy
+            }
+            else if(GATING==0){
+                energy_labr_raw[i]->Fill(event.w_labr[i][j].adcdata); //comment out this if gating on event with given energy
+            }
+
             energy = CalibrateE(event.w_labr[i][j]);
             energy_labr[i]->Fill(energy);
         }
@@ -473,24 +483,16 @@ bool UserSort::Sort(const Event &event) //det som sorterer
 
 
         // Fill DE - E matrices.
-        ede_raw[tel][ring]->Fill(e_word.adcdata, de_word.adcdata);
-
-
-        //Comment in this when gating on events with specific e energies -> does not work here, see in AnalyseGammaPPAC
-        /*
-        //Gating on event in e-de with given energy, only filling labr energy raw with these events
+        if(GATING==0){
+            ede_raw[tel][ring]->Fill(e_word.adcdata, de_word.adcdata);
+        }
+        //If gating
         double E = e_word.adcdata;
         double E1 = 9100.0;
         double E2 = 9600.0;
-        if (E>E1 && E<E2){
+        if (E>E1 && E<E2 &&GATING==1){
             ede_raw[tel][ring]->Fill(e_word.adcdata, de_word.adcdata);
-            for ( i = 0 ; i < NUM_LABR_DETECTORS ; ++i ){
-                for ( j = 0 ; j < event.n_labr[i] ; ++j ){
-                        energy_labr_raw[i]->Fill(event.w_labr[i][j].adcdata);
-                }
-            }
         }
-        */
 
         double e_energy = CalibrateE(e_word);
         double de_energy = CalibrateE(de_word);
@@ -578,8 +580,8 @@ void UserSort::AnalyzeGamma(const word_t &de_word, const double &excitation,cons
                     double E1 = 8500.0;
                     double E2 = 8900.0;
 
-                    if (E>E1 && E<E2){
-                        //energy_labr_raw[i]->Fill(event.w_labr[i][j].adcdata);
+                    if (E>E1 && E<E2 && GATING==1){
+                        energy_labr_raw[i]->Fill(event.w_labr[i][j].adcdata);
                     }
 
                     break;
@@ -587,7 +589,13 @@ void UserSort::AnalyzeGamma(const word_t &de_word, const double &excitation,cons
                 case is_background : {
                     exgam->Fill(energy, excitation, -1);
                     exgam_bg->Fill(energy, excitation);
-                    //energy_labr_raw[i]->Fill(event.w_labr[i][j].adcdata,-1);
+                    word_t e_word = event.trigger;
+                    double E = e_word.adcdata;
+                    double E1 = 8500.0;
+                    double E2 = 8900.0;
+                    if (E>E1 && E<E2 &&GATING==1){
+                        energy_labr_raw[i]->Fill(event.w_labr[i][j].adcdata, -1);
+                    }
                     break;
                 }
                 case ignore : {
@@ -664,11 +672,11 @@ void UserSort::AnalyzeGammaPPAC(const word_t &de_word, const double &excitation,
                     //Gating on event in e-de with given energy, only filling labr energy raw with these events
                     word_t e_word = event.trigger;
                     double E = e_word.adcdata;
-                    double E1 = 8500.0;
-                    double E2 = 8900.0;
+                    double E1 = 9100.0;
+                    double E2 = 9600.0;
 
-                    if (E>E1 && E<E2){
-                        //energy_labr_raw[i]->Fill(event.w_labr[i][j].adcdata);
+                    if (E>E1 && E<E2 && GATING==1){
+                        energy_labr_raw[i]->Fill(event.w_labr[i][j].adcdata);
                     }
 
                     exgam->Fill(energy, excitation);
@@ -679,7 +687,13 @@ void UserSort::AnalyzeGammaPPAC(const word_t &de_word, const double &excitation,
                     break;
                 }
                 case is_background : {
-                    //energy_labr_raw[i]->Fill(event.w_labr[i][j].adcdata,-1);
+                word_t e_word = event.trigger;
+                double E = e_word.adcdata;
+                double E1 = 9100.0;
+                double E2 = 9600.0;
+                if (E>E1 && E<E2 && GATING==1){
+                    energy_labr_raw[i]->Fill(event.w_labr[i][j].adcdata,-1);
+                }
                     exgam->Fill(energy, excitation, -1);
                     exgam_bg->Fill(energy, excitation);
                     if (ppac_prompt){
