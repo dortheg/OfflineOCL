@@ -44,7 +44,7 @@ parameter ex_from_ede    = 14.5 -1.0436 -0.001220 \
 # as the ones that are filled, and make sure you "hit" a top!
 # parameter = lower cut of prompt ,     higher gate of prompt peak,  \
 #             lower cut on backgr.,     higher cut backgr.
-parameter labr_time_cuts = -337 -330 \
+parameter labr_time_cuts = -337 -331 \
                           -291 -285                     
 
 parameter shift_time_de = \
@@ -73,14 +73,10 @@ parameter ppac_time_cuts = 190 200 \
 ############################################################################
 
 # Now we will need to read files... There is a lot of the :O
-data directory /Applications/OfflineOCL/Mine/OfflineOCL/data
+#data directory /Applications/OfflineOCL/Mine/OfflineOCL/data #on computer
+data directory /Volumes/Fabio_sgu/240Pu_exp_data
 
-data file sirius-20180416-142401_A.data
-data file sirius-20180416-142401-big-000_A.data
+data file sirius-20180418-113054.data
 
-#data file sirius-20180416-145040_A.data
-#data file sirius-20180416-145040-big-001.data
-#data file sirius-20180416-145040-big-002_A.data
-#data file sirius-20180416-145040-big-003_A.data
 
-export root  /Applications/OfflineOCL/Mine/OfflineOCL/output_files/Si_w_gate_gs.root
+export root  /Applications/OfflineOCL/Mine/OfflineOCL/output_files/Pu240_w_gating_gs_late_data.root

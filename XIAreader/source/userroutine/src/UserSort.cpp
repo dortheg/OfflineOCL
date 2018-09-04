@@ -43,7 +43,7 @@
 //If calculate with PPACS
 #define FISSION 1
 //If gating on specified energies
-#define GATING 0
+const int GATING = 1;
 
 static bool set_par(Parameters& parameters, std::istream& ipar,
                     const std::string& name, int size)
@@ -403,7 +403,7 @@ bool UserSort::Sort(const Event &event) //det som sorterer
         for ( j = 0 ; j < event.n_labr[i] ; ++j ){
 
             if(GATING==1){
-                //energy_labr_raw[i]->Fill(event.w_labr[i][j].adcdata); //comment out this if gating on event with given energy
+                //not fill energy_labr_raw here
             }
             else if(GATING==0){
                 energy_labr_raw[i]->Fill(event.w_labr[i][j].adcdata); //comment out this if gating on event with given energy
@@ -461,7 +461,7 @@ bool UserSort::Sort(const Event &event) //det som sorterer
         word_t de_word = de_words[0]; //noe skjer i dE-detector
 
         // The ring number and telescope number.
-        unsigned int ring = GetDetector(de_word.address).detectorNum % 8; // Later we should define what we divide by somewhere else...
+        int ring = GetDetector(de_word.address).detectorNum % 8; // Later we should define what we divide by somewhere else...
         int tel = GetDetector(e_word.address).telNum;
 
         tdiff = CalcTimediff(e_word, de_word);
@@ -488,10 +488,13 @@ bool UserSort::Sort(const Event &event) //det som sorterer
         }
         //If gating
         double E = e_word.adcdata;
-        double E1 = 9100.0;
-        double E2 = 9600.0;
-        if (E>E1 && E<E2 &&GATING==1){
-            ede_raw[tel][ring]->Fill(e_word.adcdata, de_word.adcdata);
+        double DE = de_word.adcdata;
+        double E1_E = 9000.0;
+        double E2_E = 9600.0;
+        double E1_DE = 1200.0;
+        double E2_DE = 2000.0;
+        if (E>E1_E && E<E2_E && DE>E1_DE &&DE<E2_DE && GATING==1){
+            ede_raw[tel][ring]->Fill(E, DE);
         }
 
         double e_energy = CalibrateE(e_word);
@@ -644,7 +647,7 @@ void UserSort::AnalyzeGammaPPAC(const word_t &de_word, const double &excitation,
                     //double tdiff_ppac = CalcTimediff(event.w_labr[0][0], event.w_ppac[n][m]);
                     double tdiff_ppac = CalcTimediff(event.w_labr[i][j], event.w_ppac[n][m]);
                     ppac_align_time_all->Fill(tdiff_ppac, n);
-                    energy_time_ppac[i]->Fill(energy, tdiff_ppac); //if aligned, can use this for PFG/PFN separations
+                    energy_time_ppac[n]->Fill(energy, tdiff_ppac); //if aligned, can use this for PFG/PFN separations
 
                     switch ( CheckTimeStatus(tdiff_ppac, ppac_time_cuts) ) {
                         //tdiff_ppac: time diff between ppac and Labr3

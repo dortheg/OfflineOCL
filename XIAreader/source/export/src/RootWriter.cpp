@@ -49,7 +49,7 @@ TH1p RootWriter::CreateTH1(Histogram1Dp h)
 
     TAxis* ryax = r->GetYaxis();
 #if ROOT1D_YTITLE
-    char buf[8];
+    char buf[256];
     std::sprintf(buf, "%.2f", xax.GetBinWidth());
     std::string ytitle = "Counts/" + std::string(buf);
     ryax->SetTitle(ytitle.c_str());
@@ -71,6 +71,7 @@ TH2* RootWriter::CreateTH2(Histogram2Dp h)
     const Axis& xax = h->GetAxisX(), yax = h->GetAxisY();
     const int xchannels = xax.GetBinCount();
     const int ychannels = yax.GetBinCount();
+
     TH2* mat = new TH2F( h->GetName().c_str(), h->GetTitle().c_str(),
                          xchannels, xax.GetLeft(), xax.GetRight(),
                          ychannels, yax.GetLeft(), yax.GetRight() );

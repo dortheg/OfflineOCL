@@ -1,0 +1,63 @@
+#Si calibration run
+data file sirius-20180416-142401_A.data
+data file sirius-20180416-142401-big-000_A.data
+
+data file sirius-20180416-145040_A.data
+data file sirius-20180416-145040-big-001.data
+data file sirius-20180416-145040-big-002_A.data
+data file sirius-20180416-145040-big-003_A.data
+
+#Pu240_d_pf_experiment
+data file sirius-20180416-234302.data
+data file sirius-20180416-234302-big-001.data
+data file sirius-20180416-234302-big-002.data
+data file sirius-20180416-234302-big-003.data
+data file sirius-20180416-234302-big-004.data
+data file sirius-20180416-234302-big-005.data
+data file sirius-20180416-234302-big-006.data
+data file sirius-20180416-234302-big-007.data
+
+data file sirius-20180417-065649.data
+data file sirius-20180417-065649-big-001.data
+data file sirius-20180417-065649-big-002.data
+data file sirius-20180417-065649-big-003.data
+data file sirius-20180417-065649-big-004.data
+data file sirius-20180417-065649-big-005.data
+
+data file sirius-20180417-100438.data
+data file sirius-20180417-100438-big-001.data
+data file sirius-20180417-100438-big-002.data
+data file sirius-20180417-100438-big-003.data
+data file sirius-20180417-100438-big-004.data
+data file sirius-20180417-100438-big-005.data
+data file sirius-20180417-100438-big-006.data
+data file sirius-20180417-100438-big-007.data
+data file sirius-20180417-100438-big-008.data
+data file sirius-20180417-100438-big-009.data
+data file sirius-20180417-100438-big-010.data
+data file sirius-20180417-100438-big-011.data
+data file sirius-20180417-100438-big-012.data
+data file sirius-20180417-100438-big-013.data
+data file sirius-20180417-100438-big-014.data
+data file sirius-20180417-100438-big-015.data
+data file sirius-20180417-100438-big-016.data
+data file sirius-20180417-100438-big-017.data
+data file sirius-20180417-100438-big-018.data
+data file sirius-20180417-100438-big-019.data
+data file sirius-20180417-100438-big-020.data
+data file sirius-20180417-100438-big-021.data
+data file sirius-20180417-100438-big-022.data
+data file sirius-20180417-100438-big-023.data
+data file sirius-20180417-100438-big-024.data
+data file sirius-20180417-100438-big-025.data
+data file sirius-20180417-100438-big-026.data
+data file sirius-20180417-100438-big-027.data
+data file sirius-20180417-100438-big-028.data
+data file sirius-20180417-100438-big-029.data
+data file sirius-20180417-100438-big-030.data
+data file sirius-20180417-100438-big-031.data
+data file sirius-20180417-100438-big-032.data
+data file sirius-20180417-100438-big-033.data
+data file sirius-20180417-100438-big-034.data
+data file sirius-20180417-100438-big-035.data
+data file sirius-20180417-100438-big-036.data

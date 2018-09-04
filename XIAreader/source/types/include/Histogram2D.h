@@ -45,11 +45,12 @@ public:
               Axis::bin_t y,  /*!< The y axis value. */
               data_t weight=1 /*!< How much to add to the corresponding bin content. */)
         {
+
 #ifdef H2D_USE_BUFFER
             buffer.push_back(buf_t(x, y, weight)); if( buffer.size()>=buffer_max ) FlushBuffer();
 #else
             FillDirect(x, y, weight);
-#endif /* H2D_USE_BUFFER */
+#endif // H2D_USE_BUFFER
         }
 
     //! Get the contents of a bin.
