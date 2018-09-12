@@ -58,8 +58,8 @@ parameter shift_time_de = \
 333.157	330.659	336.137	336.491	324.932	335.655	336.432	332.622	
 
 parameter shift_time_labr = \
--333. -329.752 -326.345 -342.973 -327.771 -325.908 -323.697 -342.299 -333.962 -328.216 -329.118 -336.929 -338.848 -330.37 -329.309 -328.5 \
--329.626 -336.887 -335.5 -335.773 -338.242 -337.231 -338.73 -336.524 -332.931 -323.185 -323.5 -335.95 -335.324 -330.158 -333.64 -333.5 
+-333. -330.752 -326.345 -342.973 -327.771 -325.908 -323.697 -342.299 -333.962 -328.216 -329.118 -336.929 -338.848 -330.37 -329.309 -328.5 \
+-329.626 -335.887 -335.5 -335.773 -338.242 -337.231 -338.73 -336.524 -332.931 -323.185 -323.5 -335.95 -335.324 -330.158 -333.64 -333.5 
 
 ################ Only when PPACs are used ##################################
 # PPAC time gates
@@ -76,7 +76,17 @@ parameter ppac_time_cuts = 190 200 \
 #data directory /Applications/OfflineOCL/Mine/OfflineOCL/data #on computer
 data directory /Volumes/Fabio_sgu/240Pu_exp_data
 
-data file sirius-20180418-113054.data
+#Pu240_d_pf_experiment
+data file sirius-20180416-234302.data
 
 
-export root  /Applications/OfflineOCL/Mine/OfflineOCL/output_files/Pu240_w_gating_gs_late_data.root
+data file sirius-20180417-065649.data
+
+
+data file sirius-20180417-100438.data
+data file sirius-20180417-100438-big-001.data
+
+
+
+
+export root  /Applications/OfflineOCL/Mine/OfflineOCL/output_files/Pu240_wo_gating_short.root

@@ -43,7 +43,7 @@
 //If calculate with PPACS
 #define FISSION 1
 //If gating on specified energies
-const int GATING = 1;
+const int GATING = 0;
 
 static bool set_par(Parameters& parameters, std::istream& ipar,
                     const std::string& name, int size)
