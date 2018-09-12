@@ -646,6 +646,7 @@ void UserSort::AnalyzeGammaPPAC(const word_t &de_word, const double &excitation,
 
                     //double tdiff_ppac = CalcTimediff(event.w_labr[0][0], event.w_ppac[n][m]);
                     double tdiff_ppac = CalcTimediff(event.w_labr[i][j], event.w_ppac[n][m]);
+
                     ppac_align_time_all->Fill(tdiff_ppac, n);
                     energy_time_ppac[n]->Fill(energy, tdiff_ppac); //if aligned, can use this for PFG/PFN separations
 
