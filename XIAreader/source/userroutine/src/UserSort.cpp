@@ -70,8 +70,8 @@ static bool set_gainshift(Parameters& parameters, std::istream& ipar)
     bool p2 = set_par(parameters, ipar, "shift_labr",   NUM_LABR_DETECTORS );
     bool p3 = set_par(parameters, ipar, "gain_de", NUM_SI_DE_DET );
     bool p4 = set_par(parameters, ipar, "shift_de", NUM_SI_DE_DET );
-    bool p5 = set_par(parameters, ipar, "gain_e", NUM_SI_E_DET );
-    bool p6 = set_par(parameters, ipar, "shift_e", NUM_SI_E_DET );
+    bool p5 = set_par(parameters, ipar, "gain_e", NUM_SI_DE_DET ); //Changed to DE, to get 64 coeff
+    bool p6 = set_par(parameters, ipar, "shift_e", NUM_SI_DE_DET ); //Changed to DE, to get 64 coeff
     bool p7 = set_par(parameters, ipar, "shift_time_labr", NUM_LABR_DETECTORS );
     bool p8 = set_par(parameters, ipar, "shift_time_de", NUM_SI_DE_DET );
     bool p9 = set_par(parameters, ipar, "shift_time_e", NUM_SI_E_DET );
@@ -84,8 +84,8 @@ UserSort::UserSort()
     , shift_labr( GetParameters(), "shift_labr", NUM_LABR_DETECTORS, 0)
     , gain_dE( GetParameters(), "gain_de", NUM_SI_DE_DET, 1)
     , shift_dE( GetParameters(), "shift_de", NUM_SI_DE_DET, 0)
-    , gain_E( GetParameters(), "gain_e", NUM_SI_E_DET, 1)
-    , shift_E( GetParameters(), "shift_e", NUM_SI_E_DET, 0)
+    , gain_E( GetParameters(), "gain_e", NUM_SI_DE_DET, 1) //Changed to DE, to get 64 coeff
+    , shift_E( GetParameters(), "shift_e", NUM_SI_DE_DET, 0) //Changed to DE, to get 64 coeff
     , shift_time_labr( GetParameters(), "shift_time_labr", NUM_LABR_DETECTORS, 0)
     , shift_time_de( GetParameters(), "shift_time_de", NUM_SI_DE_DET, 0)
     , shift_time_e( GetParameters(), "shift_time_e", NUM_SI_E_DET, 0)
