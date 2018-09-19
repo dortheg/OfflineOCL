@@ -6,7 +6,7 @@
 
 #define NUM_LABR_DETECTORS 32   //!< Number of LaBr detectors
 #define NUM_SI_DE_DET 64        //!< Number of Si dE sections
-#define NUM_SI_E_DET 8          //!< Number of E Si rings
+#define NUM_SI_E_DET 64          //!< Number of E Si rings Changed to 64 in order to create 64 coeff calib routine
 #define NUM_SI_E_GUARD 8        //!< Number of E guard rings
 #define NUM_PPAC 4              //!< Number of PPACs
 

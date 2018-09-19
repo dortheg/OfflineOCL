@@ -58,6 +58,9 @@ private:
     // Method for calibrating energy of a detector.
     double CalibrateE(const word_t &w) const;
 
+    // Method for calibrating energy of E-detector with 64 coeff.
+    double CalibrateOnlyE(const word_t &w, const word_t &de_strip) const;
+
     // Method for getting time difference between two words.
     double CalcTimediff(const word_t &start, const word_t &stop) const;
 
@@ -77,7 +80,7 @@ private:
     Histogram1Dp energy_E_raw[NUM_SI_E_DET], energy_E[NUM_SI_E_DET];
 
     // Time spectra.
-    Histogram2Dp e_de_time[NUM_SI_E_DET]; // This will be a time : dE ring spectrum.
+    Histogram2Dp e_de_time[NUM_SI_RINGS]; // This will be a time : dE ring spectrum.
     Histogram2Dp de_align_time;  // LaBr 0 as start? and dE as start. For aligning the dE detectors. Axis is x: time, y: dE detector nr.
     Histogram2Dp labr_align_time;  // LaBr as stop and dE as start. For aligning the LaBr detectors. Axis is x: time, y: LaBr detector nr.
     Histogram2Dp ppac_align_time;   // LaBr 0 as start and PPAC as stop. For aligning the PPACs.
@@ -89,13 +92,13 @@ private:
 
 
     // dE vs E
-    Histogram2Dp ede_raw[NUM_SI_E_DET][NUM_SI_RINGS], ede[NUM_SI_E_DET][NUM_SI_RINGS];
+    Histogram2Dp ede_raw[NUM_SI_RINGS][NUM_SI_RINGS], ede[NUM_SI_RINGS][NUM_SI_RINGS];
     Histogram2Dp ede_all, ede_gate;
 
     // Misc. dE/E coincidence spectra stuff.
     Histogram1Dp h_thick;   // "Apparent" thickness spectra.
-    Histogram1Dp h_ede[NUM_SI_E_DET][NUM_SI_RINGS], h_ede_all; // Total energy deposited after particle gate.
-    Histogram1Dp h_ex[NUM_SI_E_DET][NUM_SI_RINGS], h_ex_all; // Excitation energy.
+    Histogram1Dp h_ede[NUM_SI_RINGS][NUM_SI_RINGS], h_ede_all; // Total energy deposited after particle gate.
+    Histogram1Dp h_ex[NUM_SI_RINGS][NUM_SI_RINGS], h_ex_all; // Excitation energy.
 
 
     // Particle - gamma-ray coincidence matrix

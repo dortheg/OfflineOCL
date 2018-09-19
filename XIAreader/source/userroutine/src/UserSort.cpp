@@ -124,6 +124,21 @@ double UserSort::CalibrateE(const word_t &w) const
     }
 }
 
+
+double UserSort::CalibrateOnlyE(const word_t &w, const word_t &de_strip) const
+{
+    DetectorInfo_t info_e = GetDetector(w.address);
+    DetectorInfo_t info_de = GetDetector(de_strip.address);
+
+    if (info_e.type != eDet && info_de.type != deDet){
+        std::cout << "CalibrateE: Type Error" << std::endl;
+        return w.adcdata;
+    }
+    return gain_E[info_de.detectorNum]*(w.adcdata + drand48() - 0.5) + shift_E[info_de.detectorNum];
+
+}
+
+
 double UserSort::CalcTimediff(const word_t &start, const word_t &stop) const
 {
     // First we fetch the correct shift parameters.
@@ -261,7 +276,7 @@ void UserSort::CreateSpectra()
         energy_dE[i] = Spec(tmp, tmp, 10000, 0, 10000, "Energy [keV]");
     }
 
-    // Allocating the LaBr 'singles' spectra
+    // Allocating the E 'singles' spectra
     for (int i = 0 ; i < NUM_SI_E_DET ; ++i){
 
         // Create energy spectra
@@ -272,14 +287,14 @@ void UserSort::CreateSpectra()
         energy_E[i] = Spec(tmp, tmp, 10000, 0, 10000, "Energy [keV]");
     }
 
-    // Making all spectra that are indexed [NUM_SI_E_DET]
-    for (int i = 0 ; i < NUM_SI_E_DET ; ++i){
+    // Making all spectra that are indexed [NUM_SI_RINGS]
+    for (int i = 0 ; i < NUM_SI_RINGS ; ++i){
 
         // e_de_time spectrum
         sprintf(tmp, "e_de_time_%02d", i);
         e_de_time[i] = Mat(tmp, tmp, 3000, -1500, 1500, "Time t_{dE} - t_{E} [ns]", NUM_SI_RINGS, 0, NUM_SI_RINGS, "Ring number");
 
-        // Making all spectra indexed [NUM_SI_E_DET][NUM_SI_RINGS].
+        // Making all spectra indexed [NUM_SI_RINGS][NUM_SI_RINGS].
         for (int j = 0 ; j < NUM_SI_RINGS ; ++j){
 
             // Make the 'raw' ede spectrum.
@@ -434,7 +449,7 @@ bool UserSort::Sort(const Event &event) //det som sorterer
         }
     }
 
-    // We know that DE addresses should be as following:
+    // We know that DE addresses should be as following: -> Must change in order to implement 64 coeff sorting?
     // 0 - 7: With E address 0.
     // 8 - 15: With E address 1.
     // 16 - 23: With E address 2.
@@ -497,7 +512,7 @@ bool UserSort::Sort(const Event &event) //det som sorterer
             ede_raw[tel][ring]->Fill(E, DE);
         }
 
-        double e_energy = CalibrateE(e_word);
+        double e_energy = CalibrateOnlyE(e_word, de_word);
         double de_energy = CalibrateE(de_word);
 
         ede[tel][ring]->Fill(e_energy, de_energy);

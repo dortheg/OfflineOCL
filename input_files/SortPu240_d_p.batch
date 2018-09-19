@@ -1,5 +1,5 @@
 # Importing the gain shit information.
-Gain file /Applications/OfflineOCL/Mine/OfflineOCL/input_files/gain_shift_dorthea.dat
+Gain file /Applications/OfflineOCL/Mine/OfflineOCL/input_files/gain_shift_dummy64.dat
 range /Applications/OfflineOCL/Mine/OfflineOCL/input_files/zrange_p.dat
 
 # Parameters for the range curve, 3He or alpha
