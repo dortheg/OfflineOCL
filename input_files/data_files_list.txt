@@ -8,6 +8,20 @@ data file sirius-20180416-145040-big-002_A.data
 data file sirius-20180416-145040-big-003_A.data
 
 #Pu240_d_pf_experiment
+
+data file sirius-20180416-173844.data
+
+data file sirius-20180416-183652.data
+
+data file sirius-20180416-205209_A.data
+data file sirius-20180416-205209-big-000_A.data
+data file sirius-20180416-205209-big-001_A.data
+data file sirius-20180416-205209-big-002_A.data
+data file sirius-20180416-205209-big-003_A.data
+data file sirius-20180416-205209-big-004_A.data
+data file sirius-20180416-205209-big-005_A.data
+data file sirius-20180416-205209-big-006_A.data
+
 data file sirius-20180416-234302.data
 data file sirius-20180416-234302-big-001.data
 data file sirius-20180416-234302-big-002.data
@@ -61,3 +75,159 @@ data file sirius-20180417-100438-big-033.data
 data file sirius-20180417-100438-big-034.data
 data file sirius-20180417-100438-big-035.data
 data file sirius-20180417-100438-big-036.data
+
+data file sirius-20180417-155320_A.data
+data file sirius-20180417-155320-big-000_A.data
+data file sirius-20180417-155320-big-001_A.data
+data file sirius-20180417-155320-big-002_A.data
+data file sirius-20180417-155320-big-003_A.data
+data file sirius-20180417-155320-big-004_A.data
+data file sirius-20180417-155320-big-005_A.data
+data file sirius-20180417-155320-big-006_A.data
+data file sirius-20180417-155320-big-007_A.data
+data file sirius-20180417-155320-big-008_A.data
+data file sirius-20180417-155320-big-009_A.data
+
+data file sirius-20180417-192307_A.data
+data file sirius-20180417-192307-big-000_A.data
+data file sirius-20180417-192307-big-001_A.data
+data file sirius-20180417-192307-big-002_A.data
+data file sirius-20180417-192307-big-003_A.data
+data file sirius-20180417-192307-big-004_A.data
+data file sirius-20180417-192307-big-005_A.data
+
+
+data file sirius-20180417-201654_A.data
+data file sirius-20180417-201654-big-000_A.data
+data file sirius-20180417-201654-big-001_A.data
+data file sirius-20180417-201654-big-002_A.data
+data file sirius-20180417-201654-big-003_A.data
+data file sirius-20180417-201654-big-004_A.data
+data file sirius-20180417-201654-big-005_A.data
+
+data file sirius-20180417-211511_A.data
+data file sirius-20180417-211511-big-000_A.data
+data file sirius-20180417-211511-big-001_A.data
+data file sirius-20180417-211511-big-002_A.data
+data file sirius-20180417-211511-big-003_A.data
+data file sirius-20180417-211511-big-004_A.data
+data file sirius-20180417-211511-big-005_A.data
+data file sirius-20180417-211511-big-006_A.data
+
+data file sirius-20180417-224205_A.data
+data file sirius-20180417-224205-big-000_A.data
+data file sirius-20180417-224205-big-001_A.data
+data file sirius-20180417-224205-big-002_A.data
+data file sirius-20180417-224205-big-003_A.data
+data file sirius-20180417-224205-big-004_A.data
+data file sirius-20180417-224205-big-005_A.data
+data file sirius-20180417-224205-big-006_A.data
+data file sirius-20180417-224205-big-007_A.data
+data file sirius-20180417-224205-big-008_A.data
+data file sirius-20180417-224205-big-009_A.data
+data file sirius-20180417-224205-big-010_A.data
+data file sirius-20180417-224205-big-011_A.data
+data file sirius-20180417-224205-big-012_A.data
+data file sirius-20180417-224205-big-013_A.data
+data file sirius-20180417-224205-big-014_A.data
+data file sirius-20180417-224205-big-015_A.data
+data file sirius-20180417-224205-big-016_A.data
+data file sirius-20180417-224205-big-017_A.data
+data file sirius-20180417-224205-big-018_A.data
+data file sirius-20180417-224205-big-019_A.data
+data file sirius-20180417-224205-big-020_A.data
+data file sirius-20180417-224205-big-021_A.data
+data file sirius-20180417-224205-big-022_A.data
+data file sirius-20180417-224205-big-023_A.data
+data file sirius-20180417-224205-big-024_A.data
+data file sirius-20180417-224205-big-025_A.data
+data file sirius-20180417-224205-big-026_A.data
+data file sirius-20180417-224205-big-027_A.data
+data file sirius-20180417-224205-big-028_A.data
+data file sirius-20180417-224205-big-029_A.data
+data file sirius-20180417-224205-big-030_A.data
+data file sirius-20180417-224205-big-031_A.data
+data file sirius-20180417-224205-big-032_A.data
+data file sirius-20180417-224205-big-033_A.data
+data file sirius-20180417-224205-big-034_A.data
+data file sirius-20180417-224205-big-035_A.data
+data file sirius-20180417-224205-big-036_A.data
+data file sirius-20180417-224205-big-037_A.data
+data file sirius-20180417-224205-big-038_A.data
+data file sirius-20180417-224205-big-039_A.data
+data file sirius-20180417-224205-big-040_A.data
+
+data file sirius-20180418-062652_A.data
+data file sirius-20180418-062652-big-000_A.data
+data file sirius-20180418-062652-big-001_A.data
+data file sirius-20180418-062652-big-002_A.data
+data file sirius-20180418-062652-big-003_A.data
+data file sirius-20180418-062652-big-004_A.data
+data file sirius-20180418-062652-big-005_A.data
+data file sirius-20180418-062652-big-006_A.data
+data file sirius-20180418-062652-big-007_A.data
+data file sirius-20180418-062652-big-008_A.data
+data file sirius-20180418-062652-big-009_A.data
+data file sirius-20180418-062652-big-010_A.data
+data file sirius-20180418-062652-big-011_A.data
+data file sirius-20180418-062652-big-012_A.data
+data file sirius-20180418-062652-big-013_A.data
+data file sirius-20180418-062652-big-014_A.data
+data file sirius-20180418-062652-big-015_A.data
+data file sirius-20180418-062652-big-016_A.data
+data file sirius-20180418-062652-big-017_A.data
+data file sirius-20180418-062652-big-018_A.data
+data file sirius-20180418-062652-big-019_A.data
+data file sirius-20180418-062652-big-020_A.data
+data file sirius-20180418-062652-big-021_A.data
+data file sirius-20180418-062652-big-022_A.data
+data file sirius-20180418-062652-big-023_A.data
+data file sirius-20180418-062652-big-024_A.data
+data file sirius-20180418-062652-big-025_A.data
+data file sirius-20180418-062652-big-026_A.data
+data file sirius-20180418-062652-big-027_A.data
+data file sirius-20180418-062652-big-028_A.data
+data file sirius-20180418-062652-big-029_A.data
+data file sirius-20180418-062652-big-030_A.data
+data file sirius-20180418-062652-big-031_A.data
+
+data file sirius-20180418-113054_A.data
+data file sirius-20180418-113054-big-000_A.data
+data file sirius-20180418-113054-big-001_A.data
+data file sirius-20180418-113054-big-002_A.data
+data file sirius-20180418-113054-big-003_A.data
+data file sirius-20180418-113054-big-004_A.data
+data file sirius-20180418-113054-big-005_A.data
+data file sirius-20180418-113054-big-006_A.data
+data file sirius-20180418-113054-big-007_A.data
+data file sirius-20180418-113054-big-008_A.data
+data file sirius-20180418-113054-big-009_A.data
+data file sirius-20180418-113054-big-010_A.data
+data file sirius-20180418-113054-big-011_A.data
+data file sirius-20180418-113054-big-012_A.data
+data file sirius-20180418-113054-big-013_A.data
+data file sirius-20180418-113054-big-014_A.data
+data file sirius-20180418-113054-big-015_A.data
+data file sirius-20180418-113054-big-016_A.data
+data file sirius-20180418-113054-big-017_A.data
+data file sirius-20180418-113054-big-018_A.data
+data file sirius-20180418-113054-big-019_A.data
+data file sirius-20180418-113054-big-020_A.data
+data file sirius-20180418-113054-big-021_A.data
+data file sirius-20180418-113054-big-022_A.data
+data file sirius-20180418-113054-big-023_A.data
+data file sirius-20180418-113054-big-024_A.data
+data file sirius-20180418-113054-big-025_A.data
+data file sirius-20180418-113054-big-026_A.data
+data file sirius-20180418-113054-big-027_A.data
+data file sirius-20180418-113054-big-028_A.data
+data file sirius-20180418-113054-big-029_A.data
+data file sirius-20180418-113054-big-030_A.data
+data file sirius-20180418-113054-big-031_A.data
+data file sirius-20180418-113054-big-032_A.data
+data file sirius-20180418-113054-big-033_A.data
+data file sirius-20180418-113054-big-034_A.data
+data file sirius-20180418-113054-big-035_A.data
+
+
+
