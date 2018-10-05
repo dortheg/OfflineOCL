@@ -262,6 +262,7 @@ void UserSort::CreateSpectra()
         energy_time_labr[i] = Mat(tmp, tmp, 1000, 0, 16000, "LaBr energy [keV]", 2000, -100, 100, "Time difference [ns]");
 
         sprintf(tmp, "energy_time_labr_aboveSn_%02d", i+1);
+        //Mat(tmp,tmp,nrbins,start,stop, name of xaxis, and then if 2D, again)
         energy_time_labr_above[i] = Mat(tmp, tmp, 1000, 0, 16000, "LaBr energy [keV]", 2000, -100, 100, "Time difference [ns]");
     }
 
@@ -501,13 +502,13 @@ bool UserSort::Sort(const Event &event) //det som sorterer
         if(GATING==0){
             ede_raw[tel][ring]->Fill(e_word.adcdata, de_word.adcdata);
         }
-        //If gating
+        //If gate
         double E = e_word.adcdata;
         double DE = de_word.adcdata;
-        double E1_E = 9000.0;
-        double E2_E = 9600.0;
-        double E1_DE = 1200.0;
-        double E2_DE = 2000.0;
+        double E1_E = 8000.0;
+        double E2_E = 8800.0;
+        double E1_DE = 0.0;
+        double E2_DE = 3500.0;
         if (E>E1_E && E<E2_E && DE>E1_DE &&DE<E2_DE && GATING==1){
             ede_raw[tel][ring]->Fill(E, DE);
         }
@@ -592,11 +593,11 @@ void UserSort::AnalyzeGamma(const word_t &de_word, const double &excitation,cons
                 case is_prompt : {
                     exgam->Fill(energy, excitation);
 
-                    //Gating on event in e-de with given energy, only filling labr energy raw with these events
+                    //Gate on event in e-de with given energy, only filling labr energy raw with these events
                     word_t e_word = event.trigger;
                     double E = e_word.adcdata;
-                    double E1 = 8500.0;
-                    double E2 = 8900.0;
+                    double E1 = 8000.0;
+                    double E2 = 8800.0;
 
                     if (E>E1 && E<E2 && GATING==1){
                         energy_labr_raw[i]->Fill(event.w_labr[i][j].adcdata);
@@ -609,8 +610,8 @@ void UserSort::AnalyzeGamma(const word_t &de_word, const double &excitation,cons
                     exgam_bg->Fill(energy, excitation);
                     word_t e_word = event.trigger;
                     double E = e_word.adcdata;
-                    double E1 = 8500.0;
-                    double E2 = 8900.0;
+                    double E1 = 8000.0;
+                    double E2 = 8800.0;
                     if (E>E1 && E<E2 &&GATING==1){
                         energy_labr_raw[i]->Fill(event.w_labr[i][j].adcdata, -1);
                     }
@@ -688,11 +689,11 @@ void UserSort::AnalyzeGammaPPAC(const word_t &de_word, const double &excitation,
                 //tdiff, time diff between de and labr
                 case is_prompt : {
 
-                    //Gating on event in e-de with given energy, only filling labr energy raw with these events
+                    //Gate on event in e-de with given energy, only filling labr energy raw with these events
                     word_t e_word = event.trigger;
                     double E = e_word.adcdata;
-                    double E1 = 9100.0;
-                    double E2 = 9600.0;
+                    double E1 = 8000.0;
+                    double E2 = 8800.0;
 
                     if (E>E1 && E<E2 && GATING==1){
                         energy_labr_raw[i]->Fill(event.w_labr[i][j].adcdata);
@@ -708,10 +709,10 @@ void UserSort::AnalyzeGammaPPAC(const word_t &de_word, const double &excitation,
                 case is_background : {
                 word_t e_word = event.trigger;
                 double E = e_word.adcdata;
-                double E1 = 9100.0;
-                double E2 = 9600.0;
+                double E1 = 8000.0;
+                double E2 = 8800.0;
                 if (E>E1 && E<E2 && GATING==1){
-                    energy_labr_raw[i]->Fill(event.w_labr[i][j].adcdata,-1);
+                    //energy_labr_raw[i]->Fill(event.w_labr[i][j].adcdata,-1);
                 }
                     exgam->Fill(energy, excitation, -1);
                     exgam_bg->Fill(energy, excitation);
