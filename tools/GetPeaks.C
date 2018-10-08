@@ -2,7 +2,7 @@
 
 void GetPeaks()
 {
-	TFile *file = TFile::Open("Si_wo_gating.root");
+	TFile *file = TFile::Open("time_align.root");
 
 	TH2 *m = (TH2 *)file->Get("de_align_time");
 

@@ -2,7 +2,7 @@
 
 void GetPeaks_LaBr()
 {
-	TFile *file = TFile::Open("Si_wo_gating.root");
+	TFile *file = TFile::Open("time_align.root");
 
 	TH2 *m = (TH2 *)file->Get("labr_align_time");
 

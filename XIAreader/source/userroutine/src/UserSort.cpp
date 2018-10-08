@@ -335,27 +335,32 @@ void UserSort::CreateSpectra()
     // Time spectra (except those 'listed')
     sprintf(tmp, "de_align_time");
     sprintf(tmp2, "t_{dE} - t_{LaBr nr. 1}");
-    de_align_time = Mat(tmp, tmp2, 3000, -1500, 1500, "t_{dE} - t_{LaBr nr. 1} [ns]", NUM_SI_DE_DET, 0, NUM_SI_DE_DET, "#Delta E detector id.");
+    de_align_time = Mat(tmp, tmp2, 15000, -1500, 1500, "t_{dE} - t_{LaBr nr. 1} [ns]", NUM_SI_DE_DET, 0, NUM_SI_DE_DET, "#Delta E detector id.");
+
+    //Tried to write
+    sprintf(tmp, "ppac_vs_dE_time");
+    sprintf(tmp2, "t_{PPAC nr 1} - t_{dE ANY}");
+    ppac_vs_dE_time = Mat(tmp, tmp2, 10000, -1500, 1500, "t_{PPAC 1} - t_{dE ANY} [ns]", NUM_PPAC, 0, NUM_PPAC, "PPAC id.");
 
     sprintf(tmp, "labr_align_time");
     sprintf(tmp2, "t_{LaBr} - t_{dE ANY}");
-    labr_align_time = Mat(tmp, tmp2, 3000, -1500, 1500, "t_{LaBr} - t_{dE ANY} [ns]", NUM_LABR_DETECTORS, 0, NUM_LABR_DETECTORS, "LaBr detector id.");
+    labr_align_time = Mat(tmp, tmp2, 10000, -1500, 1500, "t_{LaBr} - t_{dE ANY} [ns]", NUM_LABR_DETECTORS, 0, NUM_LABR_DETECTORS, "LaBr detector id.");
 
     sprintf(tmp, "ppac_align_time");
     sprintf(tmp2, "t_{PPAC} - t_{LaBr nr. 1}");
-    ppac_align_time = Mat(tmp, tmp2, 3000, -1500, 1500, "t_{PPAC} - t_{LaBr nr. 1} [ns]", NUM_PPAC, 0, NUM_PPAC, "PPAC id.");
+    ppac_align_time = Mat(tmp, tmp2, 10000, -1500, 1500, "t_{PPAC} - t_{LaBr nr. 1} [ns]", NUM_PPAC, 0, NUM_PPAC, "PPAC id.");
 
     sprintf(tmp, "ppac_align_time_all");
-    sprintf(tmp2, "t_{PPAC} - t_{LaBr}");
-    ppac_align_time_all = Mat(tmp, tmp2, 3000, -1500, 1500, "t_{PPAC} - t_{LaBr} [ns]", NUM_PPAC, 0, NUM_PPAC, "PPAC id.");
+    sprintf(tmp2, "t_{PPAC} - t_{LaBr ANY (?)}");
+    ppac_align_time_all = Mat(tmp, tmp2, 10000, -1500, 1500, "t_{PPAC} - t_{LaBr} [ns]", NUM_PPAC, 0, NUM_PPAC, "PPAC id.");
 
     sprintf(tmp, "energy_time_labr_all");
     sprintf(tmp2, "E_{LaBr} : t_{LaBr} - t_{dE ANY}, all");
-    energy_time_labr_all = Mat(tmp, tmp2, 2000, 0, 16000, "Energy LaBr [keV]", 2000, -50, 50, "t_{LaBr} - t_{DE} [ns]");
+    energy_time_labr_all = Mat(tmp, tmp2, 10000, 0, 16000, "Energy LaBr [keV]", 2000, -50, 50, "t_{LaBr} - t_{DE} [ns]");
 
     sprintf(tmp, "ede_all");
     sprintf(tmp2, "E : DE, all");
-    ede_all = Mat(tmp, tmp2, 4000, 0, 20000, "Back energy [keV]", 1000, 0, 5000, "Front energy [keV]");
+    ede_all = Mat(tmp, tmp2, 10000, 0, 20000, "Back energy [keV]", 1000, 0, 5000, "Front energy [keV]");
 
     sprintf(tmp, "ede_gate");
     sprintf(tmp2, "E : DE, after particle gate");
@@ -635,6 +640,9 @@ void UserSort::AnalyzeGammaPPAC(const word_t &de_word, const double &excitation,
 
             double tdiff = CalcTimediff(de_word, event.w_ppac[i][j]);
             excitation_time_ppac[i]->Fill(excitation, tdiff);
+            //Dortheas attempt
+            ppac_vs_dE_time->Fill(tdiff,i);
+
         }
     }
 

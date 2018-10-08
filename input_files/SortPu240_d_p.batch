@@ -1,6 +1,7 @@
 # Importing the gain shit information.
 #Gain file /Applications/OfflineOCL/Mine/OfflineOCL/input_files/Gain_shift_ede_calib/gain_shift_20180416_173844.dat
-Gain file /Applications/OfflineOCL/Mine/OfflineOCL/input_files/gain_shift_LaBr_Si.dat
+#Gain file /Applications/OfflineOCL/Mine/OfflineOCL/input_files/gain_shift_LaBr_Si.dat
+Gain file /Applications/OfflineOCL/Mine/OfflineOCL/input_files/gain_shift_time_shift.dat
 range /Applications/OfflineOCL/Mine/OfflineOCL/input_files/zrange_p.dat
 
 # Parameters for the range curve, 3He or alpha
@@ -63,12 +64,7 @@ parameter ppac_time_cuts = 190 200 \
 data directory /Volumes/240Pu_d_p/240Pu_exp_data
 
 #Pu240_d_pf_experiment
-data file sirius-20180416-142401_A.data
-data file sirius-20180416-142401-big-000_A.data
+data file sirius-20180416-173844.data
 
-data file sirius-20180416-145040_A.data
-data file sirius-20180416-145040-big-001_A.data
-data file sirius-20180416-145040-big-002_A.data
-data file sirius-20180416-145040-big-003_A.data
 
-export root  /Applications/OfflineOCL/Mine/OfflineOCL/output_files/LaBr_drift_check.root
+export root  /Applications/OfflineOCL/Mine/OfflineOCL/output_files/time_align.root
