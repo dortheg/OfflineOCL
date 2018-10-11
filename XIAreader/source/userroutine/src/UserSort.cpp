@@ -332,35 +332,43 @@ void UserSort::CreateSpectra()
         energy_time_ppac[i] = Mat(tmp, tmp2, 2000, 0, 10000, "LaBr energy [keV]", 2000, -100, 100, "t_{PPAC} - t_{LaBr} [ns]");
     }
 
+    //Dorthea attempt to create one spectrum with all labr
+    sprintf(tmp, "energy_labr_all");
+    energy_labr_all = Spec(tmp, tmp, 10000, 0, 10000, "Energy [keV]");
+
     // Time spectra (except those 'listed')
     sprintf(tmp, "de_align_time");
     sprintf(tmp2, "t_{dE} - t_{LaBr nr. 1}");
-    de_align_time = Mat(tmp, tmp2, 15000, -1500, 1500, "t_{dE} - t_{LaBr nr. 1} [ns]", NUM_SI_DE_DET, 0, NUM_SI_DE_DET, "#Delta E detector id.");
+    de_align_time = Mat(tmp, tmp2, 5000, -1500, 1500, "t_{dE} - t_{LaBr nr. 1} [ns]", NUM_SI_DE_DET, 0, NUM_SI_DE_DET, "#Delta E detector id.");
 
     //Tried to write
     sprintf(tmp, "ppac_vs_dE_time");
-    sprintf(tmp2, "t_{PPAC nr 1} - t_{dE ANY}");
-    ppac_vs_dE_time = Mat(tmp, tmp2, 10000, -1500, 1500, "t_{PPAC 1} - t_{dE ANY} [ns]", NUM_PPAC, 0, NUM_PPAC, "PPAC id.");
+    sprintf(tmp2, "t_{PPAC} - t_{dE ANY}");
+    ppac_vs_dE_time = Mat(tmp, tmp2, 4000, -1500, 1500, "t_{PPAC 1} - t_{dE ANY} [ns]", NUM_PPAC, 0, NUM_PPAC, "PPAC id.");
 
     sprintf(tmp, "labr_align_time");
     sprintf(tmp2, "t_{LaBr} - t_{dE ANY}");
-    labr_align_time = Mat(tmp, tmp2, 10000, -1500, 1500, "t_{LaBr} - t_{dE ANY} [ns]", NUM_LABR_DETECTORS, 0, NUM_LABR_DETECTORS, "LaBr detector id.");
+    labr_align_time = Mat(tmp, tmp2, 5000, -1500, 1500, "t_{LaBr} - t_{dE ANY} [ns]", NUM_LABR_DETECTORS, 0, NUM_LABR_DETECTORS, "LaBr detector id.");
 
     sprintf(tmp, "ppac_align_time");
     sprintf(tmp2, "t_{PPAC} - t_{LaBr nr. 1}");
-    ppac_align_time = Mat(tmp, tmp2, 10000, -1500, 1500, "t_{PPAC} - t_{LaBr nr. 1} [ns]", NUM_PPAC, 0, NUM_PPAC, "PPAC id.");
+    ppac_align_time = Mat(tmp, tmp2, 3100, -1500, 1500, "t_{PPAC} - t_{LaBr nr. 1} [ns]", NUM_PPAC, 0, NUM_PPAC, "PPAC id.");
 
     sprintf(tmp, "ppac_align_time_all");
     sprintf(tmp2, "t_{PPAC} - t_{LaBr ANY (?)}");
-    ppac_align_time_all = Mat(tmp, tmp2, 10000, -1500, 1500, "t_{PPAC} - t_{LaBr} [ns]", NUM_PPAC, 0, NUM_PPAC, "PPAC id.");
+    ppac_align_time_all = Mat(tmp, tmp2, 3100, -1500, 1500, "t_{PPAC} - t_{LaBr} [ns]", NUM_PPAC, 0, NUM_PPAC, "PPAC id.");
 
     sprintf(tmp, "energy_time_labr_all");
     sprintf(tmp2, "E_{LaBr} : t_{LaBr} - t_{dE ANY}, all");
-    energy_time_labr_all = Mat(tmp, tmp2, 10000, 0, 16000, "Energy LaBr [keV]", 2000, -50, 50, "t_{LaBr} - t_{DE} [ns]");
+    energy_time_labr_all = Mat(tmp, tmp2, 5000, 0, 16000, "Energy LaBr [keV]", 2000, -50, 50, "t_{LaBr} - t_{DE} [ns]");
 
     sprintf(tmp, "ede_all");
     sprintf(tmp2, "E : DE, all");
     ede_all = Mat(tmp, tmp2, 10000, 0, 20000, "Back energy [keV]", 1000, 0, 5000, "Front energy [keV]");
+
+    sprintf(tmp, "ede_all_except_pad7");
+    sprintf(tmp2, "E : DE, all");
+    ede_all_except_pad7 = Mat(tmp, tmp2, 10000, 0, 20000, "Back energy [keV]", 1000, 0, 5000, "Front energy [keV]");
 
     sprintf(tmp, "ede_gate");
     sprintf(tmp2, "E : DE, after particle gate");
@@ -432,6 +440,8 @@ bool UserSort::Sort(const Event &event) //det som sorterer
 
             energy = CalibrateE(event.w_labr[i][j]);
             energy_labr[i]->Fill(energy);
+            //Dorthea attempt at creating labr energy spectrum with all Labr
+            energy_labr_all->Fill(energy);
         }
     }
 
@@ -455,7 +465,7 @@ bool UserSort::Sort(const Event &event) //det som sorterer
         }
     }
 
-    // We know that DE addresses should be as following: -> Must change in order to implement 64 coeff sorting?
+    // We know that DE addresses should be as following:
     // 0 - 7: With E address 0.
     // 8 - 15: With E address 1.
     // 16 - 23: With E address 2.
@@ -527,6 +537,10 @@ bool UserSort::Sort(const Event &event) //det som sorterer
         // sorting here if we have either 6 or 7.
         //if (ring == 6 || ring == 7)
         //    return true;
+
+        if(tel!=7){
+            ede_all_except_pad7->Fill(e_energy, de_energy);
+        }
 
         ede_all->Fill(e_energy, de_energy);
 

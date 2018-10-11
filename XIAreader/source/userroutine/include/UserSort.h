@@ -76,6 +76,7 @@ private:
 
     // SINGLES histograms.
     Histogram1Dp energy_labr_raw[NUM_LABR_DETECTORS], energy_labr[NUM_LABR_DETECTORS];
+    Histogram1Dp energy_labr_all;
     Histogram1Dp energy_dE_raw[NUM_SI_DE_DET], energy_dE[NUM_SI_DE_DET];
     Histogram1Dp energy_E_raw[NUM_SI_E_DET], energy_E[NUM_SI_E_DET];
 
@@ -94,7 +95,7 @@ private:
 
     // dE vs E
     Histogram2Dp ede_raw[NUM_SI_RINGS][NUM_SI_RINGS], ede[NUM_SI_RINGS][NUM_SI_RINGS];
-    Histogram2Dp ede_all, ede_gate;
+    Histogram2Dp ede_all, ede_gate, ede_all_except_pad7;
 
     // Misc. dE/E coincidence spectra stuff.
     Histogram1Dp h_thick;   // "Apparent" thickness spectra.
