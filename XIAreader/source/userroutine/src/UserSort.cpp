@@ -392,13 +392,13 @@ void UserSort::CreateSpectra()
     sprintf(tmp, "exgam_bg");
     exgam_bg = Mat(tmp, tmp, 1500, 0, 15000, "LaBr [keV]", 1600, -1000, 15000, "Ex [keV]");
 
-    sprintf(tmp, "exgam_ppac");
+    sprintf(tmp, "exgam_ppac"); //alfna med fisjon
     exgam_ppac = Mat(tmp, tmp, 1500, 0, 15000, "LaBr [keV]", 1600, -1000, 15000, "Ex [keV]");
 
     sprintf(tmp, "exgam_ppac_bg");
     exgam_ppac_bg = Mat(tmp, tmp, 1500, 0, 15000, "LaBr [keV]", 1600, -1000, 15000, "Ex [keV]");
 
-    sprintf(tmp, "exgam_veto_ppac");
+    sprintf(tmp, "exgam_veto_ppac"); //alfna uten fisjon
     exgam_veto_ppac = Mat(tmp, tmp, 1500, 0, 15000, "LaBr [keV]", 1600, -1000, 15000, "Ex [keV]");
 
     sprintf(tmp, "exgam_veto_ppac_bg");
