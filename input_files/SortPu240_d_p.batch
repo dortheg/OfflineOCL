@@ -1,7 +1,6 @@
 # Importing the gain shit information.
 #Gain file /Applications/OfflineOCL/Mine/OfflineOCL/input_files/gain_shift_LaBr_Si.dat
-Gain file /Applications/OfflineOCL/Mine/OfflineOCL/input_files/total_gain_shift_files/total_gain_shift_20180416_205209.dat
-range /Applications/OfflineOCL/Mine/OfflineOCL/input_files/zrange_p.dat
+Gain file /Applications/OfflineOCL/Mine/OfflineOCL/input_files/Calib_files_all_detectors/total_gain_shift_20180418_113054.dat
 
 # Parameters for the range curve, 3He or alpha
 #rangefile zrange_he3.dat
@@ -20,8 +19,8 @@ range /Applications/OfflineOCL/Mine/OfflineOCL/input_files/zrange_p.dat
 # Thickness gate 
 # Format: lower cut, upper cut
 # for proton banana
-#parameter thick_range = 110 140
-parameter thick_range = 160 240 ## Just for test purposes!
+parameter thick_range = 110 140
+#parameter thick_range = 160 240 ## Just for test purposes!
 
 # for deuteron banana
 # parameter thick_range = XX YY
@@ -44,8 +43,8 @@ parameter ex_from_ede    = 14.5 -1.0436 -0.001220 \
 # as the ones that are filled, and make sure you "hit" a top!
 # parameter = lower cut of prompt ,     higher gate of prompt peak,  \
 #             lower cut on backgr.,     higher cut backgr.
-parameter labr_time_cuts = -337 -331 \
-                          -291 -285                     
+parameter labr_time_cuts = -3 3 \
+                          -48 -42                   
 
 ################ Only when PPACs are used ##################################
 # PPAC time gates
@@ -54,8 +53,8 @@ parameter labr_time_cuts = -337 -331 \
 # - time gates from the y-axis, and energy from the x-axis
 # parameter = lower cut of prompt ,     higher gate of prompt peak,  \
 #             lower cut on backgr.,     higher cut backgr.
-parameter ppac_time_cuts = 190 200 \
-                           290 300
+parameter ppac_time_cuts = -5 5 \
+                           20 20.1
 ############################################################################
 
 # Now we will need to read files... There is a lot of the :O
@@ -63,8 +62,42 @@ parameter ppac_time_cuts = 190 200 \
 data directory /Volumes/240Pu_d_p/240Pu_exp_data
 
 #Pu240_d_pf_experiment
-data file sirius-20180416-205209_A.data
-data file sirius-20180416-205209-big-000_A.data
-data file sirius-20180416-205209-big-001_A.data
+data file sirius-20180418-113054_A.data
+data file sirius-20180418-113054-big-000_A.data
+data file sirius-20180418-113054-big-001_A.data
+data file sirius-20180418-113054-big-002_A.data
+data file sirius-20180418-113054-big-003_A.data
+data file sirius-20180418-113054-big-004_A.data
+data file sirius-20180418-113054-big-005_A.data
+data file sirius-20180418-113054-big-006_A.data
+data file sirius-20180418-113054-big-007_A.data
+data file sirius-20180418-113054-big-008_A.data
+data file sirius-20180418-113054-big-009_A.data
+data file sirius-20180418-113054-big-010_A.data
+data file sirius-20180418-113054-big-011_A.data
+data file sirius-20180418-113054-big-012_A.data
+data file sirius-20180418-113054-big-013_A.data
+data file sirius-20180418-113054-big-014_A.data
+data file sirius-20180418-113054-big-015_A.data
+data file sirius-20180418-113054-big-016_A.data
+data file sirius-20180418-113054-big-017_A.data
+data file sirius-20180418-113054-big-018_A.data
+data file sirius-20180418-113054-big-019_A.data
+data file sirius-20180418-113054-big-020_A.data
+data file sirius-20180418-113054-big-021_A.data
+data file sirius-20180418-113054-big-022_A.data
+data file sirius-20180418-113054-big-023_A.data
+data file sirius-20180418-113054-big-024_A.data
+data file sirius-20180418-113054-big-025_A.data
+data file sirius-20180418-113054-big-026_A.data
+data file sirius-20180418-113054-big-027_A.data
+data file sirius-20180418-113054-big-028_A.data
+data file sirius-20180418-113054-big-029_A.data
+data file sirius-20180418-113054-big-030_A.data
+data file sirius-20180418-113054-big-031_A.data
+data file sirius-20180418-113054-big-032_A.data
+data file sirius-20180418-113054-big-033_A.data
+data file sirius-20180418-113054-big-034_A.data
+data file sirius-20180418-113054-big-035_A.data
 
-export root  /Applications/OfflineOCL/Mine/OfflineOCL/output_files/file_20180416_205209.root
+export root  /Applications/OfflineOCL/Mine/OfflineOCL/output_files/time_align.root
