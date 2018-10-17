@@ -84,11 +84,14 @@ void ParticleRange::Read(const std::string & filename)
 
 double ParticleRange::GetRange(double energy) const
 {
-    if( energy<Emin )
+    if( energy < Emin ){
         return 0;
+    }
     unsigned int index = (energy-Emin)/Estep;
-    if( index >= values.size() )
+    if( index >= values.size() ){
         return 1e6;
+    }
+
     return values[index];
 }
 

@@ -337,6 +337,10 @@ void UserSort::CreateSpectra()
     sprintf(tmp2, "LaBr energy : e-de time diff, all");
     energy_time_e_de_all = Mat(tmp, tmp2, 5000, 0, 6000, "LaBr energy [keV]", 5000, 0, 300, "t_{DE} - t_{E} [ns]");
 
+    sprintf(tmp, "energy_particle_time_e_de_all");
+    sprintf(tmp2, "Particle energy : e-de time diff, all");
+    energy_particle_time_e_de_all = Mat(tmp, tmp2, 5000, 0, 20000, "Particle energy [keV]", 5000, 0, 300, "t_{DE} - t_{E} [ns]");
+
     //Dorthea attempt to create one spectrum with all labr
     sprintf(tmp, "energy_labr_all");
     energy_labr_all = Spec(tmp, tmp, 10000, 0, 10000, "Energy [keV]");
@@ -370,6 +374,10 @@ void UserSort::CreateSpectra()
     sprintf(tmp, "ede_all");
     sprintf(tmp2, "E : DE, all");
     ede_all = Mat(tmp, tmp2, 10000, 0, 20000, "Back energy [keV]", 1000, 0, 5000, "Front energy [keV]");
+
+    sprintf(tmp, "ede_all_fission");
+    sprintf(tmp2, "E : DE, all");
+    ede_all_fission = Mat(tmp, tmp2, 10000, 0, 20000, "Back energy [keV]", 1000, 0, 5000, "Front energy [keV]");
 
     sprintf(tmp, "ede_all_bg");
     sprintf(tmp2, "E : DE, all, background");
@@ -559,6 +567,7 @@ bool UserSort::Sort(const Event &event) //det som sorterer
             //tdiff_ede: if prompt between e and de
             case is_prompt : {
                 ede_all->Fill(e_energy, de_energy);
+
                 break;
             }
             case is_background : {
@@ -576,18 +585,21 @@ bool UserSort::Sort(const Event &event) //det som sorterer
         double thick = range.GetRange(e_energy + de_energy) - range.GetRange(e_energy);
         h_thick->Fill(thick);
 
-        // Check if correct particle.
+        // Check if correct particle
         //if ( thick >= thick_range[0] && thick <= thick_range[1] ){
 
             ede_gate->Fill(e_energy, de_energy);
 
-            // Calculate the excitation energy.
+            // Calculate the particle energy.
             double e_tot = e_energy + de_energy;
 
             // Filling 'total particle energy' spectrum.
             h_ede[tel][ring]->Fill( e_tot );
             h_ede[tel][ring]->Fill( e_tot );
             h_ede_all->Fill( e_tot );
+
+            //Dorthea made
+            energy_particle_time_e_de_all->Fill(e_tot, tdiff_ede);
 
 
             double ex = ex_from_ede[3*ring]; // Constant part.
@@ -606,7 +618,7 @@ bool UserSort::Sort(const Event &event) //det som sorterer
             AnalyzeGamma(de_word, ex, event);
         #endif // FISSION
 
-       // }
+       //}
     }
 
     return true;
@@ -702,13 +714,14 @@ void UserSort::AnalyzeGammaPPAC(const word_t &de_word, const double &excitation,
             energy_time_labr[i]->Fill(energy, tdiff);
             energy_time_labr_all->Fill(energy, tdiff);
 
-            //Here
+
             word_t e_word = event.trigger;
             double tdiff_ede;
             tdiff_ede = CalcTimediff(e_word, de_word);
             energy_time_e_de_all->Fill(energy, tdiff_ede);
 
             bool ppac_prompt =  false;
+            bool labr_prompt = false;
 
             for (int n = 0 ; n < NUM_PPAC ; ++n){
 
@@ -725,11 +738,12 @@ void UserSort::AnalyzeGammaPPAC(const word_t &de_word, const double &excitation,
                     switch ( CheckTimeStatus(tdiff_ppac, ppac_time_cuts) ) {
                         //tdiff_ppac: time diff between ppac and Labr3, definere fisjon
                         case is_prompt : {
-
+                            //ede_all_fission->Fill(e_energy, de_energy);
                             ppac_prompt = true;
                             break;
                         }
                         case is_background : {
+                            //ede_all_fission->Fill(e_energy, de_energy, -1);
                             ppac_prompt = false;
                             break;
                         }
@@ -737,6 +751,10 @@ void UserSort::AnalyzeGammaPPAC(const word_t &de_word, const double &excitation,
                             break;
                         }
                     }
+
+
+
+
                 }
             }
 
