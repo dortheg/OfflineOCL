@@ -95,6 +95,7 @@ UserSort::UserSort()
     , thick_range    ( GetParameters(), "thick_range", 2      )
     , labr_time_cuts  ( GetParameters(), "labr_time_cuts", 2*2  )
     , ppac_time_cuts ( GetParameters(), "ppac_time_cuts", 2*2 )
+    , ede_time_cuts ( GetParameters(), "ede_time_cuts", 2*2 )
 {
 }
 
@@ -332,6 +333,10 @@ void UserSort::CreateSpectra()
         energy_time_ppac[i] = Mat(tmp, tmp2, 2000, 0, 10000, "LaBr energy [keV]", 2000, -100, 100, "t_{PPAC} - t_{LaBr} [ns]");
     }
 
+    sprintf(tmp, "energy_time_e_de_all");
+    sprintf(tmp2, "LaBr energy : e-de time diff, all");
+    energy_time_e_de_all = Mat(tmp, tmp2, 5000, 0, 6000, "LaBr energy [keV]", 5000, 0, 300, "t_{DE} - t_{E} [ns]");
+
     //Dorthea attempt to create one spectrum with all labr
     sprintf(tmp, "energy_labr_all");
     energy_labr_all = Spec(tmp, tmp, 10000, 0, 10000, "Energy [keV]");
@@ -365,6 +370,10 @@ void UserSort::CreateSpectra()
     sprintf(tmp, "ede_all");
     sprintf(tmp2, "E : DE, all");
     ede_all = Mat(tmp, tmp2, 10000, 0, 20000, "Back energy [keV]", 1000, 0, 5000, "Front energy [keV]");
+
+    sprintf(tmp, "ede_all_bg");
+    sprintf(tmp2, "E : DE, all, background");
+    ede_all_bg = Mat(tmp, tmp2, 10000, 0, 20000, "Back energy [keV]", 1000, 0, 5000, "Front energy [keV]");
 
     sprintf(tmp, "ede_all_except_pad7");
     sprintf(tmp2, "E : DE, all");
@@ -418,6 +427,7 @@ bool UserSort::Sort(const Event &event) //det som sorterer
     int i, j;
     double energy;
     double tdiff;
+    double tdiff_ede;
 
     n_tot_e += event.tot_Edet;
     n_tot_de += event.tot_dEdet;
@@ -517,7 +527,7 @@ bool UserSort::Sort(const Event &event) //det som sorterer
         if(GATING==0){
             ede_raw[tel][ring]->Fill(e_word.adcdata, de_word.adcdata);
         }
-        //If gate
+        //If energy gate
         double E = e_word.adcdata;
         double DE = de_word.adcdata;
         double E1_E = 8150.0;
@@ -542,7 +552,25 @@ bool UserSort::Sort(const Event &event) //det som sorterer
             ede_all_except_pad7->Fill(e_energy, de_energy);
         }
 
-        ede_all->Fill(e_energy, de_energy);
+        //ede time cuts
+        //Dorthea made
+        tdiff_ede = CalcTimediff(e_word, de_word);
+        switch ( CheckTimeStatus(tdiff_ede, ede_time_cuts) ) {
+            //tdiff_ede: if prompt between e and de
+            case is_prompt : {
+                ede_all->Fill(e_energy, de_energy);
+                break;
+            }
+            case is_background : {
+                ede_all_bg->Fill(e_energy, de_energy);
+                break;
+            }
+            case ignore : {
+                break;
+            }
+        }
+
+        //ede_all->Fill(e_energy, de_energy);
 
         // Calculate 'apparent thickness'
         double thick = range.GetRange(e_energy + de_energy) - range.GetRange(e_energy);
@@ -674,6 +702,12 @@ void UserSort::AnalyzeGammaPPAC(const word_t &de_word, const double &excitation,
             energy_time_labr[i]->Fill(energy, tdiff);
             energy_time_labr_all->Fill(energy, tdiff);
 
+            //Here
+            word_t e_word = event.trigger;
+            double tdiff_ede;
+            tdiff_ede = CalcTimediff(e_word, de_word);
+            energy_time_e_de_all->Fill(energy, tdiff_ede);
+
             bool ppac_prompt =  false;
 
             for (int n = 0 ; n < NUM_PPAC ; ++n){
@@ -726,8 +760,10 @@ void UserSort::AnalyzeGammaPPAC(const word_t &de_word, const double &excitation,
 
                     exgam->Fill(energy, excitation);
                     if (ppac_prompt)
+                        //de, labr and ppac are prompt->Fission
                         exgam_ppac->Fill(energy, excitation);
                     else
+                        //de, labr are prompt, but not ppac -> not fission
                         exgam_veto_ppac->Fill(energy, excitation);
                     break;
                 }

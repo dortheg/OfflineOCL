@@ -95,7 +95,7 @@ private:
 
     // dE vs E
     Histogram2Dp ede_raw[NUM_SI_RINGS][NUM_SI_RINGS], ede[NUM_SI_RINGS][NUM_SI_RINGS];
-    Histogram2Dp ede_all, ede_gate, ede_all_except_pad7;
+    Histogram2Dp ede_all, ede_gate, ede_all_except_pad7, ede_all_bg, energy_time_e_de_all;
 
     // Misc. dE/E coincidence spectra stuff.
     Histogram1Dp h_thick;   // "Apparent" thickness spectra.
@@ -153,6 +153,9 @@ private:
 
     // Time gates for the ppacs.
     Parameter ppac_time_cuts;
+
+    // Time gates for the ppacs.
+    Parameter ede_time_cuts;
 
 
     int n_fail_de, n_fail_e;

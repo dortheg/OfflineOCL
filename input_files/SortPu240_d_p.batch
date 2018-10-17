@@ -1,6 +1,6 @@
 # Importing the gain shit information.
 #Gain file /Applications/OfflineOCL/Mine/OfflineOCL/input_files/gain_shift_LaBr_Si.dat
-Gain file /Applications/OfflineOCL/Mine/OfflineOCL/input_files/Calib_files_all_detectors/total_gain_shift_20180417_100438_big_003.dat
+Gain file /Applications/OfflineOCL/Mine/OfflineOCL/input_files/Calib_files_all_detectors/total_gain_shift_20180416_173844.dat
 
 # Parameters for the range curve, 3He or alpha
 #rangefile zrange_he3.dat
@@ -27,14 +27,14 @@ parameter thick_range = 110 140
 
 # Kinematics: Fit of qkinz
 # Give paramters in MeV^(-x), not keV
-parameter ex_from_ede    = 14.5 -1.0436 -0.001220 \
-14.5 -1.0411 -0.001220 \
-14.5 -1.0384 -0.001220 \
-14.5 -1.0355 -0.001220 \
-14.5 -1.0286 -0.001220 \
-14.5 -1.0252 -0.001220 \
-14.5 -1.0216 -0.001220 \
-14.5 -1.0177 -0.001220 \
+parameter ex_from_ede    = 15.611276 -0.951006 -0.001883 \
+15.602686 -0.949805 -0.001919 \
+15.592661 -0.948448 -0.001959 \
+15.581054 -0.946920 -0.002006 \
+15.567690 -0.945205 -0.002058 \
+15.552354 -0.943281 -0.002117 \
+15.536693 -0.941493 -0.002167 \
+15.516632 -0.939080 -0.002243\
 
 # labbr time gates, for making the exgam matrices 
 # found by looking at the m_nai_t plot and projecting it
@@ -44,7 +44,10 @@ parameter ex_from_ede    = 14.5 -1.0436 -0.001220 \
 # parameter = lower cut of prompt ,     higher gate of prompt peak,  \
 #             lower cut on backgr.,     higher cut backgr.
 parameter labr_time_cuts = -3 3 \
-                          -48 -42                   
+                          -48 -42 
+
+parameter ede_time_cuts = 250 280 \
+                          290 300                  
 
 ################ Only when PPACs are used ##################################
 # PPAC time gates
@@ -62,9 +65,6 @@ parameter ppac_time_cuts = -5 5 \
 data directory /Volumes/240Pu_d_p/240Pu_exp_data
 
 #Pu240_d_pf_experiment
-data file sirius-20180417-100438-big-003.data
-data file sirius-20180417-100438-big-004.data
-data file sirius-20180417-100438-big-005.data
-data file sirius-20180417-100438-big-006.data
+data file sirius-20180416-173844.data
 
-export root  /Applications/OfflineOCL/Mine/OfflineOCL/output_files/file_20180417_100438_big_003.root
+export root  /Applications/OfflineOCL/Mine/OfflineOCL/output_files/time_align.root
