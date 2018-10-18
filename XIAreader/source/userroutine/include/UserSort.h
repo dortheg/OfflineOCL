@@ -64,6 +64,9 @@ private:
     // Method for getting time difference between two words.
     double CalcTimediff(const word_t &start, const word_t &stop) const;
 
+    // Method for getting absolute time
+    double CalcAbsTime(const word_t &start) const;
+
     // Method for analyzing and checking conincident gamma events.
     void AnalyzeGamma(const word_t &de_word,    /*!< We need the de_word for the start time         */
                       const double &excitation, /*!< We need the reconstructed excitation energy    */
@@ -95,7 +98,7 @@ private:
 
     // dE vs E
     Histogram2Dp ede_raw[NUM_SI_RINGS][NUM_SI_RINGS], ede[NUM_SI_RINGS][NUM_SI_RINGS];
-    Histogram2Dp ede_all, ede_gate, ede_all_except_pad7, ede_all_bg, energy_time_e_de_all, energy_particle_time_e_de_all, ede_all_fission;
+    Histogram2Dp ede_all, ede_gate, ede_all_except_pad7, ede_all_bg, energy_time_e_de_all, energy_particle_time_e_de_all, ede_all_fission, prompt_peak_movement, ede_all_doublepeak;
 
     // Misc. dE/E coincidence spectra stuff.
     Histogram1Dp h_thick;   // "Apparent" thickness spectra.

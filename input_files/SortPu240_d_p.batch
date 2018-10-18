@@ -1,12 +1,12 @@
 # Importing the gain shit information.
 #Gain file /Applications/OfflineOCL/Mine/OfflineOCL/input_files/gain_shift_LaBr_Si.dat
-Gain file /Applications/OfflineOCL/Mine/OfflineOCL/input_files/Calib_files_all_detectors/total_gain_shift_20180416_173844.dat
+Gain file /Applications/OfflineOCL/Mine/OfflineOCL/input_files/Calib_files_all_detectors/total_gain_shift_20180416_205209.dat
 
 # Parameters for the range curve, 3He or alpha
 #rangefile zrange_he3.dat
 #rangefile zrange_a.dat
 #rangefile zrange_d.dat
-#rangefile zrange_p.dat
+range /Applications/OfflineOCL/Mine/OfflineOCL/input_files/zrange_p.dat
 
 ## Cut of low-energy events by making a rectangle which is excluded
 ## in the down, left corner of the banana. 
@@ -19,8 +19,8 @@ Gain file /Applications/OfflineOCL/Mine/OfflineOCL/input_files/Calib_files_all_d
 # Thickness gate 
 # Format: lower cut, upper cut
 # for proton banana
-parameter thick_range = 110 140
-#parameter thick_range = 160 240 ## Just for test purposes!
+parameter thick_range = 110 160
+#parameter thick_range = 140 240 ## Just for test purposes!
 
 # for deuteron banana
 # parameter thick_range = XX YY
@@ -46,8 +46,12 @@ parameter ex_from_ede    = 15.611276 -0.951006 -0.001883 \
 parameter labr_time_cuts = -3 3 \
                           -48 -42 
 
-parameter ede_time_cuts = 250 280 \
-                          290 300                  
+#doublepeak time cuts
+#parameter labr_time_cuts = -11 -5 \
+#                          -20 -14 
+
+parameter ede_time_cuts = 150 300 \
+                          310 310.1                  
 
 ################ Only when PPACs are used ##################################
 # PPAC time gates
@@ -57,7 +61,7 @@ parameter ede_time_cuts = 250 280 \
 # parameter = lower cut of prompt ,     higher gate of prompt peak,  \
 #             lower cut on backgr.,     higher cut backgr.
 parameter ppac_time_cuts = -5 5 \
-                           20 20.1
+                           -275 -265
 ############################################################################
 
 # Now we will need to read files... There is a lot of the :O
@@ -65,6 +69,8 @@ parameter ppac_time_cuts = -5 5 \
 data directory /Volumes/240Pu_d_p/240Pu_exp_data
 
 #Pu240_d_pf_experiment
-data file sirius-20180416-173844.data
+data file sirius-20180416-205209_A.data
+#data file sirius-20180416-205209-big-000_A.data
+#data file sirius-20180416-205209-big-001_A.data
 
 export root  /Applications/OfflineOCL/Mine/OfflineOCL/output_files/time_align.root

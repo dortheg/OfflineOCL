@@ -210,6 +210,43 @@ double UserSort::CalcTimediff(const word_t &start, const word_t &stop) const
 
 }
 
+double UserSort::CalcAbsTime(const word_t &start) const
+{
+    // First we fetch the correct shift parameters.
+    double start_shift;
+
+    DetectorInfo_t info_start = GetDetector(start.address);
+
+    switch ( info_start.type ){
+        case labr : {
+            start_shift = shift_time_labr[info_start.detectorNum];
+            break;
+        }
+        case deDet : {
+            start_shift = shift_time_de[info_start.detectorNum];
+            break;
+        }
+        case eDet : {
+            start_shift = shift_time_e[info_start.detectorNum];
+            break;
+        }
+        case ppac : {
+            start_shift = shift_time_ppac[info_start.detectorNum];
+            break;
+        }
+        default : {
+            start_shift = 0;
+            break;
+        }
+    }
+
+    // 'Coarse' time difference.
+    int64_t time_abs = start.timestamp;
+
+    return time_abs;
+
+}
+
 
 bool UserSort::UserCommand(const std::string &cmd)
 {
@@ -333,6 +370,10 @@ void UserSort::CreateSpectra()
         energy_time_ppac[i] = Mat(tmp, tmp2, 2000, 0, 10000, "LaBr energy [keV]", 2000, -100, 100, "t_{PPAC} - t_{LaBr} [ns]");
     }
 
+    sprintf(tmp, "prompt_peak_movement");
+    sprintf(tmp2, "Movement of prompt peak in energy spectrum");
+    prompt_peak_movement = Mat(tmp, tmp2, 100, -50, 50, "t_{LaBr} - t_{dE ANY} [ns]", 100, 0, 1000000000000, "t_{Labr}");
+
     sprintf(tmp, "energy_time_e_de_all");
     sprintf(tmp2, "LaBr energy : e-de time diff, all");
     energy_time_e_de_all = Mat(tmp, tmp2, 5000, 0, 6000, "LaBr energy [keV]", 5000, 0, 300, "t_{DE} - t_{E} [ns]");
@@ -374,6 +415,10 @@ void UserSort::CreateSpectra()
     sprintf(tmp, "ede_all");
     sprintf(tmp2, "E : DE, all");
     ede_all = Mat(tmp, tmp2, 10000, 0, 20000, "Back energy [keV]", 1000, 0, 5000, "Front energy [keV]");
+
+    sprintf(tmp, "ede_all_doublepeak");
+    sprintf(tmp2, "E : DE, all");
+    ede_all_doublepeak = Mat(tmp, tmp2, 10000, 0, 20000, "Back energy [keV]", 1000, 0, 5000, "Front energy [keV]");
 
     sprintf(tmp, "ede_all_fission");
     sprintf(tmp2, "E : DE, all");
@@ -571,7 +616,7 @@ bool UserSort::Sort(const Event &event) //det som sorterer
                 break;
             }
             case is_background : {
-                ede_all_bg->Fill(e_energy, de_energy);
+                ede_all->Fill(e_energy, de_energy, -1);
                 break;
             }
             case ignore : {
@@ -586,7 +631,7 @@ bool UserSort::Sort(const Event &event) //det som sorterer
         h_thick->Fill(thick);
 
         // Check if correct particle
-        //if ( thick >= thick_range[0] && thick <= thick_range[1] ){
+        if ( thick >= thick_range[0] && thick <= thick_range[1] ){
 
             ede_gate->Fill(e_energy, de_energy);
 
@@ -618,7 +663,7 @@ bool UserSort::Sort(const Event &event) //det som sorterer
             AnalyzeGamma(de_word, ex, event);
         #endif // FISSION
 
-       //}
+       }
     }
 
     return true;
@@ -640,6 +685,7 @@ void UserSort::AnalyzeGamma(const word_t &de_word, const double &excitation,cons
 
             // Fill time spectra.
             labr_align_time->Fill(tdiff, i);
+
             energy_time_labr[i]->Fill(energy, tdiff);
             energy_time_labr_all->Fill(energy, tdiff);
 
@@ -708,6 +754,15 @@ void UserSort::AnalyzeGammaPPAC(const word_t &de_word, const double &excitation,
 
             double energy = CalibrateE(event.w_labr[i][j]);
             double tdiff = CalcTimediff(de_word, event.w_labr[i][j]);
+            double tabs = CalcAbsTime(event.w_labr[i][j]);
+            //std::cout << tabs << std::endl;
+
+            //For one labr, check movement of peak
+            if(i ==3) {
+                prompt_peak_movement->Fill(tdiff, tabs);
+
+            }
+
 
             // Fill time spectra.
             labr_align_time->Fill(tdiff, i);
@@ -721,7 +776,7 @@ void UserSort::AnalyzeGammaPPAC(const word_t &de_word, const double &excitation,
             energy_time_e_de_all->Fill(energy, tdiff_ede);
 
             bool ppac_prompt =  false;
-            bool labr_prompt = false;
+            //bool labr_prompt = false;
 
             for (int n = 0 ; n < NUM_PPAC ; ++n){
 
@@ -752,9 +807,6 @@ void UserSort::AnalyzeGammaPPAC(const word_t &de_word, const double &excitation,
                         }
                     }
 
-
-
-
                 }
             }
 
@@ -774,7 +826,11 @@ void UserSort::AnalyzeGammaPPAC(const word_t &de_word, const double &excitation,
                     if (E>E1 && E<E2 && DE>DE1 &&DE<DE2 && GATING==1){
                         energy_labr_raw[i]->Fill(event.w_labr[i][j].adcdata);
                     }
-
+                    double e_energy = CalibrateOnlyE(e_word, de_word);
+                    double de_energy = CalibrateE(de_word);
+                    if(i==0||i==1||i==2||i==3){
+                        ede_all_doublepeak->Fill(e_energy, de_energy);
+                    }
 
                     exgam->Fill(energy, excitation);
                     if (ppac_prompt)
@@ -795,6 +851,12 @@ void UserSort::AnalyzeGammaPPAC(const word_t &de_word, const double &excitation,
                 double DE2 = 1900.0;
                 if (E>E1 && E<E2 && DE>DE1 &&DE<DE2 && GATING==1){
                     energy_labr_raw[i]->Fill(event.w_labr[i][j].adcdata,-1);
+                }
+                double e_energy = CalibrateOnlyE(e_word, de_word);
+                double de_energy = CalibrateE(de_word);
+
+                if(i==0||i==1||i==2||i==3){
+                    ede_all_doublepeak->Fill(e_energy, de_energy, -1);
                 }
                     exgam->Fill(energy, excitation, -1);
                     exgam_bg->Fill(energy, excitation);
