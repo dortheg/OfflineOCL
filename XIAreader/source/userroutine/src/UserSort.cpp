@@ -372,7 +372,7 @@ void UserSort::CreateSpectra()
 
     sprintf(tmp, "prompt_peak_movement");
     sprintf(tmp2, "Movement of prompt peak in energy spectrum");
-    prompt_peak_movement = Mat(tmp, tmp2, 100, -50, 50, "t_{LaBr} - t_{dE ANY} [ns]", 100, 0, 1000000000000, "t_{Labr}");
+    prompt_peak_movement = Mat(tmp, tmp2, 100, -50, 50, "t_{LaBr} - t_{dE ANY} [ns]", 100, 2900e9, 3200e9, "t_{Labr}");
 
     sprintf(tmp, "energy_time_e_de_all");
     sprintf(tmp2, "LaBr energy : e-de time diff, all");
@@ -382,6 +382,15 @@ void UserSort::CreateSpectra()
     sprintf(tmp2, "Particle energy : e-de time diff, all");
     energy_particle_time_e_de_all = Mat(tmp, tmp2, 5000, 0, 20000, "Particle energy [keV]", 5000, 0, 300, "t_{DE} - t_{E} [ns]");
 
+    sprintf(tmp, "energy_particle_time_e_de_all_gate");
+    sprintf(tmp2, "Particle energy : e-de time diff, all, gated");
+    energy_particle_time_e_de_all_gate = Mat(tmp, tmp2, 5000, 0, 20000, "Particle energy [keV]", 5000, 0, 300, "t_{DE} - t_{E} [ns]");
+
+    sprintf(tmp, "filling_test");
+    sprintf(tmp2, "Particle energy : e-de time diff, all, gated, test");
+    filling_test = Mat(tmp, tmp2, 5000, 0, 20000, "Particle energy [keV]", 5000, 0, 300, "t_{DE} - t_{E} [ns]");
+
+
     //Dorthea attempt to create one spectrum with all labr
     sprintf(tmp, "energy_labr_all");
     energy_labr_all = Spec(tmp, tmp, 10000, 0, 10000, "Energy [keV]");
@@ -390,6 +399,12 @@ void UserSort::CreateSpectra()
     sprintf(tmp, "de_align_time");
     sprintf(tmp2, "t_{dE} - t_{LaBr nr. 1}");
     de_align_time = Mat(tmp, tmp2, 5000, -1500, 1500, "t_{dE} - t_{LaBr nr. 1} [ns]", NUM_SI_DE_DET, 0, NUM_SI_DE_DET, "#Delta E detector id.");
+
+    // Time spectra (except those 'listed')
+    sprintf(tmp, "de_align_time_3");
+    sprintf(tmp2, "t_{dE} - t_{LaBr nr. 3}");
+    de_align_time_3 = Mat(tmp, tmp2, 5000, -1500, 1500, "t_{dE} - t_{LaBr nr. 3} [ns]", NUM_SI_DE_DET, 0, NUM_SI_DE_DET, "#Delta E detector id.");
+
 
     //Tried to write
     sprintf(tmp, "ppac_vs_dE_time");
@@ -562,10 +577,17 @@ bool UserSort::Sort(const Event &event) //det som sorterer
         e_de_time[tel]->Fill(tdiff, ring);
 
         // Align the dE times...
+        if(event.n_labr[2] == 1){
+            //Check alignment against Labr03
+            tdiff = CalcTimediff(event.w_labr[2][0], de_word);
+            de_align_time_3->Fill(tdiff, GetDetector(de_word.address).detectorNum);
+        }
+
 
         if ( event.n_labr[0] == 1){
             tdiff = CalcTimediff(event.w_labr[0][0], de_word);
             de_align_time->Fill(tdiff, GetDetector(de_word.address).detectorNum);
+
             for (int i = 0 ; i < NUM_PPAC ; ++i){
                 for (int j = 0 ; j < event.n_ppac[i] ; ++j){
                     tdiff = CalcTimediff(event.w_labr[0][0], event.w_ppac[i][j]);
@@ -608,23 +630,26 @@ bool UserSort::Sort(const Event &event) //det som sorterer
         //ede time cuts
         //Dorthea made
         tdiff_ede = CalcTimediff(e_word, de_word);
-        switch ( CheckTimeStatus(tdiff_ede, ede_time_cuts) ) {
-            //tdiff_ede: if prompt between e and de
-            case is_prompt : {
-                ede_all->Fill(e_energy, de_energy);
 
-                break;
-            }
-            case is_background : {
-                ede_all->Fill(e_energy, de_energy, -1);
-                break;
-            }
-            case ignore : {
-                break;
-            }
-        }
+//        switch ( CheckTimeStatus(tdiff_ede, ede_time_cuts) ) {
+//            //tdiff_ede: if prompt between e and de
+//            case is_prompt : {
+//                ede_all->Fill(e_energy, de_energy);
 
-        //ede_all->Fill(e_energy, de_energy);
+//                break;
+//            }
+//            case is_background : {
+//                ede_all->Fill(e_energy, de_energy, -1);
+//                break;
+//            }
+//            case ignore : {
+//                break;
+//            }
+//        }
+
+
+
+        ede_all->Fill(e_energy, de_energy);
 
         // Calculate 'apparent thickness'
         double thick = range.GetRange(e_energy + de_energy) - range.GetRange(e_energy);
@@ -633,7 +658,7 @@ bool UserSort::Sort(const Event &event) //det som sorterer
         // Check if correct particle
         if ( thick >= thick_range[0] && thick <= thick_range[1] ){
 
-            ede_gate->Fill(e_energy, de_energy);
+            //ede_gate->Fill(e_energy, de_energy);
 
             // Calculate the particle energy.
             double e_tot = e_energy + de_energy;
@@ -644,6 +669,13 @@ bool UserSort::Sort(const Event &event) //det som sorterer
             h_ede_all->Fill( e_tot );
 
             //Dorthea made
+
+            double y_upper = 0.0080361*e_tot + 175.7;
+            double y_lower = 0.01426418*e_tot + 37.7061778;
+            if (tdiff_ede < y_upper && tdiff_ede > y_lower && e_tot>6000){
+                energy_particle_time_e_de_all_gate->Fill(e_tot, tdiff_ede);
+                ede_gate->Fill(e_energy, de_energy);
+            }
             energy_particle_time_e_de_all->Fill(e_tot, tdiff_ede);
 
 

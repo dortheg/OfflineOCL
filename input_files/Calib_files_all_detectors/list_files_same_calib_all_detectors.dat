@@ -22,6 +22,7 @@ PLUTONIUM
 Calib file: total_gain_shift_20180416_173844.dat TP
 data file sirius-20180416-173844_A.data
 
+
 Calib file: total_gain_shift_20180416_205209.dat TP
 data file sirius-20180416-205209_A.data
 data file sirius-20180416-205209-big-000_A.data
@@ -59,9 +60,9 @@ Calib file: total_gain_shift_20180417_100438.dat TP
 data file sirius-20180417-100438_A.data
 data file sirius-20180417-100438-big-001_A.data
 data file sirius-20180417-100438-big-002_A.data
-
-Calib file: total_gain_shift_20180417_100438_big_003.dat TP
 data file sirius-20180417-100438-big-003_A.data
+
+Calib file: total_gain_shift_20180417_100438_big_003.dat TP 
 data file sirius-20180417-100438-big-003_B.data
 data file sirius-20180417-100438-big-004_A.data
 data file sirius-20180417-100438-big-005_A.data

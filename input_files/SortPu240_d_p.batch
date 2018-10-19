@@ -1,6 +1,6 @@
 # Importing the gain shit information.
 #Gain file /Applications/OfflineOCL/Mine/OfflineOCL/input_files/gain_shift_LaBr_Si.dat
-Gain file /Applications/OfflineOCL/Mine/OfflineOCL/input_files/Calib_files_all_detectors/total_gain_shift_20180416_205209.dat
+Gain file /Applications/OfflineOCL/Mine/OfflineOCL/input_files/Calib_files_all_detectors/total_gain_shift_20180416_173844.dat
 
 # Parameters for the range curve, 3He or alpha
 #rangefile zrange_he3.dat
@@ -19,7 +19,7 @@ range /Applications/OfflineOCL/Mine/OfflineOCL/input_files/zrange_p.dat
 # Thickness gate 
 # Format: lower cut, upper cut
 # for proton banana
-parameter thick_range = 110 160
+parameter thick_range = 0 1000
 #parameter thick_range = 140 240 ## Just for test purposes!
 
 # for deuteron banana
@@ -47,11 +47,11 @@ parameter labr_time_cuts = -3 3 \
                           -48 -42 
 
 #doublepeak time cuts
-#parameter labr_time_cuts = -11 -5 \
-#                          -20 -14 
+#parameter labr_time_cuts = -10 -7 \
+#                          -20 -17 
 
-parameter ede_time_cuts = 150 300 \
-                          310 310.1                  
+#parameter ede_time_cuts = 150 300 \
+#                          310 310.1                  
 
 ################ Only when PPACs are used ##################################
 # PPAC time gates
@@ -69,8 +69,6 @@ parameter ppac_time_cuts = -5 5 \
 data directory /Volumes/240Pu_d_p/240Pu_exp_data
 
 #Pu240_d_pf_experiment
-data file sirius-20180416-205209_A.data
-#data file sirius-20180416-205209-big-000_A.data
-#data file sirius-20180416-205209-big-001_A.data
+data file sirius-20180416-173844_A.data
 
 export root  /Applications/OfflineOCL/Mine/OfflineOCL/output_files/time_align.root
