@@ -382,6 +382,11 @@ void UserSort::CreateSpectra()
     sprintf(tmp2, "Particle energy : e-de time diff, all");
     energy_particle_time_e_de_all = Mat(tmp, tmp2, 5000, 0, 20000, "Particle energy [keV]", 5000, 0, 300, "t_{DE} - t_{E} [ns]");
 
+    sprintf(tmp, "energy_E_particle_time_e_de_all");
+    sprintf(tmp2, "Particle energy : e-de time diff, all");
+    energy_E_particle_time_e_de_all = Mat(tmp, tmp2, 5000, 0, 20000, "Particle energy [keV]", 5000, 0, 300, "t_{DE} - t_{E} [ns]");
+
+
     sprintf(tmp, "energy_particle_time_e_de_all_gate");
     sprintf(tmp2, "Particle energy : e-de time diff, all, gated");
     energy_particle_time_e_de_all_gate = Mat(tmp, tmp2, 5000, 0, 20000, "Particle energy [keV]", 5000, 0, 300, "t_{DE} - t_{E} [ns]");
@@ -671,12 +676,22 @@ bool UserSort::Sort(const Event &event) //det som sorterer
             //Dorthea made
 
             double y_upper = 0.0080361*e_tot + 175.7;
-            double y_lower = 0.01426418*e_tot + 37.7061778;
-            if (tdiff_ede < y_upper && tdiff_ede > y_lower && e_tot>6000){
-                energy_particle_time_e_de_all_gate->Fill(e_tot, tdiff_ede);
-                ede_gate->Fill(e_energy, de_energy);
+            //double y_lower = 0.01426418*e_tot + 37.7061778; //as in book page 150
+            double y_lower_1 = 0.00826418*e_tot + 150.7061778; //very tight
+            double y_lower_2 = -1.15834790e+03+2.80987862e-01*e_tot - 1.42244814e-05*e_tot*e_tot;
+            if (tdiff_ede < y_upper && e_tot>6000 && tdiff_ede > 120){
+                if(e_tot >= 9500 && tdiff_ede > y_lower_1){
+                    energy_particle_time_e_de_all_gate->Fill(e_tot, tdiff_ede);
+                    ede_gate->Fill(e_energy, de_energy);
+                }
+                else if (e_tot < 9500 && tdiff_ede > y_lower_2){
+                    energy_particle_time_e_de_all_gate->Fill(e_tot, tdiff_ede);
+                    ede_gate->Fill(e_energy, de_energy);
+                }
+
             }
             energy_particle_time_e_de_all->Fill(e_tot, tdiff_ede);
+            energy_E_particle_time_e_de_all->Fill(e_energy, tdiff_ede);
 
 
             double ex = ex_from_ede[3*ring]; // Constant part.

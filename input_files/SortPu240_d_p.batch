@@ -19,7 +19,8 @@ range /Applications/OfflineOCL/Mine/OfflineOCL/input_files/zrange_p.dat
 # Thickness gate 
 # Format: lower cut, upper cut
 # for proton banana
-parameter thick_range = 0 1000
+parameter thick_range = 0 1000 #no gate
+#parameter thick_range = 110 220
 #parameter thick_range = 140 240 ## Just for test purposes!
 
 # for deuteron banana
