@@ -44,6 +44,8 @@
 #define FISSION 1
 //If gating on specified energies
 const int GATING = 0;
+//If cut in energy_particle_time, as seen in book p 152-153
+const int GATING_EDE_TIME = 1;
 
 static bool set_par(Parameters& parameters, std::istream& ipar,
                     const std::string& name, int size)
@@ -679,7 +681,8 @@ bool UserSort::Sort(const Event &event) //det som sorterer
             //double y_lower = 0.01426418*e_tot + 37.7061778; //as in book page 150
             double y_lower_1 = 0.00826418*e_tot + 150.7061778; //very tight
             double y_lower_2 = -1.15834790e+03+2.80987862e-01*e_tot - 1.42244814e-05*e_tot*e_tot;
-            if (tdiff_ede < y_upper && e_tot>6000 && tdiff_ede > 120){
+
+            if (tdiff_ede < y_upper && e_tot>6000 && tdiff_ede > 120 && GATING_EDE_TIME==1){
                 if(e_tot >= 9500 && tdiff_ede > y_lower_1){
                     energy_particle_time_e_de_all_gate->Fill(e_tot, tdiff_ede);
                     ede_gate->Fill(e_energy, de_energy);
@@ -690,6 +693,13 @@ bool UserSort::Sort(const Event &event) //det som sorterer
                 }
 
             }
+
+            else if(GATING_EDE_TIME==0){
+                energy_particle_time_e_de_all_gate->Fill(e_tot, tdiff_ede);
+                ede_gate->Fill(e_energy, de_energy);
+            }
+
+
             energy_particle_time_e_de_all->Fill(e_tot, tdiff_ede);
             energy_E_particle_time_e_de_all->Fill(e_energy, tdiff_ede);
 
@@ -703,9 +713,10 @@ bool UserSort::Sort(const Event &event) //det som sorterer
             h_ex[tel][ring]->Fill(ex);
             h_ex_all->Fill(ex);
 
+
             // Analyze gamma rays.
         #if FISSION
-            AnalyzeGammaPPAC(de_word, ex, event);
+            AnalyzeGammaPPAC(de_word, e_word, ex, event);
         #else
             AnalyzeGamma(de_word, ex, event);
         #endif // FISSION
@@ -777,7 +788,7 @@ void UserSort::AnalyzeGamma(const word_t &de_word, const double &excitation,cons
     }
 }
 
-void UserSort::AnalyzeGammaPPAC(const word_t &de_word, const double &excitation, const Event &event)
+void UserSort::AnalyzeGammaPPAC(const word_t &de_word, const word_t &e_word, const double &excitation, const Event &event)
 {
 
 
@@ -825,6 +836,7 @@ void UserSort::AnalyzeGammaPPAC(const word_t &de_word, const double &excitation,
             bool ppac_prompt =  false;
             //bool labr_prompt = false;
 
+            //Is this correct? Doesnt it loop through all events, and changes ppac_prompt between true and false?
             for (int n = 0 ; n < NUM_PPAC ; ++n){
 
                 //Number of PPAC
@@ -878,15 +890,50 @@ void UserSort::AnalyzeGammaPPAC(const word_t &de_word, const double &excitation,
                     if(i==0||i==1||i==2||i==3){
                         ede_all_doublepeak->Fill(e_energy, de_energy);
                     }
+                    double e_tot = e_energy + de_energy;
+                    double tdiff_ede = CalcTimediff(e_word, de_word);
+                    //Cuts in energy_particle_time -> Get rid of background
+                    double y_upper = 0.0080361*e_tot + 175.7;
+                    double y_lower_1 = 0.00826418*e_tot + 150.7061778;
+                    double y_lower_2 = -1.15834790e+03+2.80987862e-01*e_tot - 1.42244814e-05*e_tot*e_tot;
 
-                    exgam->Fill(energy, excitation);
-                    if (ppac_prompt)
-                        //de, labr and ppac are prompt->Fission
-                        exgam_ppac->Fill(energy, excitation);
-                    else
-                        //de, labr are prompt, but not ppac -> not fission
-                        exgam_veto_ppac->Fill(energy, excitation);
-                    break;
+                    if (tdiff_ede < y_upper && e_tot>6000 && tdiff_ede > 120 && GATING_EDE_TIME==1){
+                        if(e_tot >= 9500 && tdiff_ede > y_lower_1){
+                            exgam->Fill(energy, excitation);
+                            if (ppac_prompt)
+                                //de, labr and ppac are prompt->Fission
+                                exgam_ppac->Fill(energy, excitation);
+                            else
+                                //de, labr are prompt, but not ppac -> not fission
+                                exgam_veto_ppac->Fill(energy, excitation);
+                            break;
+
+                        }
+                        else if (e_tot < 9500 && tdiff_ede > y_lower_2){
+                            exgam->Fill(energy, excitation);
+                            if (ppac_prompt)
+                                //de, labr and ppac are prompt->Fission
+                                exgam_ppac->Fill(energy, excitation);
+                            else
+                                //de, labr are prompt, but not ppac -> not fission
+                                exgam_veto_ppac->Fill(energy, excitation);
+                            break;
+
+                        }
+
+                    }
+
+                    else if(GATING_EDE_TIME==0){
+                        if (ppac_prompt)
+                            //de, labr and ppac are prompt->Fission
+                            exgam_ppac->Fill(energy, excitation);
+                        else
+                            //de, labr are prompt, but not ppac -> not fission
+                            exgam_veto_ppac->Fill(energy, excitation);
+                        break;
+
+                    }
+
                 }
                 case is_background : {
                 word_t e_word = event.trigger;
@@ -905,8 +952,45 @@ void UserSort::AnalyzeGammaPPAC(const word_t &de_word, const double &excitation,
                 if(i==0||i==1||i==2||i==3){
                     ede_all_doublepeak->Fill(e_energy, de_energy, -1);
                 }
-                    exgam->Fill(energy, excitation, -1);
-                    exgam_bg->Fill(energy, excitation);
+
+                double e_tot = e_energy + de_energy;
+                double tdiff_ede = CalcTimediff(e_word, de_word);
+                //Cuts in energy_particle_time -> Get rid of background
+                double y_upper = 0.0080361*e_tot + 175.7;
+                double y_lower_1 = 0.00826418*e_tot + 150.7061778;
+                double y_lower_2 = -1.15834790e+03+2.80987862e-01*e_tot - 1.42244814e-05*e_tot*e_tot;
+
+                if (tdiff_ede < y_upper && e_tot>6000 && tdiff_ede > 120 && GATING_EDE_TIME==1){
+                    if(e_tot >= 9500 && tdiff_ede > y_lower_1){
+                        exgam->Fill(energy, excitation, -1);
+                        exgam_bg->Fill(energy, excitation);
+                        if (ppac_prompt){
+                            exgam_ppac->Fill(energy, excitation, -1);
+                            exgam_ppac_bg->Fill(energy, excitation);
+                        } else {
+                            exgam_veto_ppac->Fill(energy, excitation, -1);
+                            exgam_veto_ppac_bg->Fill(energy, excitation);
+                        }
+                        break;
+
+                    }
+                    else if (e_tot < 9500 && tdiff_ede > y_lower_2){
+                        exgam->Fill(energy, excitation, -1);
+                        exgam_bg->Fill(energy, excitation);
+                        if (ppac_prompt){
+                            exgam_ppac->Fill(energy, excitation, -1);
+                            exgam_ppac_bg->Fill(energy, excitation);
+                        } else {
+                            exgam_veto_ppac->Fill(energy, excitation, -1);
+                            exgam_veto_ppac_bg->Fill(energy, excitation);
+                        }
+                        break;
+
+                    }
+
+                }
+
+                else if(GATING_EDE_TIME==0){
                     if (ppac_prompt){
                         exgam_ppac->Fill(energy, excitation, -1);
                         exgam_ppac_bg->Fill(energy, excitation);
@@ -915,6 +999,9 @@ void UserSort::AnalyzeGammaPPAC(const word_t &de_word, const double &excitation,
                         exgam_veto_ppac_bg->Fill(energy, excitation);
                     }
                     break;
+
+                }
+
                 }
                 case ignore : {
                     break;

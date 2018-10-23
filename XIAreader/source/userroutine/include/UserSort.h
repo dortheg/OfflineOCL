@@ -74,6 +74,7 @@ private:
 
     // Method for analyzing and checking coinicident gamma-ppac events.
     void AnalyzeGammaPPAC(const word_t &de_word,    /*!< We need the de_word for the start time         */
+                          const word_t &e_word,     /*!< Dorthea needs this for gating                  */
                           const double &excitation, /*!< We need the reconstructed excitation energy    */
                           const Event &event        /*!< Event structure.                               */);
 
