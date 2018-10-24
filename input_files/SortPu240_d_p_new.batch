@@ -1,6 +1,6 @@
 # Importing the gain shit information.
 #Gain file /Applications/OfflineOCL/Mine/OfflineOCL/input_files/gain_shift_LaBr_Si.dat
-Gain file /Applications/OfflineOCL/Mine/OfflineOCL/input_files/Calib_files_all_detectors/total_gain_shift_20180416_173844_new.dat
+Gain file /Applications/OfflineOCL/Mine/OfflineOCL/input_files/Calib_files_all_detectors/total_gain_shift_20180416_173844.dat
 
 # Parameters for the range curve, 3He or alpha
 #rangefile zrange_he3.dat
@@ -20,7 +20,7 @@ range /Applications/OfflineOCL/Mine/OfflineOCL/input_files/zrange_p.dat
 # Format: lower cut, upper cut
 # for proton banana
 #parameter thick_range = 0 1000 #no gate
-parameter thick_range = 110 180
+parameter thick_range = 105 240
 #parameter thick_range = 140 240 ## Just for test purposes!
 
 # for deuteron banana

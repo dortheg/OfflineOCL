@@ -42,10 +42,10 @@
 
 //If calculate with PPACS
 #define FISSION 1
-//If gating on specified energies
+//If gating on specified energies in ede
 const int GATING = 0;
 //If cut in energy_particle_time, as seen in book p 152-153
-const int GATING_EDE_TIME = 1;
+const int GATING_EDE_TIME = 0;
 
 static bool set_par(Parameters& parameters, std::istream& ipar,
                     const std::string& name, int size)
@@ -446,6 +446,11 @@ void UserSort::CreateSpectra()
     sprintf(tmp2, "E : DE, all");
     ede_all_fission = Mat(tmp, tmp2, 10000, 0, 20000, "Back energy [keV]", 1000, 0, 5000, "Front energy [keV]");
 
+    sprintf(tmp, "ede_all_nofission");
+    sprintf(tmp2, "E : DE, all");
+    ede_all_nofission = Mat(tmp, tmp2, 10000, 0, 20000, "Back energy [keV]", 1000, 0, 5000, "Front energy [keV]");
+
+
     sprintf(tmp, "ede_all_bg");
     sprintf(tmp2, "E : DE, all, background");
     ede_all_bg = Mat(tmp, tmp2, 10000, 0, 20000, "Back energy [keV]", 1000, 0, 5000, "Front energy [keV]");
@@ -682,7 +687,8 @@ bool UserSort::Sort(const Event &event) //det som sorterer
             double y_lower_1 = 0.00826418*e_tot + 150.7061778; //very tight
             double y_lower_2 = -1.15834790e+03+2.80987862e-01*e_tot - 1.42244814e-05*e_tot*e_tot;
 
-            if (tdiff_ede < y_upper && e_tot>6000 && tdiff_ede > 120 && GATING_EDE_TIME==1){
+
+            if (tdiff_ede < y_upper && e_tot>6000 && tdiff_ede > 120 && GATING_EDE_TIME==1 ){
                 if(e_tot >= 9500 && tdiff_ede > y_lower_1){
                     energy_particle_time_e_de_all_gate->Fill(e_tot, tdiff_ede);
                     ede_gate->Fill(e_energy, de_energy);
@@ -821,7 +827,6 @@ void UserSort::AnalyzeGammaPPAC(const word_t &de_word, const word_t &e_word, con
 
             }
 
-
             // Fill time spectra.
             labr_align_time->Fill(tdiff, i);
             energy_time_labr[i]->Fill(energy, tdiff);
@@ -838,7 +843,7 @@ void UserSort::AnalyzeGammaPPAC(const word_t &de_word, const word_t &e_word, con
 
             //Is this correct? Doesnt it loop through all events, and changes ppac_prompt between true and false?
             for (int n = 0 ; n < NUM_PPAC ; ++n){
-
+                //std::cout << "m: " << event.n_ppac[n] << std::endl;
                 //Number of PPAC
                 for (int m = 0 ; m < event.n_ppac[n] ; ++m){
                     //All events in ppacs
@@ -849,25 +854,29 @@ void UserSort::AnalyzeGammaPPAC(const word_t &de_word, const word_t &e_word, con
                     ppac_align_time_all->Fill(tdiff_ppac, n);
                     energy_time_ppac[n]->Fill(energy, tdiff_ppac); //if aligned, can use this for PFG/PFN separations
 
+
                     switch ( CheckTimeStatus(tdiff_ppac, ppac_time_cuts) ) {
-                        //tdiff_ppac: time diff between ppac and Labr3, definere fisjon
+//                        tdiff_ppac: time diff between ppac and Labr3, definere fisjon
                         case is_prompt : {
-                            //ede_all_fission->Fill(e_energy, de_energy);
+                            //std::cout << "true" << std::endl;
                             ppac_prompt = true;
                             break;
                         }
                         case is_background : {
-                            //ede_all_fission->Fill(e_energy, de_energy, -1);
+                            //std::cout << "false" << std::endl;
                             ppac_prompt = false;
                             break;
                         }
                         case ignore : {
+                            //std::cout << "ignore" << std::endl;
                             break;
                         }
                     }
-
+                //std::cout << "ppac_prompt " << ppac_prompt << std::endl;
                 }
+
             }
+            //std::cout << "---" << std::endl;
 
             // Check time gate.
             switch ( CheckTimeStatus(tdiff, labr_time_cuts) ) {
@@ -897,6 +906,7 @@ void UserSort::AnalyzeGammaPPAC(const word_t &de_word, const word_t &e_word, con
                     double y_lower_1 = 0.00826418*e_tot + 150.7061778;
                     double y_lower_2 = -1.15834790e+03+2.80987862e-01*e_tot - 1.42244814e-05*e_tot*e_tot;
 
+                    //Cut in energy_particle_time
                     if (tdiff_ede < y_upper && e_tot>6000 && tdiff_ede > 120 && GATING_EDE_TIME==1){
                         if(e_tot >= 9500 && tdiff_ede > y_lower_1){
                             exgam->Fill(energy, excitation);
@@ -924,13 +934,17 @@ void UserSort::AnalyzeGammaPPAC(const word_t &de_word, const word_t &e_word, con
                     }
 
                     else if(GATING_EDE_TIME==0){
-                        if (ppac_prompt)
+                        if (ppac_prompt){
                             //de, labr and ppac are prompt->Fission
+                            ede_all_fission->Fill(e_energy, de_energy);
                             exgam_ppac->Fill(energy, excitation);
-                        else
+                        }
+                        else{
                             //de, labr are prompt, but not ppac -> not fission
+                            ede_all_nofission->Fill(e_energy, de_energy);
                             exgam_veto_ppac->Fill(energy, excitation);
-                        break;
+                        }
+                            break;
 
                     }
 
@@ -993,9 +1007,11 @@ void UserSort::AnalyzeGammaPPAC(const word_t &de_word, const word_t &e_word, con
                 else if(GATING_EDE_TIME==0){
                     if (ppac_prompt){
                         exgam_ppac->Fill(energy, excitation, -1);
+                        ede_all_fission->Fill(e_energy, de_energy, -1);
                         exgam_ppac_bg->Fill(energy, excitation);
                     } else {
                         exgam_veto_ppac->Fill(energy, excitation, -1);
+                        ede_all_nofission->Fill(e_energy, de_energy, -1);
                         exgam_veto_ppac_bg->Fill(energy, excitation);
                     }
                     break;
