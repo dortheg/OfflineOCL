@@ -1,75 +1,268 @@
-# Importing the gain shit information.
-#Gain file /Applications/OfflineOCL/Mine/OfflineOCL/input_files/gain_shift_LaBr_Si.dat
-#Gain file /Applications/OfflineOCL/Mine/OfflineOCL/input_files/Calib_files_all_detectors/total_gain_shift_20180416_173844.dat
+#List of which files have the same total calibration files, so have taken Labr, EDE and time into account
 
-# Parameters for the range curve, 3He or alpha
-#rangefile zrange_he3.dat
-#rangefile zrange_a.dat
-#rangefile zrange_d.dat
-range /Applications/OfflineOCL/Mine/OfflineOCL/input_files/zrange_p.dat
+T:checked time alignment again, sorted the time files together, in stead of separatably
+P: checked total projection of time alignment
 
-## Cut of low-energy events by making a rectangle which is excluded
-## in the down, left corner of the banana. 
-## Contains E-minimum 1, DE-minimum 1, E-minimum 2, DE-minimum 2.
-## Including Z=1 particles:
-# parameter ede_rect  = 500 250 30 500
-## Excluding Z=1 particles:
-## parameter ede_rect  = 500 2500 2000 2500
+SILICONE
 
-# Thickness gate 
-# Format: lower cut, upper cut
-# for proton banana
-#parameter thick_range = 0 1000 #no gate
-parameter thick_range = 110 180
-#parameter thick_range = 140 240 ## Just for test purposes!
+Calib file: total_gain_shift_20180416_142401.dat ->Borrowed E-DE from 20180416-173844
+data file sirius-20180416-142401_A.data
 
-# for deuteron banana
-# parameter thick_range = XX YY
+Calib file: total_gain_shift_20180416_142401_big_000.dat ->Borrowed E-DE from 20180416-173844
+data file sirius-20180416-142401-big-000_A.data
 
-# Kinematics: Fit of qkinz
-# Give paramters in MeV^(-x), not keV
-parameter ex_from_ede    = 15.611276 -0.951006 -0.001883 \
-15.602686 -0.949805 -0.001919 \
-15.592661 -0.948448 -0.001959 \
-15.581054 -0.946920 -0.002006 \
-15.567690 -0.945205 -0.002058 \
-15.552354 -0.943281 -0.002117 \
-15.536693 -0.941493 -0.002167 \
-15.516632 -0.939080 -0.002243\
+Calib file: total_gain_shift_20180416_145040.dat ->Borrowed E-DE from 20180416-173844
+data file sirius-20180416-145040_A.data
+data file sirius-20180416-145040-big-001_A.data
+data file sirius-20180416-145040-big-002_A.data
+data file sirius-20180416-145040-big-003_A.data
 
-# labbr time gates, for making the exgam matrices 
-# found by looking at the m_nai_t plot and projecting it
-# down to the x-axis/m_nai_e_t_c x-axis plot 
-# remember to subtract the same amount of channels 
-# as the ones that are filled, and make sure you "hit" a top!
-# parameter = lower cut of prompt ,     higher gate of prompt peak,  \
-#             lower cut on backgr.,     higher cut backgr.
-parameter labr_time_cuts = -3 3 \
-                          -48 -42 
+PLUTONIUM
 
-#doublepeak time cuts
-#parameter labr_time_cuts = -10 -7 \
-#                          -20 -17 
+Calib file: total_gain_shift_20180416_173844.dat TP
+data file sirius-20180416-173844_A.data
 
-#parameter ede_time_cuts = 150 300 \
-#                          310 310.1                  
 
-################ Only when PPACs are used ##################################
-# PPAC time gates
-# time gates of the ppacs are found from the fission blob 
-# in the m_siri_e_t_ppac plot (fission blob in tPPAC vs E_SiRi gate)
-# - time gates from the y-axis, and energy from the x-axis
-# parameter = lower cut of prompt ,     higher gate of prompt peak,  \
-#             lower cut on backgr.,     higher cut backgr.
-parameter ppac_time_cuts = -5 5 \
-                           -275 -265
-############################################################################
+Calib file: total_gain_shift_20180416_205209.dat TP
+data file sirius-20180416-205209_A.data
+data file sirius-20180416-205209-big-000_A.data
+data file sirius-20180416-205209-big-001_A.data
+(double bump in labr_align_time for all files)
 
-# Now we will need to read files... There is a lot of the :O
-#data directory /Applications/OfflineOCL/Mine/OfflineOCL/data #on computer
-data directory /Volumes/240Pu_d_p/240Pu_exp_data
+Calib file: total_gain_shift_20180416_205209_big_002.dat TP
+data file sirius-20180416-205209-big-002_A.data
+data file sirius-20180416-205209-big-003_A.data
+data file sirius-20180416-205209-big-004_A.data
+data file sirius-20180416-205209-big-005_A.data
+data file sirius-20180416-205209-big-006_A.data
 
-#Pu240_d_pf_experiment
+Calib file: total_gain_shift_20180416_234302.dat TP
+#data file sirius-20180416-205209-big-006_B.data -> small, unsure if same
+data file sirius-20180416-234302_A.data
+data file sirius-20180416-234302-big-001_A.data
+data file sirius-20180416-234302-big-002_A.data
+data file sirius-20180416-234302-big-003_A.data
+data file sirius-20180416-234302-big-004_A.data
+data file sirius-20180416-234302-big-005_A.data
+data file sirius-20180416-234302-big-006_A.data
+data file sirius-20180416-234302-big-007_A.data
+
+Calib file: total_gain_shift_20180417_065649.dat TP
+#data file sirius-20180416-234302-big-007_B.data ->small, unsure if same
+data file sirius-20180417-065649_A.data
+data file sirius-20180417-065649-big-001_A.data
+data file sirius-20180417-065649-big-002_A.data
+data file sirius-20180417-065649-big-003_A.data
+data file sirius-20180417-065649-big-004_A.data
+data file sirius-20180417-065649-big-005_A.data
+
+Calib file: total_gain_shift_20180417_100438.dat TP
+data file sirius-20180417-100438_A.data
+data file sirius-20180417-100438-big-001_A.data
+data file sirius-20180417-100438-big-002_A.data
+data file sirius-20180417-100438-big-003_A.data
+
+Calib file: total_gain_shift_20180417_100438_big_003.dat TP 
+data file sirius-20180417-100438-big-003_B.data
+data file sirius-20180417-100438-big-004_A.data
+data file sirius-20180417-100438-big-005_A.data
+data file sirius-20180417-100438-big-006_A.data
+
+Calib file: total_gain_shift_20180417_100438_big_007.dat TP
+data file sirius-20180417-100438-big-006_B.data
+data file sirius-20180417-100438-big-007_A.data
+data file sirius-20180417-100438-big-008_A.data
+data file sirius-20180417-100438-big-009_A.data
+data file sirius-20180417-100438-big-010_A.data
+data file sirius-20180417-100438-big-011_A.data
+data file sirius-20180417-100438-big-012_A.data
+data file sirius-20180417-100438-big-013_A.data
+data file sirius-20180417-100438-big-014_A.data
+data file sirius-20180417-100438-big-015_A.data
+data file sirius-20180417-100438-big-016_A.data
+data file sirius-20180417-100438-big-017_A.data
+data file sirius-20180417-100438-big-018_A.data
+data file sirius-20180417-100438-big-019_A.data
+
+Calib file: total_gain_shift_20180417_100438_big_020.dat TP
+data file sirius-20180417-100438-big-020_A.data
+data file sirius-20180417-100438-big-021_A.data
+data file sirius-20180417-100438-big-022_A.data
+data file sirius-20180417-100438-big-023_A.data
+data file sirius-20180417-100438-big-024_A.data
+data file sirius-20180417-100438-big-025_A.data
+data file sirius-20180417-100438-big-026_A.data
+data file sirius-20180417-100438-big-027_A.data
+data file sirius-20180417-100438-big-028_A.data
+data file sirius-20180417-100438-big-029_A.data
+data file sirius-20180417-100438-big-030_A.data
+data file sirius-20180417-100438-big-031_A.data
+data file sirius-20180417-100438-big-032_A.data
+data file sirius-20180417-100438-big-033_A.data
+data file sirius-20180417-100438-big-034_A.data
+data file sirius-20180417-100438-big-035_A.data
+data file sirius-20180417-100438-big-036_A.data
+
+Calib file: total_gain_shift_20180417_155320.dat TP
+data file sirius-20180417-155320_A.data
+data file sirius-20180417-155320-big-000_A.data
+data file sirius-20180417-155320-big-001_A.data
+data file sirius-20180417-155320-big-002_A.data
+data file sirius-20180417-155320-big-003_A.data
+data file sirius-20180417-155320-big-004_A.data
+data file sirius-20180417-155320-big-005_A.data
+data file sirius-20180417-155320-big-006_A.data
+data file sirius-20180417-155320-big-007_A.data
+data file sirius-20180417-155320-big-008_A.data
+data file sirius-20180417-155320-big-009_A.data
+
+Calib file: total_gain_shift_20180417_192307.dat TP
+data file sirius-20180417-192307_A.data
+data file sirius-20180417-192307-big-000_A.data
+data file sirius-20180417-192307-big-001_A.data
+data file sirius-20180417-192307-big-002_A.data
+data file sirius-20180417-192307-big-003_A.data
+data file sirius-20180417-192307-big-004_A.data
+data file sirius-20180417-192307-big-005_A.data
+
+Calib file: total_gain_shift_20180417_201654.dat TP
+data file sirius-20180417-201654_A.data
+data file sirius-20180417-201654-big-000_A.data
+data file sirius-20180417-201654-big-001_A.data
+data file sirius-20180417-201654-big-002_A.data
+data file sirius-20180417-201654-big-003_A.data
+data file sirius-20180417-201654-big-004_A.data
+data file sirius-20180417-201654-big-005_A.data
+
+Calib file: total_gain_shift_20180417_211511.dat TP
+data file sirius-20180417-211511_A.data
+data file sirius-20180417-211511-big-000_A.data
+data file sirius-20180417-211511-big-001_A.data
+data file sirius-20180417-211511-big-002_A.data
+data file sirius-20180417-211511-big-003_A.data
+data file sirius-20180417-211511-big-004_A.data
+data file sirius-20180417-211511-big-005_A.data
+data file sirius-20180417-211511-big-006_A.data
+
+Calib file: total_gain_shift_20180417_224205.dat TP
+data file sirius-20180417-224205_A.data
+data file sirius-20180417-224205-big-000_A.data
+data file sirius-20180417-224205-big-001_A.data
+data file sirius-20180417-224205-big-002_A.data
+data file sirius-20180417-224205-big-003_A.data
+data file sirius-20180417-224205-big-004_A.data
+data file sirius-20180417-224205-big-005_A.data
+data file sirius-20180417-224205-big-006_A.data
+data file sirius-20180417-224205-big-007_A.data
+data file sirius-20180417-224205-big-008_A.data
+data file sirius-20180417-224205-big-009_A.data
+data file sirius-20180417-224205-big-010_A.data
+data file sirius-20180417-224205-big-011_A.data
+data file sirius-20180417-224205-big-012_A.data
+data file sirius-20180417-224205-big-013_A.data
+data file sirius-20180417-224205-big-014_A.data
+data file sirius-20180417-224205-big-015_A.data
+data file sirius-20180417-224205-big-016_A.data
+data file sirius-20180417-224205-big-017_A.data
+data file sirius-20180417-224205-big-018_A.data
+data file sirius-20180417-224205-big-019_A.data
+data file sirius-20180417-224205-big-020_A.data
+data file sirius-20180417-224205-big-021_A.data
+data file sirius-20180417-224205-big-022_A.data
+data file sirius-20180417-224205-big-023_A.data
+data file sirius-20180417-224205-big-024_A.data
+data file sirius-20180417-224205-big-025_A.data
+data file sirius-20180417-224205-big-026_A.data
+data file sirius-20180417-224205-big-027_A.data
+data file sirius-20180417-224205-big-028_A.data
+data file sirius-20180417-224205-big-029_A.data
+data file sirius-20180417-224205-big-030_A.data
+data file sirius-20180417-224205-big-031_A.data
+data file sirius-20180417-224205-big-032_A.data
+data file sirius-20180417-224205-big-033_A.data
+data file sirius-20180417-224205-big-034_A.data
+data file sirius-20180417-224205-big-035_A.data
+data file sirius-20180417-224205-big-036_A.data
+data file sirius-20180417-224205-big-037_A.data
+data file sirius-20180417-224205-big-038_A.data
+data file sirius-20180417-224205-big-039_A.data
+data file sirius-20180417-224205-big-040_A.data
+
+Calib file: total_gain_shift_20180418_062652.dat TP
+data file sirius-20180418-062652_A.data
+data file sirius-20180418-062652-big-000_A.data
+data file sirius-20180418-062652-big-001_A.data
+data file sirius-20180418-062652-big-002_A.data
+data file sirius-20180418-062652-big-003_A.data
+data file sirius-20180418-062652-big-004_A.data
+data file sirius-20180418-062652-big-005_A.data
+data file sirius-20180418-062652-big-006_A.data
+data file sirius-20180418-062652-big-007_A.data
+data file sirius-20180418-062652-big-008_A.data
+data file sirius-20180418-062652-big-009_A.data
+data file sirius-20180418-062652-big-010_A.data
+data file sirius-20180418-062652-big-011_A.data
+data file sirius-20180418-062652-big-012_A.data
+data file sirius-20180418-062652-big-013_A.data
+data file sirius-20180418-062652-big-014_A.data
+data file sirius-20180418-062652-big-015_A.data
+data file sirius-20180418-062652-big-016_A.data
+data file sirius-20180418-062652-big-017_A.data
+data file sirius-20180418-062652-big-018_A.data
+data file sirius-20180418-062652-big-019_A.data
+data file sirius-20180418-062652-big-020_A.data
+data file sirius-20180418-062652-big-021_A.data
+data file sirius-20180418-062652-big-022_A.data
+data file sirius-20180418-062652-big-023_A.data
+data file sirius-20180418-062652-big-024_A.data
+data file sirius-20180418-062652-big-025_A.data
+data file sirius-20180418-062652-big-026_A.data
+data file sirius-20180418-062652-big-027_A.data
+data file sirius-20180418-062652-big-028_A.data
+data file sirius-20180418-062652-big-029_A.data
+data file sirius-20180418-062652-big-030_A.data
+data file sirius-20180418-062652-big-031_A.data
+
+Calib file: total_gain_shift_20180418_113054.dat TP
+data file sirius-20180418-113054_A.data
+data file sirius-20180418-113054-big-000_A.data
+data file sirius-20180418-113054-big-001_A.data
+data file sirius-20180418-113054-big-002_A.data
+data file sirius-20180418-113054-big-003_A.data
+data file sirius-20180418-113054-big-004_A.data
+data file sirius-20180418-113054-big-005_A.data
+data file sirius-20180418-113054-big-006_A.data
+data file sirius-20180418-113054-big-007_A.data
+data file sirius-20180418-113054-big-008_A.data
+data file sirius-20180418-113054-big-009_A.data
+data file sirius-20180418-113054-big-010_A.data
+data file sirius-20180418-113054-big-011_A.data
+data file sirius-20180418-113054-big-012_A.data
+data file sirius-20180418-113054-big-013_A.data
+data file sirius-20180418-113054-big-014_A.data
+data file sirius-20180418-113054-big-015_A.data
+data file sirius-20180418-113054-big-016_A.data
+data file sirius-20180418-113054-big-017_A.data
+data file sirius-20180418-113054-big-018_A.data
+data file sirius-20180418-113054-big-019_A.data
+data file sirius-20180418-113054-big-020_A.data
+data file sirius-20180418-113054-big-021_A.data
+data file sirius-20180418-113054-big-022_A.data
+data file sirius-20180418-113054-big-023_A.data
+data file sirius-20180418-113054-big-024_A.data
+data file sirius-20180418-113054-big-025_A.data
+data file sirius-20180418-113054-big-026_A.data
+data file sirius-20180418-113054-big-027_A.data
+data file sirius-20180418-113054-big-028_A.data
+data file sirius-20180418-113054-big-029_A.data
+data file sirius-20180418-113054-big-030_A.data
+data file sirius-20180418-113054-big-031_A.data
+data file sirius-20180418-113054-big-032_A.data
+data file sirius-20180418-113054-big-033_A.data
+data file sirius-20180418-113054-big-034_A.data
+data file sirius-20180418-113054-big-035_A.data
+
+Data files as written in SortPu240_d_p.batch
 
 Gain file /Applications/OfflineOCL/Mine/OfflineOCL/input_files/Calib_files_all_detectors/total_gain_shift_20180416_173844.dat
 data file sirius-20180416-173844_A.data
@@ -310,4 +503,3 @@ data file sirius-20180418-113054-big-033_A.data
 data file sirius-20180418-113054-big-034_A.data
 data file sirius-20180418-113054-big-035_A.data
 
-export root  /Applications/OfflineOCL/Mine/OfflineOCL/output_files/Pu_all_25oct2018.root

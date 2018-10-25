@@ -842,6 +842,7 @@ void UserSort::AnalyzeGammaPPAC(const word_t &de_word, const word_t &e_word, con
             //bool labr_prompt = false;
 
             //Is this correct? Doesnt it loop through all events, and changes ppac_prompt between true and false?
+            //
             for (int n = 0 ; n < NUM_PPAC ; ++n){
                 //std::cout << "m: " << event.n_ppac[n] << std::endl;
                 //Number of PPAC
