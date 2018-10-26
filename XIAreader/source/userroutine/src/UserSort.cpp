@@ -108,7 +108,7 @@ double UserSort::CalibrateE(const word_t &w) const
     switch ( info.type ) {
 
     case labr : {
-        return gain_labr[info.detectorNum]*(w.adcdata + drand48() - 0.5) + shift_labr[info.detectorNum];
+        return 1.00740*gain_labr[info.detectorNum]*(w.adcdata + drand48() - 0.5) + shift_labr[info.detectorNum];
     }
     case deDet : {
         return gain_dE[info.detectorNum]*(w.adcdata + drand48() - 0.5) + shift_dE[info.detectorNum];
