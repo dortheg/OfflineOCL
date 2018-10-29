@@ -108,7 +108,7 @@ double UserSort::CalibrateE(const word_t &w) const
     switch ( info.type ) {
 
     case labr : {
-        return 1.00740*gain_labr[info.detectorNum]*(w.adcdata + drand48() - 0.5) + shift_labr[info.detectorNum];
+        return gain_labr[info.detectorNum]*(w.adcdata + drand48() - 0.5) + shift_labr[info.detectorNum];
     }
     case deDet : {
         return gain_dE[info.detectorNum]*(w.adcdata + drand48() - 0.5) + shift_dE[info.detectorNum];
@@ -402,6 +402,9 @@ void UserSort::CreateSpectra()
     sprintf(tmp, "energy_labr_all");
     energy_labr_all = Spec(tmp, tmp, 10000, 0, 10000, "Energy [keV]");
 
+    sprintf(tmp, "energy_labr_all_separate");
+    energy_labr_all_separate = Spec(tmp, tmp, 10000, 0, 10000, "Energy [keV]");
+
     // Time spectra (except those 'listed')
     sprintf(tmp, "de_align_time");
     sprintf(tmp2, "t_{dE} - t_{LaBr nr. 1}");
@@ -533,7 +536,9 @@ bool UserSort::Sort(const Event &event) //det som sorterer
             //Dorthea attempt at creating labr energy spectrum with all Labr
             energy_labr_all->Fill(energy);
         }
+
     }
+
 
     for ( i = 0 ; i < NUM_SI_DE_DET ; ++i ){
         for ( j = 0 ; j < event.n_dEdet[i] ; ++j ){
@@ -658,7 +663,6 @@ bool UserSort::Sort(const Event &event) //det som sorterer
 //                break;
 //            }
 //        }
-
 
 
         ede_all->Fill(e_energy, de_energy);

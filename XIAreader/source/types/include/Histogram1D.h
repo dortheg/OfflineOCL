@@ -34,7 +34,7 @@ public:
     ~Histogram1D();
 
     //! Add another histogram.
-    void Add(const Histogram1Dp other, data_t scale);
+    void Add(const Histogram1Dp other, data_t scale=1);
 
     //! Increment a histogram bin.
     void Fill(Axis::bin_t x,  /*!< The x axis value. */

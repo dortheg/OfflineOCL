@@ -80,7 +80,7 @@ private:
 
     // SINGLES histograms.
     Histogram1Dp energy_labr_raw[NUM_LABR_DETECTORS], energy_labr[NUM_LABR_DETECTORS];
-    Histogram1Dp energy_labr_all;
+    Histogram1Dp energy_labr_all, energy_labr_all_separate;
     Histogram1Dp energy_dE_raw[NUM_SI_DE_DET], energy_dE[NUM_SI_DE_DET];
     Histogram1Dp energy_E_raw[NUM_SI_E_DET], energy_E[NUM_SI_E_DET];
 
