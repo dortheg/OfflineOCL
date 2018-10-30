@@ -45,7 +45,7 @@
 //If gating on specified energies in ede
 const int GATING = 0;
 //If cut in energy_particle_time, as seen in book p 152-153
-const int GATING_EDE_TIME = 0;
+const int GATING_EDE_TIME = 1;
 
 static bool set_par(Parameters& parameters, std::istream& ipar,
                     const std::string& name, int size)
@@ -686,21 +686,21 @@ bool UserSort::Sort(const Event &event) //det som sorterer
 
             //Dorthea made
 
-            double y_upper = 0.0080361*e_tot + 175.7;
+            double y_upper = 0.0062125*e_tot + 205.926;
             //double y_lower = 0.01426418*e_tot + 37.7061778; //as in book page 150
-            double y_lower_1 = 0.00826418*e_tot + 150.7061778; //very tight
+            double y_lower_1 = 0.0058352*e_tot + 171.429633; //very tight
             double y_lower_2 = -1.15834790e+03+2.80987862e-01*e_tot - 1.42244814e-05*e_tot*e_tot;
 
 
-            if (tdiff_ede < y_upper && e_tot>6000 && tdiff_ede > 120 && GATING_EDE_TIME==1 ){
-                if(e_tot >= 9500 && tdiff_ede > y_lower_1){
+            if (tdiff_ede < y_upper && e_tot>4000 && tdiff_ede > 190 && GATING_EDE_TIME==1 ){
+                if(tdiff_ede > y_lower_1){
                     energy_particle_time_e_de_all_gate->Fill(e_tot, tdiff_ede);
                     ede_gate->Fill(e_energy, de_energy);
                 }
-                else if (e_tot < 9500 && tdiff_ede > y_lower_2){
-                    energy_particle_time_e_de_all_gate->Fill(e_tot, tdiff_ede);
-                    ede_gate->Fill(e_energy, de_energy);
-                }
+                //else if (e_tot < 9500 && tdiff_ede > y_lower_2){
+                //    energy_particle_time_e_de_all_gate->Fill(e_tot, tdiff_ede);
+                //    ede_gate->Fill(e_energy, de_energy);
+                //}
 
             }
 
@@ -718,6 +718,10 @@ bool UserSort::Sort(const Event &event) //det som sorterer
             ex += ex_from_ede[3*ring + 1]*(e_tot*1e-3); // Linear part.
             ex += ex_from_ede[3*ring + 2]*( e_tot*1e-3 )*( e_tot*1e-3 ); // Quadratic term.
             ex *= 1000; // Back to keV units!
+
+            //Here change ex to ex_new! In order to make the known peaks fit
+            //these param fits with the fission barrier in exgam_ppac!
+            ex = 1.10068736*ex + 1.79650904;
 
 
             h_ex[tel][ring]->Fill(ex);

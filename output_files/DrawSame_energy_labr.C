@@ -1,7 +1,7 @@
 
-void DrawSame(){
+void DrawSame_energy_labr(){
 
-	TFile *file = TFile::Open("bg.root");
+	TFile *file = TFile::Open("Pu_all_25oct2018_notimegate.root");
 
 	TH2 *energy_labr_01 = (TH2 *)file->Get("energy_labr_01");
 	TH2 *energy_labr_02 = (TH2 *)file->Get("energy_labr_02");
@@ -62,20 +62,20 @@ void DrawSame(){
 	energy_labr_20->SetLineColor(21);
 
 	energy_labr_21->SetLineColor(22);
-	energy_labr_22->SetLineColor(23);
-	energy_labr_23->SetLineColor(24);
-	energy_labr_24->SetLineColor(25);
-	energy_labr_25->SetLineColor(26);
-	energy_labr_26->SetLineColor(27);
-	energy_labr_27->SetLineColor(28);
-	energy_labr_28->SetLineColor(29);
-	energy_labr_29->SetLineColor(30);
-	energy_labr_30->SetLineColor(31);
+	energy_labr_22->SetLineColor(228);
+	energy_labr_23->SetLineColor(130);
+	energy_labr_24->SetLineColor(209);
+	energy_labr_25->SetLineColor(213);
+	energy_labr_26->SetLineColor(207);
+	energy_labr_27->SetLineColor(205);
+	energy_labr_28->SetLineColor(226);
+	energy_labr_29->SetLineColor(223);
+	energy_labr_30->SetLineColor(221);
 
-	energy_labr_31->SetLineColor(32);
-	energy_labr_32->SetLineColor(33);
+	energy_labr_31->SetLineColor(227);
+	energy_labr_32->SetLineColor(210);
 
-	int j = 0;
+	int j = 1;
 
 	energy_labr_01->Draw("apl");
 	energy_labr_02->Draw("pl same");

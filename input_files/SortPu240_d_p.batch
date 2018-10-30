@@ -19,8 +19,8 @@ range /Applications/OfflineOCL/Mine/OfflineOCL/input_files/zrange_p.dat
 # Thickness gate 
 # Format: lower cut, upper cut
 # for proton banana
-#parameter thick_range = 0 1000 #no gate
-parameter thick_range = 110 180
+parameter thick_range = 0 1000 #no gate
+#parameter thick_range = 110 180
 #parameter thick_range = 140 240 ## Just for test purposes!
 
 # for deuteron banana
@@ -44,7 +44,7 @@ parameter ex_from_ede    = 15.611276 -0.951006 -0.001883 \
 # as the ones that are filled, and make sure you "hit" a top!
 # parameter = lower cut of prompt ,     higher gate of prompt peak,  \
 #             lower cut on backgr.,     higher cut backgr.
-parameter labr_time_cuts = -3 -3 \
+parameter labr_time_cuts = -3 3 \
                           -48	-42
 
 #doublepeak time cuts
@@ -54,7 +54,7 @@ parameter labr_time_cuts = -3 -3 \
 #parameter ede_time_cuts = 150 300 \
 #                          310 310.1                  
 
-################ Only when PPACs are used ##################################
+################ Only when PPACs are used #################################
 # PPAC time gates
 # time gates of the ppacs are found from the fission blob 
 # in the m_siri_e_t_ppac plot (fission blob in tPPAC vs E_SiRi gate)
@@ -75,4 +75,4 @@ Gain file /Applications/OfflineOCL/Mine/OfflineOCL/input_files/Calib_files_all_d
 data file sirius-20180416-173844_A.data
 
 
-export root  /Applications/OfflineOCL/Mine/OfflineOCL/output_files/bg.root
+export root  /Applications/OfflineOCL/Mine/OfflineOCL/output_files/Pu_ede_time_gate.root
