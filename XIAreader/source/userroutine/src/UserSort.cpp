@@ -685,23 +685,12 @@ bool UserSort::Sort(const Event &event) //det som sorterer
             h_ede_all->Fill( e_tot );
 
             //Dorthea made
-
             double y_upper = 0.0062125*e_tot + 205.926;
-            //double y_lower = 0.01426418*e_tot + 37.7061778; //as in book page 150
-            double y_lower_1 = 0.0058352*e_tot + 171.429633; //very tight
-            double y_lower_2 = -1.15834790e+03+2.80987862e-01*e_tot - 1.42244814e-05*e_tot*e_tot;
+            double y_lower = 0.0058352*e_tot + 60;
 
-
-            if (tdiff_ede < y_upper && e_tot>4000 && tdiff_ede > 190 && GATING_EDE_TIME==1 ){
-                if(tdiff_ede > y_lower_1){
-                    energy_particle_time_e_de_all_gate->Fill(e_tot, tdiff_ede);
-                    ede_gate->Fill(e_energy, de_energy);
-                }
-                //else if (e_tot < 9500 && tdiff_ede > y_lower_2){
-                //    energy_particle_time_e_de_all_gate->Fill(e_tot, tdiff_ede);
-                //    ede_gate->Fill(e_energy, de_energy);
-                //}
-
+            if (e_tot>4000 && tdiff_ede < y_upper && tdiff_ede > y_lower && GATING_EDE_TIME==1 ){
+                 energy_particle_time_e_de_all_gate->Fill(e_tot, tdiff_ede);
+                 ede_gate->Fill(e_energy, de_energy);
             }
 
             else if(GATING_EDE_TIME==0){
@@ -721,7 +710,7 @@ bool UserSort::Sort(const Event &event) //det som sorterer
 
             //Here change ex to ex_new! In order to make the known peaks fit
             //these param fits with the fission barrier in exgam_ppac!
-            ex = 1.10068736*ex + 1.79650904;
+            //ex = 1.10068736*ex + 1.79650904;
 
 
             h_ex[tel][ring]->Fill(ex);
@@ -911,34 +900,21 @@ void UserSort::AnalyzeGammaPPAC(const word_t &de_word, const word_t &e_word, con
                     double e_tot = e_energy + de_energy;
                     double tdiff_ede = CalcTimediff(e_word, de_word);
                     //Cuts in energy_particle_time -> Get rid of background
-                    double y_upper = 0.0080361*e_tot + 175.7;
-                    double y_lower_1 = 0.00826418*e_tot + 150.7061778;
-                    double y_lower_2 = -1.15834790e+03+2.80987862e-01*e_tot - 1.42244814e-05*e_tot*e_tot;
+                    double y_upper = 0.0062125*e_tot + 205.926;
+                    double y_lower = 0.0058352*e_tot + 60;
 
                     //Cut in energy_particle_time
-                    if (tdiff_ede < y_upper && e_tot>6000 && tdiff_ede > 120 && GATING_EDE_TIME==1){
-                        if(e_tot >= 9500 && tdiff_ede > y_lower_1){
-                            exgam->Fill(energy, excitation);
-                            if (ppac_prompt)
-                                //de, labr and ppac are prompt->Fission
-                                exgam_ppac->Fill(energy, excitation);
-                            else
-                                //de, labr are prompt, but not ppac -> not fission
-                                exgam_veto_ppac->Fill(energy, excitation);
-                            break;
-
+                    if (tdiff_ede < y_upper && e_tot>4000 && tdiff_ede > y_lower && GATING_EDE_TIME==1){
+                        exgam->Fill(energy, excitation);
+                        if (ppac_prompt){
+                            //de, labr and ppac are prompt->Fission
+                            exgam_ppac->Fill(energy, excitation);
                         }
-                        else if (e_tot < 9500 && tdiff_ede > y_lower_2){
-                            exgam->Fill(energy, excitation);
-                            if (ppac_prompt)
-                                //de, labr and ppac are prompt->Fission
-                                exgam_ppac->Fill(energy, excitation);
-                            else
-                                //de, labr are prompt, but not ppac -> not fission
-                                exgam_veto_ppac->Fill(energy, excitation);
-                            break;
-
+                        else{
+                            //de, labr are prompt, but not ppac -> not fission
+                            exgam_veto_ppac->Fill(energy, excitation);
                         }
+                        break;
 
                     }
 
@@ -953,7 +929,7 @@ void UserSort::AnalyzeGammaPPAC(const word_t &de_word, const word_t &e_word, con
                             ede_all_nofission->Fill(e_energy, de_energy);
                             exgam_veto_ppac->Fill(energy, excitation);
                         }
-                            break;
+                        break;
 
                     }
 
@@ -979,38 +955,20 @@ void UserSort::AnalyzeGammaPPAC(const word_t &de_word, const word_t &e_word, con
                 double e_tot = e_energy + de_energy;
                 double tdiff_ede = CalcTimediff(e_word, de_word);
                 //Cuts in energy_particle_time -> Get rid of background
-                double y_upper = 0.0080361*e_tot + 175.7;
-                double y_lower_1 = 0.00826418*e_tot + 150.7061778;
-                double y_lower_2 = -1.15834790e+03+2.80987862e-01*e_tot - 1.42244814e-05*e_tot*e_tot;
+                double y_upper = 0.0062125*e_tot + 205.926;
+                double y_lower = 0.0058352*e_tot + 60;
 
-                if (tdiff_ede < y_upper && e_tot>6000 && tdiff_ede > 120 && GATING_EDE_TIME==1){
-                    if(e_tot >= 9500 && tdiff_ede > y_lower_1){
-                        exgam->Fill(energy, excitation, -1);
-                        exgam_bg->Fill(energy, excitation);
-                        if (ppac_prompt){
-                            exgam_ppac->Fill(energy, excitation, -1);
-                            exgam_ppac_bg->Fill(energy, excitation);
-                        } else {
-                            exgam_veto_ppac->Fill(energy, excitation, -1);
-                            exgam_veto_ppac_bg->Fill(energy, excitation);
-                        }
-                        break;
-
+                if (tdiff_ede < y_upper && e_tot>4000 && tdiff_ede > y_lower && GATING_EDE_TIME==1){
+                    exgam->Fill(energy, excitation, -1);
+                    exgam_bg->Fill(energy, excitation);
+                    if (ppac_prompt){
+                        exgam_ppac->Fill(energy, excitation, -1);
+                        exgam_ppac_bg->Fill(energy, excitation);
+                    } else {
+                        exgam_veto_ppac->Fill(energy, excitation, -1);
+                        exgam_veto_ppac_bg->Fill(energy, excitation);
                     }
-                    else if (e_tot < 9500 && tdiff_ede > y_lower_2){
-                        exgam->Fill(energy, excitation, -1);
-                        exgam_bg->Fill(energy, excitation);
-                        if (ppac_prompt){
-                            exgam_ppac->Fill(energy, excitation, -1);
-                            exgam_ppac_bg->Fill(energy, excitation);
-                        } else {
-                            exgam_veto_ppac->Fill(energy, excitation, -1);
-                            exgam_veto_ppac_bg->Fill(energy, excitation);
-                        }
-                        break;
-
-                    }
-
+                    break;
                 }
 
                 else if(GATING_EDE_TIME==0){

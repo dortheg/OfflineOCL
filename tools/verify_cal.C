@@ -30,6 +30,7 @@ void verify_cal(){
 }
 
 void draw_ede_f0(){
+    h_ede_b0_f0 = ede_b0_f0->ProjectionX();
     ede_b0_f0->SetLineColor(1);
     ede_b1_f0->SetLineColor(85);
     ede_b2_f0->SetLineColor(28);
