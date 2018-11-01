@@ -137,8 +137,109 @@ double UserSort::CalibrateOnlyE(const word_t &w, const word_t &de_strip) const
         std::cout << "CalibrateE: Type Error" << std::endl;
         return w.adcdata;
     }
-    return gain_E[info_de.detectorNum]*(w.adcdata + drand48() - 0.5) + shift_E[info_de.detectorNum];
+    //change b1f1
+//    if(info_de.detectorNum==9){
+//        return 1.04783577*(gain_E[info_de.detectorNum]*(w.adcdata + drand48() - 0.5) + shift_E[info_de.detectorNum]) - 648.80515;
+//    }
+    if(info_de.detectorNum==0){
+        return 1.00852659251*(gain_E[info_de.detectorNum]*(w.adcdata + drand48() - 0.5) + shift_E[info_de.detectorNum]) - 126.310420215;
+    }
 
+    if(info_de.detectorNum==1){
+        return 1.01054405216*(gain_E[info_de.detectorNum]*(w.adcdata + drand48() - 0.5) + shift_E[info_de.detectorNum]) - 158.366926658;
+    }
+
+    if(info_de.detectorNum==2){
+        return 1.00801130021*(gain_E[info_de.detectorNum]*(w.adcdata + drand48() - 0.5) + shift_E[info_de.detectorNum]) -128.664260047;
+    }
+
+    if(info_de.detectorNum==8){
+        return 1.00178957408*(gain_E[info_de.detectorNum]*(w.adcdata + drand48() - 0.5) + shift_E[info_de.detectorNum]) - 29.2556309974;
+    }
+
+    if(info_de.detectorNum==9){
+        return 1.0321774536*(gain_E[info_de.detectorNum]*(w.adcdata + drand48() - 0.5) + shift_E[info_de.detectorNum]) - 403.996969179;
+    }
+
+    if(info_de.detectorNum==10){
+        return 1.00193207639*(gain_E[info_de.detectorNum]*(w.adcdata + drand48() - 0.5) + shift_E[info_de.detectorNum]) -54.8228538909;
+    }
+
+    if(info_de.detectorNum==16){
+        return 0.996832946174*(gain_E[info_de.detectorNum]*(w.adcdata + drand48() - 0.5) + shift_E[info_de.detectorNum]) + 31.68451201;
+    }
+
+    if(info_de.detectorNum==17){
+        return 0.998898923042*(gain_E[info_de.detectorNum]*(w.adcdata + drand48() - 0.5) + shift_E[info_de.detectorNum]) - 12.6530158614;
+    }
+
+    if(info_de.detectorNum==18){
+        return 0.995652174499*(gain_E[info_de.detectorNum]*(w.adcdata + drand48() - 0.5) + shift_E[info_de.detectorNum]) + 27.1425106722;
+    }
+
+    if(info_de.detectorNum==24){
+        return 1.00403364728*(gain_E[info_de.detectorNum]*(w.adcdata + drand48() - 0.5) + shift_E[info_de.detectorNum]) - 53.4903885192;
+    }
+
+    if(info_de.detectorNum==25){
+        return 0.990438093594*(gain_E[info_de.detectorNum]*(w.adcdata + drand48() - 0.5) + shift_E[info_de.detectorNum]) + 74.3410216251;
+    }
+
+    if(info_de.detectorNum==26){
+        return 0.987759178021*(gain_E[info_de.detectorNum]*(w.adcdata + drand48() - 0.5) + shift_E[info_de.detectorNum]) + 126.427018636;
+    }
+
+    if(info_de.detectorNum==32){
+        return 0.986040657504*(gain_E[info_de.detectorNum]*(w.adcdata + drand48() - 0.5) + shift_E[info_de.detectorNum]) + 150.77083862;
+    }
+
+    if(info_de.detectorNum==33){
+        return 0.993448618731*(gain_E[info_de.detectorNum]*(w.adcdata + drand48() - 0.5) + shift_E[info_de.detectorNum]) + 42.0272218719;
+    }
+
+    if(info_de.detectorNum==34){
+        return 1.01333994917*(gain_E[info_de.detectorNum]*(w.adcdata + drand48() - 0.5) + shift_E[info_de.detectorNum]) -175.290543003;
+    }
+
+    if(info_de.detectorNum==40){
+        return 0.991999125656*(gain_E[info_de.detectorNum]*(w.adcdata + drand48() - 0.5) + shift_E[info_de.detectorNum]) + 54.0064952741;
+    }
+
+    if(info_de.detectorNum==41){
+        return 0.993399118314*(gain_E[info_de.detectorNum]*(w.adcdata + drand48() - 0.5) + shift_E[info_de.detectorNum]) + 30.0596248577;
+    }
+
+    if(info_de.detectorNum==42){
+        return 0.99431139601*(gain_E[info_de.detectorNum]*(w.adcdata + drand48() - 0.5) + shift_E[info_de.detectorNum]) + 9.89494971722;
+    }
+
+    if(info_de.detectorNum==48){
+        return 0.995241276383*(gain_E[info_de.detectorNum]*(w.adcdata + drand48() - 0.5) + shift_E[info_de.detectorNum]) + 39.1397838828;
+    }
+
+    if(info_de.detectorNum==49){
+        return 1.00944399408*(gain_E[info_de.detectorNum]*(w.adcdata + drand48() - 0.5) + shift_E[info_de.detectorNum]) -137.165520061;
+    }
+
+    if(info_de.detectorNum==50){
+        return 1.00887849447*(gain_E[info_de.detectorNum]*(w.adcdata + drand48() - 0.5) + shift_E[info_de.detectorNum]) -129.318208685;
+    }
+
+    if(info_de.detectorNum==56){
+        return 0.996359888104*(gain_E[info_de.detectorNum]*(w.adcdata + drand48() - 0.5) + shift_E[info_de.detectorNum]) + 33.9283061123;
+    }
+
+    if(info_de.detectorNum==57){
+        return 1.00087972113*(gain_E[info_de.detectorNum]*(w.adcdata + drand48() - 0.5) + shift_E[info_de.detectorNum]) - 35.2200002207;
+    }
+
+    if(info_de.detectorNum==58){
+        return 0.999245325548*(gain_E[info_de.detectorNum]*(w.adcdata + drand48() - 0.5) + shift_E[info_de.detectorNum]) -7.20824790206;
+    }
+
+    else{
+        return gain_E[info_de.detectorNum]*(w.adcdata + drand48() - 0.5) + shift_E[info_de.detectorNum];
+    }
 }
 
 
@@ -553,6 +654,7 @@ bool UserSort::Sort(const Event &event) //det som sorterer
     for ( i = 0 ; i < NUM_SI_E_DET ; ++i ){
         for ( j = 0 ; j < event.n_Edet[i] ; ++j ){
             energy_E_raw[i]->Fill(event.w_Edet[i][j].adcdata);
+            //singles spectra doesn't use correct calibration
             energy = CalibrateE(event.w_Edet[i][j]);
             energy_E[i]->Fill(energy);
             if (event.w_Edet[i][j].cfdfail > 0) // For 'statistical' purposes!
