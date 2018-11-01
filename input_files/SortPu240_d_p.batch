@@ -20,9 +20,9 @@ range /Applications/OfflineOCL/Mine/OfflineOCL/input_files/zrange_p.dat
 # Format: lower cut, upper cut
 # for proton banana
 #parameter thick_range = 0 1000 #no gate
-#parameter thick_range = 110 180 #protons
+parameter thick_range = 110 180 #protons
 
-parameter thick_range = 200 250 #deuterons
+#parameter thick_range = 200 250 #deuterons
 
 # for deuteron banana
 # parameter thick_range = XX YY
@@ -311,4 +311,4 @@ data file sirius-20180418-113054-big-033_A.data
 data file sirius-20180418-113054-big-034_A.data
 data file sirius-20180418-113054-big-035_A.data
 
-export root  /Applications/OfflineOCL/Mine/OfflineOCL/output_files/Pu_all_ring0_correction.root
+export root  /Applications/OfflineOCL/Mine/OfflineOCL/output_files/Pu_all_allringscorrected_protongate_no_ex_corr.root

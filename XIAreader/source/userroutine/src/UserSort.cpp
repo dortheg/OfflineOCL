@@ -153,6 +153,26 @@ double UserSort::CalibrateOnlyE(const word_t &w, const word_t &de_strip) const
         return 1.00801130021*(gain_E[info_de.detectorNum]*(w.adcdata + drand48() - 0.5) + shift_E[info_de.detectorNum]) -128.664260047;
     }
 
+    if(info_de.detectorNum==3){
+        return 1.00758122521*(gain_E[info_de.detectorNum]*(w.adcdata + drand48() - 0.5) + shift_E[info_de.detectorNum]) -125.873456448;
+    }
+
+    if(info_de.detectorNum==4){
+        return 1.00229000251*(gain_E[info_de.detectorNum]*(w.adcdata + drand48() - 0.5) + shift_E[info_de.detectorNum]) -55.5632838676;
+    }
+
+    if(info_de.detectorNum==5){
+        return 0.997998582917*(gain_E[info_de.detectorNum]*(w.adcdata + drand48() - 0.5) + shift_E[info_de.detectorNum]) -30.4900005565;
+    }
+
+    if(info_de.detectorNum==6){
+        return 1.00839105694*(gain_E[info_de.detectorNum]*(w.adcdata + drand48() - 0.5) + shift_E[info_de.detectorNum]) -152.122119317;
+    }
+
+    if(info_de.detectorNum==7){
+        return 1.01503221179*(gain_E[info_de.detectorNum]*(w.adcdata + drand48() - 0.5) + shift_E[info_de.detectorNum]) -235.394487516;
+    }
+
     if(info_de.detectorNum==8){
         return 1.00178957408*(gain_E[info_de.detectorNum]*(w.adcdata + drand48() - 0.5) + shift_E[info_de.detectorNum]) - 29.2556309974;
     }
@@ -163,6 +183,26 @@ double UserSort::CalibrateOnlyE(const word_t &w, const word_t &de_strip) const
 
     if(info_de.detectorNum==10){
         return 1.00193207639*(gain_E[info_de.detectorNum]*(w.adcdata + drand48() - 0.5) + shift_E[info_de.detectorNum]) -54.8228538909;
+    }
+
+    if(info_de.detectorNum==11){
+        return 1.00809055478*(gain_E[info_de.detectorNum]*(w.adcdata + drand48() - 0.5) + shift_E[info_de.detectorNum]) -120.242054039;
+    }
+
+    if(info_de.detectorNum==12){
+        return 1.00375191173*(gain_E[info_de.detectorNum]*(w.adcdata + drand48() - 0.5) + shift_E[info_de.detectorNum]) -82.0253833215;
+    }
+
+    if(info_de.detectorNum==13){
+        return 0.987809637357*(gain_E[info_de.detectorNum]*(w.adcdata + drand48() - 0.5) + shift_E[info_de.detectorNum]) + 92.6423012963;
+    }
+
+    if(info_de.detectorNum==14){
+        return 0.99559803607*(gain_E[info_de.detectorNum]*(w.adcdata + drand48() - 0.5) + shift_E[info_de.detectorNum]) + 43.6162924804;
+    }
+
+    if(info_de.detectorNum==15){
+        return 0.998454893818*(gain_E[info_de.detectorNum]*(w.adcdata + drand48() - 0.5) + shift_E[info_de.detectorNum]) -18.1451041661;
     }
 
     if(info_de.detectorNum==16){
@@ -177,6 +217,26 @@ double UserSort::CalibrateOnlyE(const word_t &w, const word_t &de_strip) const
         return 0.995652174499*(gain_E[info_de.detectorNum]*(w.adcdata + drand48() - 0.5) + shift_E[info_de.detectorNum]) + 27.1425106722;
     }
 
+    if(info_de.detectorNum==19){
+        return 0.999551482345*(gain_E[info_de.detectorNum]*(w.adcdata + drand48() - 0.5) + shift_E[info_de.detectorNum]) -4.3686676003;
+    }
+
+    if(info_de.detectorNum==20){
+        return 0.99897872031*(gain_E[info_de.detectorNum]*(w.adcdata + drand48() - 0.5) + shift_E[info_de.detectorNum]) -12.8217950663;
+    }
+
+    if(info_de.detectorNum==21){
+        return 0.981477213244*(gain_E[info_de.detectorNum]*(w.adcdata + drand48() - 0.5) + shift_E[info_de.detectorNum]) + 184.068164129;
+    }
+
+    if(info_de.detectorNum==22){
+        return 1.00933198119*(gain_E[info_de.detectorNum]*(w.adcdata + drand48() - 0.5) + shift_E[info_de.detectorNum]) -121.398336087;
+    }
+
+    if(info_de.detectorNum==23){
+        return 0.993458785702*(gain_E[info_de.detectorNum]*(w.adcdata + drand48() - 0.5) + shift_E[info_de.detectorNum]) + 48.4303638799;
+    }
+
     if(info_de.detectorNum==24){
         return 1.00403364728*(gain_E[info_de.detectorNum]*(w.adcdata + drand48() - 0.5) + shift_E[info_de.detectorNum]) - 53.4903885192;
     }
@@ -187,6 +247,26 @@ double UserSort::CalibrateOnlyE(const word_t &w, const word_t &de_strip) const
 
     if(info_de.detectorNum==26){
         return 0.987759178021*(gain_E[info_de.detectorNum]*(w.adcdata + drand48() - 0.5) + shift_E[info_de.detectorNum]) + 126.427018636;
+    }
+
+    if(info_de.detectorNum==27){
+        return 0.995683828449*(gain_E[info_de.detectorNum]*(w.adcdata + drand48() - 0.5) + shift_E[info_de.detectorNum]) + 13.2894955223 ;
+    }
+
+    if(info_de.detectorNum==28){
+        return 1.00413068604*(gain_E[info_de.detectorNum]*(w.adcdata + drand48() - 0.5) + shift_E[info_de.detectorNum]) -72.4761800398 ;
+    }
+
+    if(info_de.detectorNum==29){
+        return 1.00358799658 *(gain_E[info_de.detectorNum]*(w.adcdata + drand48() - 0.5) + shift_E[info_de.detectorNum]) -75.6579320917;
+    }
+
+    if(info_de.detectorNum==30){
+        return 0.992315003843 *(gain_E[info_de.detectorNum]*(w.adcdata + drand48() - 0.5) + shift_E[info_de.detectorNum]) + 68.1170954517;
+    }
+
+    if(info_de.detectorNum==31){
+        return 0.981472706182*(gain_E[info_de.detectorNum]*(w.adcdata + drand48() - 0.5) + shift_E[info_de.detectorNum]) + 175.58645599;
     }
 
     if(info_de.detectorNum==32){
@@ -201,6 +281,26 @@ double UserSort::CalibrateOnlyE(const word_t &w, const word_t &de_strip) const
         return 1.01333994917*(gain_E[info_de.detectorNum]*(w.adcdata + drand48() - 0.5) + shift_E[info_de.detectorNum]) -175.290543003;
     }
 
+    if(info_de.detectorNum==35){
+        return 0.997327035407*(gain_E[info_de.detectorNum]*(w.adcdata + drand48() - 0.5) + shift_E[info_de.detectorNum]) + 5.91402582213;
+    }
+
+    if(info_de.detectorNum==36){
+        return 0.993533000697*(gain_E[info_de.detectorNum]*(w.adcdata + drand48() - 0.5) + shift_E[info_de.detectorNum]) + 50.5610921715;
+    }
+
+    if(info_de.detectorNum==37){
+        return 0.981814822113*(gain_E[info_de.detectorNum]*(w.adcdata + drand48() - 0.5) + shift_E[info_de.detectorNum]) + 186.315211596;
+    }
+
+    if(info_de.detectorNum==38){
+        return 0.992955095889*(gain_E[info_de.detectorNum]*(w.adcdata + drand48() - 0.5) + shift_E[info_de.detectorNum]) + 65.9950278342;
+    }
+
+    if(info_de.detectorNum==39){
+        return 1.00768707053*(gain_E[info_de.detectorNum]*(w.adcdata + drand48() - 0.5) + shift_E[info_de.detectorNum]) -94.8285222686;
+    }
+
     if(info_de.detectorNum==40){
         return 0.991999125656*(gain_E[info_de.detectorNum]*(w.adcdata + drand48() - 0.5) + shift_E[info_de.detectorNum]) + 54.0064952741;
     }
@@ -211,6 +311,26 @@ double UserSort::CalibrateOnlyE(const word_t &w, const word_t &de_strip) const
 
     if(info_de.detectorNum==42){
         return 0.99431139601*(gain_E[info_de.detectorNum]*(w.adcdata + drand48() - 0.5) + shift_E[info_de.detectorNum]) + 9.89494971722;
+    }
+
+    if(info_de.detectorNum==43){
+        return 0.990958851152*(gain_E[info_de.detectorNum]*(w.adcdata + drand48() - 0.5) + shift_E[info_de.detectorNum]) + 50.2971578498;
+    }
+
+    if(info_de.detectorNum==44){
+        return 0.994201179914*(gain_E[info_de.detectorNum]*(w.adcdata + drand48() - 0.5) + shift_E[info_de.detectorNum]) +29.2330367709;
+    }
+
+    if(info_de.detectorNum==45){
+        return 0.991190952747*(gain_E[info_de.detectorNum]*(w.adcdata + drand48() - 0.5) + shift_E[info_de.detectorNum]) +54.1993695047 ;
+    }
+
+    if(info_de.detectorNum==46){
+        return 0.989983205946*(gain_E[info_de.detectorNum]*(w.adcdata + drand48() - 0.5) + shift_E[info_de.detectorNum]) +85.8159667554;
+    }
+
+    if(info_de.detectorNum==47){
+        return 0.988122741765*(gain_E[info_de.detectorNum]*(w.adcdata + drand48() - 0.5) + shift_E[info_de.detectorNum]) +84.4621694597;
     }
 
     if(info_de.detectorNum==48){
@@ -225,6 +345,26 @@ double UserSort::CalibrateOnlyE(const word_t &w, const word_t &de_strip) const
         return 1.00887849447*(gain_E[info_de.detectorNum]*(w.adcdata + drand48() - 0.5) + shift_E[info_de.detectorNum]) -129.318208685;
     }
 
+    if(info_de.detectorNum==51){
+        return 1.00022827766*(gain_E[info_de.detectorNum]*(w.adcdata + drand48() - 0.5) + shift_E[info_de.detectorNum]) -27.8703999905;
+    }
+
+    if(info_de.detectorNum==52){
+        return 0.991952750385*(gain_E[info_de.detectorNum]*(w.adcdata + drand48() - 0.5) + shift_E[info_de.detectorNum]) + 57.3709240994;
+    }
+
+    if(info_de.detectorNum==53){
+        return 0.98971797548*(gain_E[info_de.detectorNum]*(w.adcdata + drand48() - 0.5) + shift_E[info_de.detectorNum]) + 77.4867227562;
+    }
+
+    if(info_de.detectorNum==54){
+        return 1.01144910412*(gain_E[info_de.detectorNum]*(w.adcdata + drand48() - 0.5) + shift_E[info_de.detectorNum]) -162.844397235;
+    }
+
+    if(info_de.detectorNum==55){
+        return 1.0159836277*(gain_E[info_de.detectorNum]*(w.adcdata + drand48() - 0.5) + shift_E[info_de.detectorNum]) -203.498124961;
+    }
+
     if(info_de.detectorNum==56){
         return 0.996359888104*(gain_E[info_de.detectorNum]*(w.adcdata + drand48() - 0.5) + shift_E[info_de.detectorNum]) + 33.9283061123;
     }
@@ -235,6 +375,26 @@ double UserSort::CalibrateOnlyE(const word_t &w, const word_t &de_strip) const
 
     if(info_de.detectorNum==58){
         return 0.999245325548*(gain_E[info_de.detectorNum]*(w.adcdata + drand48() - 0.5) + shift_E[info_de.detectorNum]) -7.20824790206;
+    }
+
+    if(info_de.detectorNum==59){
+        return 0.999977505892*(gain_E[info_de.detectorNum]*(w.adcdata + drand48() - 0.5) + shift_E[info_de.detectorNum]) -12.3884230434;
+    }
+
+    if(info_de.detectorNum==60){
+        return 0.998104395349*(gain_E[info_de.detectorNum]*(w.adcdata + drand48() - 0.5) + shift_E[info_de.detectorNum]) + 1.26761444883;
+    }
+
+    if(info_de.detectorNum==61){
+        return 1.01402956987*(gain_E[info_de.detectorNum]*(w.adcdata + drand48() - 0.5) + shift_E[info_de.detectorNum]) -161.2242491;
+    }
+
+    if(info_de.detectorNum==62){
+        return 1.00275702277*(gain_E[info_de.detectorNum]*(w.adcdata + drand48() - 0.5) + shift_E[info_de.detectorNum]) -32.2508546044;
+    }
+
+    if(info_de.detectorNum==63){
+        return 1.00872623673*(gain_E[info_de.detectorNum]*(w.adcdata + drand48() - 0.5) + shift_E[info_de.detectorNum]) -111.761651903;
     }
 
     else{

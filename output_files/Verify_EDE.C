@@ -1,5 +1,5 @@
 void Verify_EDE(){
-	TFile *file = TFile::Open("Pu_all_ring0_correction.root");
+	TFile *file = TFile::Open("Pu_all_allringscorrected_correction.root");
 
 	TH2 *ede_b0_f0 = (TH2 *)file->Get("ede_b0_f0");
 	TH2 *ede_b0_f1 = (TH2 *)file->Get("ede_b0_f1");
@@ -247,14 +247,14 @@ void Verify_EDE(){
 	hx_ede_b6_f7->SetLineColor(7);
 	hx_ede_b7_f7->SetLineColor(8);
 
-	hx_ede_b0_f0->Draw();
-	hx_ede_b1_f0->Draw("same");
-	hx_ede_b2_f0->Draw("same");
-	hx_ede_b3_f0->Draw("same");
-	hx_ede_b4_f0->Draw("same");
-	hx_ede_b5_f0->Draw("same");
-	hx_ede_b6_f0->Draw("same");
-	hx_ede_b7_f0->Draw("same");
+	// hx_ede_b0_f0->Draw();
+	// hx_ede_b1_f0->Draw("same");
+	// hx_ede_b2_f0->Draw("same");
+	// hx_ede_b3_f0->Draw("same");
+	// hx_ede_b4_f0->Draw("same");
+	// hx_ede_b5_f0->Draw("same");
+	// hx_ede_b6_f0->Draw("same");
+	// hx_ede_b7_f0->Draw("same");
 
 	//  hx_ede_b0_f1->Draw("same");
 	// hx_ede_b1_f1->Draw("same");
@@ -274,7 +274,7 @@ void Verify_EDE(){
 	// hx_ede_b6_f2->Draw("same");
 	// hx_ede_b7_f2->Draw("same");
 
-	//hx_ede_b0_f3->Draw("same");
+	// hx_ede_b0_f3->Draw("same");
 	// hx_ede_b1_f3->Draw("same");
 	// hx_ede_b2_f3->Draw("same");
 	// hx_ede_b3_f3->Draw("same");
@@ -283,7 +283,7 @@ void Verify_EDE(){
 	// hx_ede_b6_f3->Draw("same");
 	// hx_ede_b7_f3->Draw("same");
 
-	//hx_ede_b0_f4->Draw("same");
+	// hx_ede_b0_f4->Draw("same");
 	// hx_ede_b1_f4->Draw("same");
 	// hx_ede_b2_f4->Draw("same");
 	// hx_ede_b3_f4->Draw("same");
@@ -292,7 +292,7 @@ void Verify_EDE(){
 	// hx_ede_b6_f4->Draw("same");
 	// hx_ede_b7_f4->Draw("same");
 
-	//hx_ede_b0_f5->Draw("same");
+	// hx_ede_b0_f5->Draw("same");
 	// hx_ede_b1_f5->Draw("same");
 	// hx_ede_b2_f5->Draw("same");
 	// hx_ede_b3_f5->Draw("same");
@@ -301,23 +301,23 @@ void Verify_EDE(){
 	// hx_ede_b6_f5->Draw("same");
 	// hx_ede_b7_f5->Draw("same");
 
-	//hx_ede_b0_f6->Draw("same");
-	//hx_ede_b1_f6->Draw("same");
-	//hx_ede_b2_f6->Draw("same");
-	//hx_ede_b3_f6->Draw("same");
-	//hx_ede_b4_f6->Draw("same");
-	//hx_ede_b5_f6->Draw("same");
-	//hx_ede_b6_f6->Draw("same");
-	//hx_ede_b7_f6->Draw("same");
+	// hx_ede_b0_f6->Draw("same");
+	// hx_ede_b1_f6->Draw("same");
+	// hx_ede_b2_f6->Draw("same");
+	// hx_ede_b3_f6->Draw("same");
+	// hx_ede_b4_f6->Draw("same");
+	// hx_ede_b5_f6->Draw("same");
+	// hx_ede_b6_f6->Draw("same");
+	// hx_ede_b7_f6->Draw("same");
 
-	//hx_ede_b0_f7->Draw("same");
-	// hx_ede_b1_f7->Draw("same");
-	// hx_ede_b2_f7->Draw("same");
-	// hx_ede_b3_f7->Draw("same");
-	// hx_ede_b4_f7->Draw("same");
-	// hx_ede_b5_f7->Draw("same");
-	// hx_ede_b6_f7->Draw("same");
-	// hx_ede_b7_f7->Draw("same");
+	hx_ede_b0_f7->Draw("same");
+	hx_ede_b1_f7->Draw("same");
+	hx_ede_b2_f7->Draw("same");
+	hx_ede_b3_f7->Draw("same");
+	hx_ede_b4_f7->Draw("same");
+	hx_ede_b5_f7->Draw("same");
+	hx_ede_b6_f7->Draw("same");
+	hx_ede_b7_f7->Draw("same");
 
 
 	TH1 *hy_ede_b0_f0 = ede_b0_f0->ProjectionY();
