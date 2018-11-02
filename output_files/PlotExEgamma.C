@@ -1,6 +1,6 @@
 
 void PlotExEgamma(){
-	TFile *file = TFile::Open("Pu_all_withexcorr_30oct.root");
+	TFile *file = TFile::Open("Pu_2nov_highex_though0_again.root");
 
 	TH2 *exgam_veto_ppac = (TH2 *)file->Get("exgam_veto_ppac");
 

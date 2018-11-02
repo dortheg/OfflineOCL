@@ -971,8 +971,8 @@ bool UserSort::Sort(const Event &event) //det som sorterer
             ex *= 1000; // Back to keV units!
 
             //Here change ex to ex_new! In order to make the known peaks fit
-            //these param fits with the fission barrier in exgam_ppac!
-            //ex = 1.10068736*ex + 1.79650904;
+            ex = 1.0458313*ex + 2.88477418; //low
+            //ex = 1.08774584*ex + 20.31316188; //high
 
 
             h_ex[tel][ring]->Fill(ex);
