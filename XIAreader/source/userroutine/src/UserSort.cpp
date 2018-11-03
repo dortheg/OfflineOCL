@@ -950,7 +950,7 @@ bool UserSort::Sort(const Event &event) //det som sorterer
             double y_upper = 0.0062125*e_tot + 205.926;
             double y_lower = 0.0058352*e_tot + 60;
 
-            if (e_tot>4000 && tdiff_ede < y_upper && tdiff_ede > y_lower && GATING_EDE_TIME==1 ){
+            if (tdiff_ede < y_upper && tdiff_ede > y_lower && GATING_EDE_TIME==1 ){
                  energy_particle_time_e_de_all_gate->Fill(e_tot, tdiff_ede);
                  ede_gate->Fill(e_energy, de_energy);
             }
