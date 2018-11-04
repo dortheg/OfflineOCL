@@ -884,10 +884,10 @@ bool UserSort::Sort(const Event &event) //det som sorterer
         //If energy gate
         double E = e_word.adcdata;
         double DE = de_word.adcdata;
-        double E1_E = 8150.0;
-        double E2_E = 8300.0;
-        double E1_DE = 1400.0;
-        double E2_DE = 1900.0;
+        double E1_E = 8400.0;
+        double E2_E = 9000.0;
+        double E1_DE = 100.0;
+        double E2_DE = 4000.0;
         if (E>E1_E && E<E2_E && DE>E1_DE &&DE<E2_DE && GATING==1){
             ede_raw[tel][ring]->Fill(E, DE);
         }
@@ -1146,11 +1146,11 @@ void UserSort::AnalyzeGammaPPAC(const word_t &de_word, const word_t &e_word, con
                     //Gate on event in e-de with given energy, only filling labr energy raw with these events
                     word_t e_word = event.trigger;
                     double E = e_word.adcdata;
-                    double E1 = 8150.0;
-                    double E2 = 8300.0;
+                    double E1 = 8400.0;
+                    double E2 = 9000.0;
                     double DE = de_word.adcdata;
-                    double DE1 = 1400.0;
-                    double DE2 = 1900.0;
+                    double DE1 = 100.0;
+                    double DE2 = 4000.0;
                     if (E>E1 && E<E2 && DE>DE1 &&DE<DE2 && GATING==1){
                         energy_labr_raw[i]->Fill(event.w_labr[i][j].adcdata);
                     }
@@ -1199,11 +1199,11 @@ void UserSort::AnalyzeGammaPPAC(const word_t &de_word, const word_t &e_word, con
                 case is_background : {
                 word_t e_word = event.trigger;
                 double E = e_word.adcdata;
-                double E1 = 8150.0;
-                double E2 = 8300.0;
+                double E1 = 8400.0;
+                double E2 = 9000.0;
                 double DE = de_word.adcdata;
-                double DE1 = 1400.0;
-                double DE2 = 1900.0;
+                double DE1 = 100.0;
+                double DE2 = 4000.0;
                 if (E>E1 && E<E2 && DE>DE1 &&DE<DE2 && GATING==1){
                     energy_labr_raw[i]->Fill(event.w_labr[i][j].adcdata,-1);
                 }
