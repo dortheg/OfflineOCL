@@ -573,6 +573,13 @@ void UserSort::CreateSpectra()
         energy_time_labr_above[i] = Mat(tmp, tmp, 1000, 0, 16000, "LaBr energy [keV]", 2000, -100, 100, "Time difference [ns]");
     }
 
+    sprintf(tmp, "number_of_fissions");
+    number_of_fissions = Spec(tmp, tmp, 15, 0, 15000, "Ex energy [MeV]");
+
+    sprintf(tmp, "PFG_mult");
+    sprintf(tmp2, "PFG multiplicity");
+    PFG_mult = Mat(tmp, tmp2, 16, 0, 15, "PFG multiplicity", 16, 0, 15000, "Ex energy [keV]");
+
     // Allocating the dE 'singles' spectra
     for (int i = 0 ; i < NUM_SI_DE_DET ; ++i){
 
@@ -716,10 +723,13 @@ void UserSort::CreateSpectra()
     sprintf(tmp2, "E : DE, all");
     ede_all_fission = Mat(tmp, tmp2, 10000, 0, 20000, "Back energy [keV]", 1000, 0, 5000, "Front energy [keV]");
 
+    sprintf(tmp, "ede_all_fission_nobgsub");
+    sprintf(tmp2, "E : DE, all");
+    ede_all_fission_nobgsub = Mat(tmp, tmp2, 10000, 0, 20000, "Back energy [keV]", 1000, 0, 5000, "Front energy [keV]");
+
     sprintf(tmp, "ede_all_fission_bg");
     sprintf(tmp2, "E : DE, all");
     ede_all_fission_bg = Mat(tmp, tmp2, 10000, 0, 20000, "Back energy [keV]", 1000, 0, 5000, "Front energy [keV]");
-
 
     sprintf(tmp, "ede_all_nofission");
     sprintf(tmp2, "E : DE, all");
@@ -1051,6 +1061,8 @@ void UserSort::AnalyzeGammaPPAC(const word_t &de_word, const word_t &e_word, con
 {
 
 
+    float bg_param = -0.94;
+
     // Things with PPAC
     for (int i = 0 ; i < NUM_PPAC ; ++i){
         for (int j = 0 ; j < event.n_ppac[i] ; ++j){
@@ -1061,6 +1073,30 @@ void UserSort::AnalyzeGammaPPAC(const word_t &de_word, const word_t &e_word, con
             ppac_vs_dE_time->Fill(tdiff,i);
 
         }
+    }
+
+    //fission counting
+    for (int n = 0 ; n < NUM_PPAC ; ++n){
+        for (int m = 0 ; m < event.n_ppac[n] ; ++m){
+            //All events in ppacs
+
+            double tdiff_ppac = CalcTimediff(de_word, event.w_ppac[n][m]);
+
+            switch ( CheckTimeStatus(tdiff_ppac, ppac_time_cuts) ) {
+                case is_prompt : {
+                    number_of_fissions->Fill(excitation);
+                    break;
+                }
+                case is_background : {
+                    number_of_fissions->Fill(excitation, -1);
+                    break;
+                }
+                case ignore : {
+                    break;
+                }
+            }
+        }
+
     }
 
     // Things with gamma
@@ -1102,7 +1138,8 @@ void UserSort::AnalyzeGammaPPAC(const word_t &de_word, const word_t &e_word, con
                     //All events in ppacs
 
                     //double tdiff_ppac = CalcTimediff(event.w_labr[0][0], event.w_ppac[n][m]);
-                    double tdiff_ppac = CalcTimediff(event.w_labr[i][j], event.w_ppac[n][m]);
+                    //double tdiff_ppac = CalcTimediff(event.w_labr[i][j], event.w_ppac[n][m]);
+                    double tdiff_ppac = CalcTimediff(de_word, event.w_ppac[n][m]);
 
                     ppac_align_time_all->Fill(tdiff_ppac, n);
                     energy_time_ppac[n]->Fill(energy, tdiff_ppac); //if aligned, can use this for PFG/PFN separations
@@ -1164,6 +1201,7 @@ void UserSort::AnalyzeGammaPPAC(const word_t &de_word, const word_t &e_word, con
                         if (ppac_prompt==1){
                             //de, labr and ppac are prompt->Fission
                             ede_all_fission->Fill(e_energy, de_energy);
+                            ede_all_fission_nobgsub->Fill(e_energy, de_energy);
                             exgam_ppac->Fill(energy, excitation);
                         }
                         else{
@@ -1171,9 +1209,9 @@ void UserSort::AnalyzeGammaPPAC(const word_t &de_word, const word_t &e_word, con
                             exgam_veto_ppac->Fill(energy, excitation);
 
                             if(ppac_prompt==2){
-                                ede_all_fission->Fill(e_energy, de_energy, -1);
+                                ede_all_fission->Fill(e_energy, de_energy, bg_param);
                                 ede_all_fission_bg->Fill(e_energy, de_energy);
-                                exgam_ppac->Fill(energy, excitation, -1);
+                                exgam_ppac->Fill(energy, excitation, bg_param);
                                 exgam_ppac_bg->Fill(energy, excitation);
                             }
                         }
@@ -1186,6 +1224,7 @@ void UserSort::AnalyzeGammaPPAC(const word_t &de_word, const word_t &e_word, con
                         if (ppac_prompt==1){
                             //de, labr and ppac are prompt->Fission
                             ede_all_fission->Fill(e_energy, de_energy);
+                            ede_all_fission_nobgsub->Fill(e_energy, de_energy);
                             exgam_ppac->Fill(energy, excitation);
                         }
                         else{
@@ -1194,9 +1233,9 @@ void UserSort::AnalyzeGammaPPAC(const word_t &de_word, const word_t &e_word, con
                             exgam_veto_ppac->Fill(energy, excitation);
 
                             if(ppac_prompt==2){
-                                ede_all_fission->Fill(e_energy, de_energy, -1);
+                                ede_all_fission->Fill(e_energy, de_energy, bg_param);
                                 ede_all_fission_bg->Fill(e_energy, de_energy);
-                                exgam_ppac->Fill(energy, excitation, -1);
+                                exgam_ppac->Fill(energy, excitation, bg_param);
                                 exgam_ppac_bg->Fill(energy, excitation);
                             }
                         }
@@ -1234,17 +1273,17 @@ void UserSort::AnalyzeGammaPPAC(const word_t &de_word, const word_t &e_word, con
                     exgam_bg->Fill(energy, excitation);
 
                     if (ppac_prompt==1){
-                        exgam_ppac->Fill(energy, excitation, -1);
+                        exgam_ppac->Fill(energy, excitation, bg_param);
                         exgam_ppac_bg->Fill(energy, excitation);
-                        ede_all_fission->Fill(e_energy, de_energy, -1);
+                        ede_all_fission->Fill(e_energy, de_energy, bg_param);
                         ede_all_fission_bg->Fill(e_energy, de_energy);
                     }
 
                     else {
                         if(ppac_prompt==2){
-                            ede_all_fission->Fill(e_energy, de_energy, -1);
+                            ede_all_fission->Fill(e_energy, de_energy, bg_param);
                             ede_all_fission_bg->Fill(e_energy, de_energy);
-                            exgam_ppac->Fill(energy, excitation, -1);
+                            exgam_ppac->Fill(energy, excitation, bg_param);
                             exgam_ppac_bg->Fill(energy, excitation);
                         }
 
@@ -1258,18 +1297,18 @@ void UserSort::AnalyzeGammaPPAC(const word_t &de_word, const word_t &e_word, con
                     exgam->Fill(energy, excitation, -1);
                     exgam_bg->Fill(energy, excitation);
                     if (ppac_prompt==1){
-                        exgam_ppac->Fill(energy, excitation, -1);
+                        exgam_ppac->Fill(energy, excitation, bg_param);
                         exgam_ppac_bg->Fill(energy, excitation);
-                        ede_all_fission->Fill(e_energy, de_energy, -1);
+                        ede_all_fission->Fill(e_energy, de_energy, bg_param);
                         ede_all_fission_bg->Fill(e_energy, de_energy);
                     }
 
                     else {
 
                         if(ppac_prompt==2){
-                            ede_all_fission->Fill(e_energy, de_energy, -1);
+                            ede_all_fission->Fill(e_energy, de_energy, bg_param);
                             ede_all_fission_bg->Fill(e_energy, de_energy);
-                            exgam_ppac->Fill(energy, excitation, -1);
+                            exgam_ppac->Fill(energy, excitation, bg_param);
                             exgam_ppac_bg->Fill(energy, excitation);
                         }
 
