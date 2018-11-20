@@ -42,10 +42,15 @@
 
 //If calculate with PPACS
 #define FISSION 1
+
 //If gating on specified energies in ede
 const int GATING = 0;
+
 //If cut in energy_particle_time, as seen in book p 152-153
 const int GATING_EDE_TIME = 1;
+
+//If line up E-detectors better
+const int E_LINEUP = 1;
 
 static bool set_par(Parameters& parameters, std::istream& ipar,
                     const std::string& name, int size)
@@ -141,259 +146,260 @@ double UserSort::CalibrateOnlyE(const word_t &w, const word_t &de_strip) const
 //    if(info_de.detectorNum==9){
 //        return 1.04783577*(gain_E[info_de.detectorNum]*(w.adcdata + drand48() - 0.5) + shift_E[info_de.detectorNum]) - 648.80515;
 //    }
-    if(info_de.detectorNum==0){
+
+    if(info_de.detectorNum==0 && E_LINEUP==1){
         return 1.00852659251*(gain_E[info_de.detectorNum]*(w.adcdata + drand48() - 0.5) + shift_E[info_de.detectorNum]) - 126.310420215;
     }
 
-    if(info_de.detectorNum==1){
+    if(info_de.detectorNum==1 && E_LINEUP==1){
         return 1.01054405216*(gain_E[info_de.detectorNum]*(w.adcdata + drand48() - 0.5) + shift_E[info_de.detectorNum]) - 158.366926658;
     }
 
-    if(info_de.detectorNum==2){
+    if(info_de.detectorNum==2 && E_LINEUP==1){
         return 1.00801130021*(gain_E[info_de.detectorNum]*(w.adcdata + drand48() - 0.5) + shift_E[info_de.detectorNum]) -128.664260047;
     }
 
-    if(info_de.detectorNum==3){
+    if(info_de.detectorNum==3 && E_LINEUP==1){
         return 1.00758122521*(gain_E[info_de.detectorNum]*(w.adcdata + drand48() - 0.5) + shift_E[info_de.detectorNum]) -125.873456448;
     }
 
-    if(info_de.detectorNum==4){
+    if(info_de.detectorNum==4 && E_LINEUP==1){
         return 1.00229000251*(gain_E[info_de.detectorNum]*(w.adcdata + drand48() - 0.5) + shift_E[info_de.detectorNum]) -55.5632838676;
     }
 
-    if(info_de.detectorNum==5){
+    if(info_de.detectorNum==5 && E_LINEUP==1){
         return 0.997998582917*(gain_E[info_de.detectorNum]*(w.adcdata + drand48() - 0.5) + shift_E[info_de.detectorNum]) -30.4900005565;
     }
 
-    if(info_de.detectorNum==6){
+    if(info_de.detectorNum==6  && E_LINEUP==1){
         return 1.00839105694*(gain_E[info_de.detectorNum]*(w.adcdata + drand48() - 0.5) + shift_E[info_de.detectorNum]) -152.122119317;
     }
 
-    if(info_de.detectorNum==7){
+    if(info_de.detectorNum==7  && E_LINEUP==1){
         return 1.01503221179*(gain_E[info_de.detectorNum]*(w.adcdata + drand48() - 0.5) + shift_E[info_de.detectorNum]) -235.394487516;
     }
 
-    if(info_de.detectorNum==8){
+    if(info_de.detectorNum==8 && E_LINEUP==1){
         return 1.00178957408*(gain_E[info_de.detectorNum]*(w.adcdata + drand48() - 0.5) + shift_E[info_de.detectorNum]) - 29.2556309974;
     }
 
-    if(info_de.detectorNum==9){
+    if(info_de.detectorNum==9 && E_LINEUP==1){
         return 1.0321774536*(gain_E[info_de.detectorNum]*(w.adcdata + drand48() - 0.5) + shift_E[info_de.detectorNum]) - 403.996969179;
     }
 
-    if(info_de.detectorNum==10){
+    if(info_de.detectorNum==10 && E_LINEUP==1){
         return 1.00193207639*(gain_E[info_de.detectorNum]*(w.adcdata + drand48() - 0.5) + shift_E[info_de.detectorNum]) -54.8228538909;
     }
 
-    if(info_de.detectorNum==11){
+    if(info_de.detectorNum==11 && E_LINEUP==1){
         return 1.00809055478*(gain_E[info_de.detectorNum]*(w.adcdata + drand48() - 0.5) + shift_E[info_de.detectorNum]) -120.242054039;
     }
 
-    if(info_de.detectorNum==12){
+    if(info_de.detectorNum==12 && E_LINEUP==1){
         return 1.00375191173*(gain_E[info_de.detectorNum]*(w.adcdata + drand48() - 0.5) + shift_E[info_de.detectorNum]) -82.0253833215;
     }
 
-    if(info_de.detectorNum==13){
+    if(info_de.detectorNum==13 && E_LINEUP==1){
         return 0.987809637357*(gain_E[info_de.detectorNum]*(w.adcdata + drand48() - 0.5) + shift_E[info_de.detectorNum]) + 92.6423012963;
     }
 
-    if(info_de.detectorNum==14){
+    if(info_de.detectorNum==14 && E_LINEUP==1){
         return 0.99559803607*(gain_E[info_de.detectorNum]*(w.adcdata + drand48() - 0.5) + shift_E[info_de.detectorNum]) + 43.6162924804;
     }
 
-    if(info_de.detectorNum==15){
+    if(info_de.detectorNum==15 && E_LINEUP==1){
         return 0.998454893818*(gain_E[info_de.detectorNum]*(w.adcdata + drand48() - 0.5) + shift_E[info_de.detectorNum]) -18.1451041661;
     }
 
-    if(info_de.detectorNum==16){
+    if(info_de.detectorNum==16 && E_LINEUP==1){
         return 0.996832946174*(gain_E[info_de.detectorNum]*(w.adcdata + drand48() - 0.5) + shift_E[info_de.detectorNum]) + 31.68451201;
     }
 
-    if(info_de.detectorNum==17){
+    if(info_de.detectorNum==17 && E_LINEUP==1){
         return 0.998898923042*(gain_E[info_de.detectorNum]*(w.adcdata + drand48() - 0.5) + shift_E[info_de.detectorNum]) - 12.6530158614;
     }
 
-    if(info_de.detectorNum==18){
+    if(info_de.detectorNum==18 && E_LINEUP==1){
         return 0.995652174499*(gain_E[info_de.detectorNum]*(w.adcdata + drand48() - 0.5) + shift_E[info_de.detectorNum]) + 27.1425106722;
     }
 
-    if(info_de.detectorNum==19){
+    if(info_de.detectorNum==19 && E_LINEUP==1){
         return 0.999551482345*(gain_E[info_de.detectorNum]*(w.adcdata + drand48() - 0.5) + shift_E[info_de.detectorNum]) -4.3686676003;
     }
 
-    if(info_de.detectorNum==20){
+    if(info_de.detectorNum==20 && E_LINEUP==1){
         return 0.99897872031*(gain_E[info_de.detectorNum]*(w.adcdata + drand48() - 0.5) + shift_E[info_de.detectorNum]) -12.8217950663;
     }
 
-    if(info_de.detectorNum==21){
+    if(info_de.detectorNum==21 && E_LINEUP==1){
         return 0.981477213244*(gain_E[info_de.detectorNum]*(w.adcdata + drand48() - 0.5) + shift_E[info_de.detectorNum]) + 184.068164129;
     }
 
-    if(info_de.detectorNum==22){
+    if(info_de.detectorNum==22 && E_LINEUP==1){
         return 1.00933198119*(gain_E[info_de.detectorNum]*(w.adcdata + drand48() - 0.5) + shift_E[info_de.detectorNum]) -121.398336087;
     }
 
-    if(info_de.detectorNum==23){
+    if(info_de.detectorNum==23 && E_LINEUP==1){
         return 0.993458785702*(gain_E[info_de.detectorNum]*(w.adcdata + drand48() - 0.5) + shift_E[info_de.detectorNum]) + 48.4303638799;
     }
 
-    if(info_de.detectorNum==24){
+    if(info_de.detectorNum==24 && E_LINEUP==1){
         return 1.00403364728*(gain_E[info_de.detectorNum]*(w.adcdata + drand48() - 0.5) + shift_E[info_de.detectorNum]) - 53.4903885192;
     }
 
-    if(info_de.detectorNum==25){
+    if(info_de.detectorNum==25 && E_LINEUP==1){
         return 0.990438093594*(gain_E[info_de.detectorNum]*(w.adcdata + drand48() - 0.5) + shift_E[info_de.detectorNum]) + 74.3410216251;
     }
 
-    if(info_de.detectorNum==26){
+    if(info_de.detectorNum==26 && E_LINEUP==1){
         return 0.987759178021*(gain_E[info_de.detectorNum]*(w.adcdata + drand48() - 0.5) + shift_E[info_de.detectorNum]) + 126.427018636;
     }
 
-    if(info_de.detectorNum==27){
+    if(info_de.detectorNum==27 && E_LINEUP==1){
         return 0.995683828449*(gain_E[info_de.detectorNum]*(w.adcdata + drand48() - 0.5) + shift_E[info_de.detectorNum]) + 13.2894955223 ;
     }
 
-    if(info_de.detectorNum==28){
+    if(info_de.detectorNum==28 && E_LINEUP==1){
         return 1.00413068604*(gain_E[info_de.detectorNum]*(w.adcdata + drand48() - 0.5) + shift_E[info_de.detectorNum]) -72.4761800398 ;
     }
 
-    if(info_de.detectorNum==29){
+    if(info_de.detectorNum==29 && E_LINEUP==1){
         return 1.00358799658 *(gain_E[info_de.detectorNum]*(w.adcdata + drand48() - 0.5) + shift_E[info_de.detectorNum]) -75.6579320917;
     }
 
-    if(info_de.detectorNum==30){
+    if(info_de.detectorNum==30 && E_LINEUP==1){
         return 0.992315003843 *(gain_E[info_de.detectorNum]*(w.adcdata + drand48() - 0.5) + shift_E[info_de.detectorNum]) + 68.1170954517;
     }
 
-    if(info_de.detectorNum==31){
+    if(info_de.detectorNum==31 && E_LINEUP==1){
         return 0.981472706182*(gain_E[info_de.detectorNum]*(w.adcdata + drand48() - 0.5) + shift_E[info_de.detectorNum]) + 175.58645599;
     }
 
-    if(info_de.detectorNum==32){
+    if(info_de.detectorNum==32 && E_LINEUP==1){
         return 0.986040657504*(gain_E[info_de.detectorNum]*(w.adcdata + drand48() - 0.5) + shift_E[info_de.detectorNum]) + 150.77083862;
     }
 
-    if(info_de.detectorNum==33){
+    if(info_de.detectorNum==33 && E_LINEUP==1){
         return 0.993448618731*(gain_E[info_de.detectorNum]*(w.adcdata + drand48() - 0.5) + shift_E[info_de.detectorNum]) + 42.0272218719;
     }
 
-    if(info_de.detectorNum==34){
+    if(info_de.detectorNum==34 && E_LINEUP==1){
         return 1.01333994917*(gain_E[info_de.detectorNum]*(w.adcdata + drand48() - 0.5) + shift_E[info_de.detectorNum]) -175.290543003;
     }
 
-    if(info_de.detectorNum==35){
+    if(info_de.detectorNum==35 && E_LINEUP==1){
         return 0.997327035407*(gain_E[info_de.detectorNum]*(w.adcdata + drand48() - 0.5) + shift_E[info_de.detectorNum]) + 5.91402582213;
     }
 
-    if(info_de.detectorNum==36){
+    if(info_de.detectorNum==36 && E_LINEUP==1){
         return 0.993533000697*(gain_E[info_de.detectorNum]*(w.adcdata + drand48() - 0.5) + shift_E[info_de.detectorNum]) + 50.5610921715;
     }
 
-    if(info_de.detectorNum==37){
+    if(info_de.detectorNum==37 && E_LINEUP==1){
         return 0.981814822113*(gain_E[info_de.detectorNum]*(w.adcdata + drand48() - 0.5) + shift_E[info_de.detectorNum]) + 186.315211596;
     }
 
-    if(info_de.detectorNum==38){
+    if(info_de.detectorNum==38 && E_LINEUP==1){
         return 0.992955095889*(gain_E[info_de.detectorNum]*(w.adcdata + drand48() - 0.5) + shift_E[info_de.detectorNum]) + 65.9950278342;
     }
 
-    if(info_de.detectorNum==39){
+    if(info_de.detectorNum==39 && E_LINEUP==1){
         return 1.00768707053*(gain_E[info_de.detectorNum]*(w.adcdata + drand48() - 0.5) + shift_E[info_de.detectorNum]) -94.8285222686;
     }
 
-    if(info_de.detectorNum==40){
+    if(info_de.detectorNum==40 && E_LINEUP==1){
         return 0.991999125656*(gain_E[info_de.detectorNum]*(w.adcdata + drand48() - 0.5) + shift_E[info_de.detectorNum]) + 54.0064952741;
     }
 
-    if(info_de.detectorNum==41){
+    if(info_de.detectorNum==41 && E_LINEUP==1){
         return 0.993399118314*(gain_E[info_de.detectorNum]*(w.adcdata + drand48() - 0.5) + shift_E[info_de.detectorNum]) + 30.0596248577;
     }
 
-    if(info_de.detectorNum==42){
+    if(info_de.detectorNum==42 && E_LINEUP==1){
         return 0.99431139601*(gain_E[info_de.detectorNum]*(w.adcdata + drand48() - 0.5) + shift_E[info_de.detectorNum]) + 9.89494971722;
     }
 
-    if(info_de.detectorNum==43){
+    if(info_de.detectorNum==43 && E_LINEUP==1){
         return 0.990958851152*(gain_E[info_de.detectorNum]*(w.adcdata + drand48() - 0.5) + shift_E[info_de.detectorNum]) + 50.2971578498;
     }
 
-    if(info_de.detectorNum==44){
+    if(info_de.detectorNum==44 && E_LINEUP==1){
         return 0.994201179914*(gain_E[info_de.detectorNum]*(w.adcdata + drand48() - 0.5) + shift_E[info_de.detectorNum]) +29.2330367709;
     }
 
-    if(info_de.detectorNum==45){
+    if(info_de.detectorNum==45 && E_LINEUP==1){
         return 0.991190952747*(gain_E[info_de.detectorNum]*(w.adcdata + drand48() - 0.5) + shift_E[info_de.detectorNum]) +54.1993695047 ;
     }
 
-    if(info_de.detectorNum==46){
+    if(info_de.detectorNum==46 && E_LINEUP==1){
         return 0.989983205946*(gain_E[info_de.detectorNum]*(w.adcdata + drand48() - 0.5) + shift_E[info_de.detectorNum]) +85.8159667554;
     }
 
-    if(info_de.detectorNum==47){
+    if(info_de.detectorNum==47 && E_LINEUP==1){
         return 0.988122741765*(gain_E[info_de.detectorNum]*(w.adcdata + drand48() - 0.5) + shift_E[info_de.detectorNum]) +84.4621694597;
     }
 
-    if(info_de.detectorNum==48){
+    if(info_de.detectorNum==48 && E_LINEUP==1){
         return 0.995241276383*(gain_E[info_de.detectorNum]*(w.adcdata + drand48() - 0.5) + shift_E[info_de.detectorNum]) + 39.1397838828;
     }
 
-    if(info_de.detectorNum==49){
+    if(info_de.detectorNum==49 && E_LINEUP==1){
         return 1.00944399408*(gain_E[info_de.detectorNum]*(w.adcdata + drand48() - 0.5) + shift_E[info_de.detectorNum]) -137.165520061;
     }
 
-    if(info_de.detectorNum==50){
+    if(info_de.detectorNum==50 && E_LINEUP==1){
         return 1.00887849447*(gain_E[info_de.detectorNum]*(w.adcdata + drand48() - 0.5) + shift_E[info_de.detectorNum]) -129.318208685;
     }
 
-    if(info_de.detectorNum==51){
+    if(info_de.detectorNum==51 && E_LINEUP==1){
         return 1.00022827766*(gain_E[info_de.detectorNum]*(w.adcdata + drand48() - 0.5) + shift_E[info_de.detectorNum]) -27.8703999905;
     }
 
-    if(info_de.detectorNum==52){
+    if(info_de.detectorNum==52 && E_LINEUP==1){
         return 0.991952750385*(gain_E[info_de.detectorNum]*(w.adcdata + drand48() - 0.5) + shift_E[info_de.detectorNum]) + 57.3709240994;
     }
 
-    if(info_de.detectorNum==53){
+    if(info_de.detectorNum==53 && E_LINEUP==1){
         return 0.98971797548*(gain_E[info_de.detectorNum]*(w.adcdata + drand48() - 0.5) + shift_E[info_de.detectorNum]) + 77.4867227562;
     }
 
-    if(info_de.detectorNum==54){
+    if(info_de.detectorNum==54 && E_LINEUP==1){
         return 1.01144910412*(gain_E[info_de.detectorNum]*(w.adcdata + drand48() - 0.5) + shift_E[info_de.detectorNum]) -162.844397235;
     }
 
-    if(info_de.detectorNum==55){
+    if(info_de.detectorNum==55 && E_LINEUP==1){
         return 1.0159836277*(gain_E[info_de.detectorNum]*(w.adcdata + drand48() - 0.5) + shift_E[info_de.detectorNum]) -203.498124961;
     }
 
-    if(info_de.detectorNum==56){
+    if(info_de.detectorNum==56 && E_LINEUP==1){
         return 0.996359888104*(gain_E[info_de.detectorNum]*(w.adcdata + drand48() - 0.5) + shift_E[info_de.detectorNum]) + 33.9283061123;
     }
 
-    if(info_de.detectorNum==57){
+    if(info_de.detectorNum==57 && E_LINEUP==1){
         return 1.00087972113*(gain_E[info_de.detectorNum]*(w.adcdata + drand48() - 0.5) + shift_E[info_de.detectorNum]) - 35.2200002207;
     }
 
-    if(info_de.detectorNum==58){
+    if(info_de.detectorNum==58 && E_LINEUP==1){
         return 0.999245325548*(gain_E[info_de.detectorNum]*(w.adcdata + drand48() - 0.5) + shift_E[info_de.detectorNum]) -7.20824790206;
     }
 
-    if(info_de.detectorNum==59){
+    if(info_de.detectorNum==59 && E_LINEUP==1){
         return 0.999977505892*(gain_E[info_de.detectorNum]*(w.adcdata + drand48() - 0.5) + shift_E[info_de.detectorNum]) -12.3884230434;
     }
 
-    if(info_de.detectorNum==60){
+    if(info_de.detectorNum==60 && E_LINEUP==1){
         return 0.998104395349*(gain_E[info_de.detectorNum]*(w.adcdata + drand48() - 0.5) + shift_E[info_de.detectorNum]) + 1.26761444883;
     }
 
-    if(info_de.detectorNum==61){
+    if(info_de.detectorNum==61 && E_LINEUP==1){
         return 1.01402956987*(gain_E[info_de.detectorNum]*(w.adcdata + drand48() - 0.5) + shift_E[info_de.detectorNum]) -161.2242491;
     }
 
-    if(info_de.detectorNum==62){
+    if(info_de.detectorNum==62 && E_LINEUP==1){
         return 1.00275702277*(gain_E[info_de.detectorNum]*(w.adcdata + drand48() - 0.5) + shift_E[info_de.detectorNum]) -32.2508546044;
     }
 
-    if(info_de.detectorNum==63){
+    if(info_de.detectorNum==63 && E_LINEUP==1){
         return 1.00872623673*(gain_E[info_de.detectorNum]*(w.adcdata + drand48() - 0.5) + shift_E[info_de.detectorNum]) -111.761651903;
     }
 
@@ -710,6 +716,11 @@ void UserSort::CreateSpectra()
     sprintf(tmp2, "E : DE, all");
     ede_all_fission = Mat(tmp, tmp2, 10000, 0, 20000, "Back energy [keV]", 1000, 0, 5000, "Front energy [keV]");
 
+    sprintf(tmp, "ede_all_fission_bg");
+    sprintf(tmp2, "E : DE, all");
+    ede_all_fission_bg = Mat(tmp, tmp2, 10000, 0, 20000, "Back energy [keV]", 1000, 0, 5000, "Front energy [keV]");
+
+
     sprintf(tmp, "ede_all_nofission");
     sprintf(tmp2, "E : DE, all");
     ede_all_nofission = Mat(tmp, tmp2, 10000, 0, 20000, "Back energy [keV]", 1000, 0, 5000, "Front energy [keV]");
@@ -910,23 +921,6 @@ bool UserSort::Sort(const Event &event) //det som sorterer
         //Dorthea made
         tdiff_ede = CalcTimediff(e_word, de_word);
 
-//        switch ( CheckTimeStatus(tdiff_ede, ede_time_cuts) ) {
-//            //tdiff_ede: if prompt between e and de
-//            case is_prompt : {
-//                ede_all->Fill(e_energy, de_energy);
-
-//                break;
-//            }
-//            case is_background : {
-//                ede_all->Fill(e_energy, de_energy, -1);
-//                break;
-//            }
-//            case ignore : {
-//                break;
-//            }
-//        }
-
-
         ede_all->Fill(e_energy, de_energy);
 
         // Calculate 'apparent thickness'
@@ -970,8 +964,8 @@ bool UserSort::Sort(const Event &event) //det som sorterer
             ex += ex_from_ede[3*ring + 2]*( e_tot*1e-3 )*( e_tot*1e-3 ); // Quadratic term.
             ex *= 1000; // Back to keV units!
 
-            //Here change ex to ex_new! In order to make the known peaks fit
-            ex = 1.0458313*ex + 2.88477418; //low
+            //Here change ex to ex_new! In order to make the known peaks fit ex-energies
+            //ex = 1.0458313*ex + 2.88477418; //low
             //ex = 1.08774584*ex + 20.31316188; //high
 
 
@@ -1097,8 +1091,7 @@ void UserSort::AnalyzeGammaPPAC(const word_t &de_word, const word_t &e_word, con
             tdiff_ede = CalcTimediff(e_word, de_word);
             energy_time_e_de_all->Fill(energy, tdiff_ede);
 
-            bool ppac_prompt =  false;
-            //bool labr_prompt = false;
+            int ppac_prompt = 0;
 
             //Is this correct? Doesnt it loop through all events, and changes ppac_prompt between true and false?
             //
@@ -1119,12 +1112,12 @@ void UserSort::AnalyzeGammaPPAC(const word_t &de_word, const word_t &e_word, con
 //                        tdiff_ppac: time diff between ppac and Labr3, definere fisjon
                         case is_prompt : {
                             //std::cout << "true" << std::endl;
-                            ppac_prompt = true;
+                            ppac_prompt = 1;
                             break;
                         }
                         case is_background : {
                             //std::cout << "false" << std::endl;
-                            ppac_prompt = false;
+                            ppac_prompt = 2;
                             break;
                         }
                         case ignore : {
@@ -1168,20 +1161,29 @@ void UserSort::AnalyzeGammaPPAC(const word_t &de_word, const word_t &e_word, con
                     //Cut in energy_particle_time
                     if (tdiff_ede < y_upper && e_tot>4000 && tdiff_ede > y_lower && GATING_EDE_TIME==1){
                         exgam->Fill(energy, excitation);
-                        if (ppac_prompt){
+                        if (ppac_prompt==1){
                             //de, labr and ppac are prompt->Fission
+                            ede_all_fission->Fill(e_energy, de_energy);
                             exgam_ppac->Fill(energy, excitation);
                         }
                         else{
                             //de, labr are prompt, but not ppac -> not fission
                             exgam_veto_ppac->Fill(energy, excitation);
+
+                            if(ppac_prompt==2){
+                                ede_all_fission->Fill(e_energy, de_energy, -1);
+                                ede_all_fission_bg->Fill(e_energy, de_energy);
+                                exgam_ppac->Fill(energy, excitation, -1);
+                                exgam_ppac_bg->Fill(energy, excitation);
+                            }
                         }
                         break;
 
                     }
 
                     else if(GATING_EDE_TIME==0){
-                        if (ppac_prompt){
+                        exgam->Fill(energy, excitation);
+                        if (ppac_prompt==1){
                             //de, labr and ppac are prompt->Fission
                             ede_all_fission->Fill(e_energy, de_energy);
                             exgam_ppac->Fill(energy, excitation);
@@ -1190,6 +1192,13 @@ void UserSort::AnalyzeGammaPPAC(const word_t &de_word, const word_t &e_word, con
                             //de, labr are prompt, but not ppac -> not fission
                             ede_all_nofission->Fill(e_energy, de_energy);
                             exgam_veto_ppac->Fill(energy, excitation);
+
+                            if(ppac_prompt==2){
+                                ede_all_fission->Fill(e_energy, de_energy, -1);
+                                ede_all_fission_bg->Fill(e_energy, de_energy);
+                                exgam_ppac->Fill(energy, excitation, -1);
+                                exgam_ppac_bg->Fill(energy, excitation);
+                            }
                         }
                         break;
 
@@ -1223,10 +1232,22 @@ void UserSort::AnalyzeGammaPPAC(const word_t &de_word, const word_t &e_word, con
                 if (tdiff_ede < y_upper && e_tot>4000 && tdiff_ede > y_lower && GATING_EDE_TIME==1){
                     exgam->Fill(energy, excitation, -1);
                     exgam_bg->Fill(energy, excitation);
-                    if (ppac_prompt){
+
+                    if (ppac_prompt==1){
                         exgam_ppac->Fill(energy, excitation, -1);
                         exgam_ppac_bg->Fill(energy, excitation);
-                    } else {
+                        ede_all_fission->Fill(e_energy, de_energy, -1);
+                        ede_all_fission_bg->Fill(e_energy, de_energy);
+                    }
+
+                    else {
+                        if(ppac_prompt==2){
+                            ede_all_fission->Fill(e_energy, de_energy, -1);
+                            ede_all_fission_bg->Fill(e_energy, de_energy);
+                            exgam_ppac->Fill(energy, excitation, -1);
+                            exgam_ppac_bg->Fill(energy, excitation);
+                        }
+
                         exgam_veto_ppac->Fill(energy, excitation, -1);
                         exgam_veto_ppac_bg->Fill(energy, excitation);
                     }
@@ -1234,13 +1255,25 @@ void UserSort::AnalyzeGammaPPAC(const word_t &de_word, const word_t &e_word, con
                 }
 
                 else if(GATING_EDE_TIME==0){
-                    if (ppac_prompt){
+                    exgam->Fill(energy, excitation, -1);
+                    exgam_bg->Fill(energy, excitation);
+                    if (ppac_prompt==1){
                         exgam_ppac->Fill(energy, excitation, -1);
-                        ede_all_fission->Fill(e_energy, de_energy, -1);
                         exgam_ppac_bg->Fill(energy, excitation);
-                    } else {
+                        ede_all_fission->Fill(e_energy, de_energy, -1);
+                        ede_all_fission_bg->Fill(e_energy, de_energy);
+                    }
+
+                    else {
+
+                        if(ppac_prompt==2){
+                            ede_all_fission->Fill(e_energy, de_energy, -1);
+                            ede_all_fission_bg->Fill(e_energy, de_energy);
+                            exgam_ppac->Fill(energy, excitation, -1);
+                            exgam_ppac_bg->Fill(energy, excitation);
+                        }
+
                         exgam_veto_ppac->Fill(energy, excitation, -1);
-                        ede_all_nofission->Fill(e_energy, de_energy, -1);
                         exgam_veto_ppac_bg->Fill(energy, excitation);
                     }
                     break;

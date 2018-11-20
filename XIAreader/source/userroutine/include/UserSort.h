@@ -99,7 +99,7 @@ private:
 
     // dE vs E
     Histogram2Dp ede_raw[NUM_SI_RINGS][NUM_SI_RINGS], ede[NUM_SI_RINGS][NUM_SI_RINGS];
-    Histogram2Dp ede_all, ede_gate, ede_all_except_pad7, ede_all_bg, energy_time_e_de_all, energy_particle_time_e_de_all, energy_particle_time_e_de_all_gate, energy_E_particle_time_e_de_all, ede_all_fission, ede_all_nofission,prompt_peak_movement, ede_all_doublepeak;
+    Histogram2Dp ede_all, ede_gate, ede_all_except_pad7, ede_all_bg, energy_time_e_de_all, energy_particle_time_e_de_all, energy_particle_time_e_de_all_gate, energy_E_particle_time_e_de_all, ede_all_fission, ede_all_fission_bg, ede_all_nofission,prompt_peak_movement, ede_all_doublepeak;
     Histogram2Dp filling_test;
     // Misc. dE/E coincidence spectra stuff.
     Histogram1Dp h_thick;   // "Apparent" thickness spectra.
