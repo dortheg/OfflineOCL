@@ -574,7 +574,7 @@ void UserSort::CreateSpectra()
     }
 
     sprintf(tmp, "number_of_fissions");
-    number_of_fissions = Spec(tmp, tmp, 15, 0, 15000, "Ex energy [MeV]");
+    number_of_fissions = Spec(tmp, tmp, 1600, -1000, 15000, "Ex energy [MeV]");
 
     sprintf(tmp, "PFG_mult");
     sprintf(tmp2, "PFG multiplicity");
@@ -1061,7 +1061,8 @@ void UserSort::AnalyzeGammaPPAC(const word_t &de_word, const word_t &e_word, con
 {
 
 
-    float bg_param = -0.94;
+    //float bg_param = -0.946;
+    float bg_param = -1.0;
 
     // Things with PPAC
     for (int i = 0 ; i < NUM_PPAC ; ++i){
@@ -1079,22 +1080,58 @@ void UserSort::AnalyzeGammaPPAC(const word_t &de_word, const word_t &e_word, con
     for (int n = 0 ; n < NUM_PPAC ; ++n){
         for (int m = 0 ; m < event.n_ppac[n] ; ++m){
             //All events in ppacs
+            int ppac_prompt = 0;
 
             double tdiff_ppac = CalcTimediff(de_word, event.w_ppac[n][m]);
 
             switch ( CheckTimeStatus(tdiff_ppac, ppac_time_cuts) ) {
                 case is_prompt : {
                     number_of_fissions->Fill(excitation);
+                    ppac_prompt=1;
                     break;
                 }
                 case is_background : {
-                    number_of_fissions->Fill(excitation, -1);
+                    //was -bg_param, might be the bug
+                    number_of_fissions->Fill(excitation, bg_param);
+                    ppac_prompt=2;
                     break;
                 }
                 case ignore : {
                     break;
                 }
             }
+
+//            int gamma_prompt = 0;
+
+//            for (int i = 0 ; i < NUM_LABR_DETECTORS ; ++i){
+//                for (int j = 0 ; j < event.n_labr[i] ; ++j){
+//                    double tdiff = CalcTimediff(de_word, event.w_labr[i][j]);
+
+//                    switch ( CheckTimeStatus(tdiff, labr_time_cuts) ) {
+
+//                        case is_prompt:{
+//                            gamma_prompt = 1;
+//                        }
+
+//                        case is_background:{
+//                            break;
+//                        }
+
+//                         case ignore:{
+//                             break;
+//                         }
+//                    }
+//                }
+//            }
+
+//            if(ppac_prompt==1 && gamma_prompt==1){
+//                number_of_fissions->Fill(excitation);
+//            }
+
+//            if(ppac_prompt==2){
+//                number_of_fissions->Fill(excitation, bg_param);
+//            }
+
         }
 
     }
