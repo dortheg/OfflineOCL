@@ -1145,7 +1145,6 @@ void UserSort::AnalyzeGammaPPAC(const word_t &de_word, const word_t &e_word, con
             double energy = CalibrateE(event.w_labr[i][j]);
             double tdiff = CalcTimediff(de_word, event.w_labr[i][j]);
             double tabs = CalcAbsTime(event.w_labr[i][j]);
-            //std::cout << tabs << std::endl;
 
             //For one labr, check movement of peak
             if(i ==3) {
