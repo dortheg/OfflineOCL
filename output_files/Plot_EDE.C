@@ -1,8 +1,8 @@
 
 void Plot_EDE(){
-	TFile *file = TFile::Open("Pu_2nov_highexfit.root");
+	TFile *file = TFile::Open("*Pu_all_newbg_1_Ecorr_noexcorr_looseEDEtimegate_protongate_22nov2018/Pu_all_properfisscount_1_Ecorr_noexcorr_looseEDEtimegate_protongate_23nov2018.root");
 
-	TH2 *ede_gate = (TH2 *)file->Get("ede_all");
+	TH2 *ede_gate = (TH2 *)file->Get("ede_all_except_pad7");
 
 	ede_gate->Draw();
 	gPad->SetLogz();

@@ -3,9 +3,6 @@
 #Gain file /Applications/OfflineOCL/Mine/OfflineOCL/input_files/Calib_files_all_detectors/total_gain_shift_20180416_173844.dat
 
 # Parameters for the range curve, 3He or alpha
-#rangefile zrange_he3.dat
-#rangefile zrange_a.dat
-#rangefile zrange_d.dat
 range /Applications/OfflineOCL/Mine/OfflineOCL/input_files/zrange_p.dat
 
 ## Cut of low-energy events by making a rectangle which is excluded
@@ -21,11 +18,6 @@ range /Applications/OfflineOCL/Mine/OfflineOCL/input_files/zrange_p.dat
 # for proton banana
 #parameter thick_range = 0 1000 #no gate
 parameter thick_range = 110 170 #protons
-
-#parameter thick_range = 200 250 #deuterons
-
-# for deuteron banana
-# parameter thick_range = XX YY
 
 # Kinematics: Fit of qkinz
 # Give paramters in MeV^(-x), not keV
@@ -48,10 +40,6 @@ parameter ex_from_ede    = 15.611276 -0.951006 -0.001883 \
 parameter labr_time_cuts = -3 3 \
                           -48	-42
 
-#doublepeak time cuts
-#parameter labr_time_cuts = -10 -7 \
-#                          -20 -17 
-
 #parameter ede_time_cuts = 150 300 \
 #                          310 310.1                  
 
@@ -73,6 +61,7 @@ parameter ppac_time_cuts = -5 5 \
 data directory /Volumes/240Pu_d_p/240Pu_exp_data
 
 #Pu240_d_pf_experiment
+
 Gain file /Applications/OfflineOCL/Mine/OfflineOCL/input_files/Calib_files_all_detectors/total_gain_shift_20180416_173844.dat
 data file sirius-20180416-173844_A.data
 
@@ -312,5 +301,4 @@ data file sirius-20180418-113054-big-033_A.data
 data file sirius-20180418-113054-big-034_A.data
 data file sirius-20180418-113054-big-035_A.data
 
-
-export root  /Applications/OfflineOCL/Mine/OfflineOCL/output_files/Pu_all_properfisscount_1_Ecorr_noexcorr_looseEDEtimegate_protongate_23nov2018.root
+export root  /Applications/OfflineOCL/Mine/OfflineOCL/output_files/Pu_all_properfisscount_bg1_Ecorr_lowexcorr_looseEDEtimegate_protongate_27nov2018.root

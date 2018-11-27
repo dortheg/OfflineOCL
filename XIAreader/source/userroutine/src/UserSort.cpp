@@ -142,10 +142,6 @@ double UserSort::CalibrateOnlyE(const word_t &w, const word_t &de_strip) const
         std::cout << "CalibrateE: Type Error" << std::endl;
         return w.adcdata;
     }
-    //change b1f1
-//    if(info_de.detectorNum==9){
-//        return 1.04783577*(gain_E[info_de.detectorNum]*(w.adcdata + drand48() - 0.5) + shift_E[info_de.detectorNum]) - 648.80515;
-//    }
 
     if(info_de.detectorNum==0 && E_LINEUP==1){
         return 1.00852659251*(gain_E[info_de.detectorNum]*(w.adcdata + drand48() - 0.5) + shift_E[info_de.detectorNum]) - 126.310420215;
@@ -975,7 +971,7 @@ bool UserSort::Sort(const Event &event) //det som sorterer
             ex *= 1000; // Back to keV units!
 
             //Here change ex to ex_new! In order to make the known peaks fit ex-energies
-            //ex = 1.0458313*ex + 2.88477418; //low
+            ex = 1.0458313*ex + 2.88477418; //low
             //ex = 1.08774584*ex + 20.31316188; //high
 
 
@@ -1101,37 +1097,6 @@ void UserSort::AnalyzeGammaPPAC(const word_t &de_word, const word_t &e_word, con
                 }
             }
 
-//            int gamma_prompt = 0;
-
-//            for (int i = 0 ; i < NUM_LABR_DETECTORS ; ++i){
-//                for (int j = 0 ; j < event.n_labr[i] ; ++j){
-//                    double tdiff = CalcTimediff(de_word, event.w_labr[i][j]);
-
-//                    switch ( CheckTimeStatus(tdiff, labr_time_cuts) ) {
-
-//                        case is_prompt:{
-//                            gamma_prompt = 1;
-//                        }
-
-//                        case is_background:{
-//                            break;
-//                        }
-
-//                         case ignore:{
-//                             break;
-//                         }
-//                    }
-//                }
-//            }
-
-//            if(ppac_prompt==1 && gamma_prompt==1){
-//                number_of_fissions->Fill(excitation);
-//            }
-
-//            if(ppac_prompt==2){
-//                number_of_fissions->Fill(excitation, bg_param);
-//            }
-
         }
 
     }
@@ -1243,7 +1208,7 @@ void UserSort::AnalyzeGammaPPAC(const word_t &de_word, const word_t &e_word, con
                         else{
                             //de, labr are prompt, but not ppac -> not fission
                             exgam_veto_ppac->Fill(energy, excitation);
-
+                            ede_all_nofission->Fill(e_energy, de_energy);
                             if(ppac_prompt==2){
                                 ede_all_fission->Fill(e_energy, de_energy, bg_param);
                                 ede_all_fission_bg->Fill(e_energy, de_energy);
