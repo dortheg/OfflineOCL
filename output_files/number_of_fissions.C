@@ -1,5 +1,5 @@
 void number_of_fissions(){
-	TFile *file = TFile::Open("Pu_all_properfisscount_1_Ecorr_noexcorr_looseEDEtimegate_protongate_23nov2018.root");
+	TFile *file = TFile::Open("Pu_all_properfisscount_bg1_Ecorr_lowexcorr_looseEDEtimegate_protongate_28nov2018.root");
 
 	TH1 *number_of_fissions = (TH1 *)file->Get("number_of_fissions");
 

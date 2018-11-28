@@ -744,6 +744,11 @@ void UserSort::CreateSpectra()
     sprintf(tmp2, "E : DE, after particle gate");
     ede_gate = Mat(tmp, tmp2, 1000, 0, 20000, "Back energy [keV]", 250, 0, 5000, "Front energy [keV]");
 
+    sprintf(tmp, "ede_EDEgate");
+    sprintf(tmp2, "E : DE, after particle gate");
+    ede_EDEgate = Mat(tmp, tmp2, 1000, 0, 20000, "Back energy [keV]", 250, 0, 5000, "Front energy [keV]");
+
+
     sprintf(tmp, "h_thick");
     sprintf(tmp2, "Apparent thickness of #Delta E");
     h_thick = Spec(tmp, tmp2, 3000, 0, 3000, "Apparent thickness [#mu m]");
@@ -933,22 +938,29 @@ bool UserSort::Sort(const Event &event) //det som sorterer
         double thick = range.GetRange(e_energy + de_energy) - range.GetRange(e_energy);
         h_thick->Fill(thick);
 
+
+        // Calculate the particle energy.
+        double e_tot = e_energy + de_energy;
+
+        //Dorthea made
+        double y_upper = 0.0062125*e_tot + 205.926;
+        double y_lower = 0.0058352*e_tot + 60;
+
+        if (tdiff_ede < y_upper && tdiff_ede > y_lower && GATING_EDE_TIME==1 ){
+             ede_EDEgate->Fill(e_energy, de_energy);
+        }
+
+        energy_particle_time_e_de_all->Fill(e_tot, tdiff_ede);
+
         // Check if correct particle
         if ( thick >= thick_range[0] && thick <= thick_range[1] ){
 
             //ede_gate->Fill(e_energy, de_energy);
 
-            // Calculate the particle energy.
-            double e_tot = e_energy + de_energy;
-
             // Filling 'total particle energy' spectrum.
             h_ede[tel][ring]->Fill( e_tot );
             h_ede[tel][ring]->Fill( e_tot );
             h_ede_all->Fill( e_tot );
-
-            //Dorthea made
-            double y_upper = 0.0062125*e_tot + 205.926;
-            double y_lower = 0.0058352*e_tot + 60;
 
             if (tdiff_ede < y_upper && tdiff_ede > y_lower && GATING_EDE_TIME==1 ){
                  energy_particle_time_e_de_all_gate->Fill(e_tot, tdiff_ede);
