@@ -109,7 +109,7 @@ private:
 
     // Particle - gamma-ray coincidence matrix
     Histogram2Dp exgam, exgam_bg;
-    Histogram2Dp exgam_ppac, exgam_ppac_bg;
+    Histogram2Dp exgam_ppac, exgam_ppac_bg, exgam_ppac_newfiss;
     Histogram2Dp exgam_veto_ppac, exgam_veto_ppac_bg;
 
     // Gain labr

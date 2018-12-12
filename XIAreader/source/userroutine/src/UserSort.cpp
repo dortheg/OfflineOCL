@@ -47,7 +47,7 @@
 const int GATING = 0;
 
 //If cut in energy_particle_time, as seen in book p 152-153
-const int GATING_EDE_TIME = 1;
+const int GATING_EDE_TIME = 0;
 
 //If line up E-detectors better
 const int E_LINEUP = 1;
@@ -770,6 +770,9 @@ void UserSort::CreateSpectra()
     sprintf(tmp, "exgam_ppac"); //alfna med fisjon
     exgam_ppac = Mat(tmp, tmp, 1500, 0, 15000, "LaBr [keV]", 1600, -1000, 15000, "Ex [keV]");
 
+    sprintf(tmp, "exgam_ppac_newfiss"); //alfna med fisjon
+    exgam_ppac_newfiss = Mat(tmp, tmp, 1500, 0, 15000, "LaBr [keV]", 1600, -1000, 15000, "Ex [keV]");
+
     sprintf(tmp, "exgam_ppac_bg");
     exgam_ppac_bg = Mat(tmp, tmp, 1500, 0, 15000, "LaBr [keV]", 1600, -1000, 15000, "Ex [keV]");
 
@@ -1084,7 +1087,7 @@ void UserSort::AnalyzeGammaPPAC(const word_t &de_word, const word_t &e_word, con
 
 
     //float bg_param = -0.946;
-    float bg_param = -1.0;
+    float bg_param = -1;
 
     // Things with PPAC
     for (int i = 0 ; i < NUM_PPAC ; ++i){
@@ -1103,23 +1106,77 @@ void UserSort::AnalyzeGammaPPAC(const word_t &de_word, const word_t &e_word, con
     for (int n = 0 ; n < NUM_PPAC ; ++n){
         for (int m = 0 ; m < event.n_ppac[n] ; ++m){
             //All events in ppacs
-            int ppac_prompt = 0;
             word_t e_word = event.trigger;
             double e_energy = CalibrateOnlyE(e_word, de_word);
             double de_energy = CalibrateE(de_word);
             double tdiff_ppac = CalcTimediff(de_word, event.w_ppac[n][m]);
+
             switch ( CheckTimeStatus(tdiff_ppac, ppac_time_cuts) ) {
                 case is_prompt : {
                     number_of_fissions->Fill(excitation);
-                    ppac_prompt=1;
+
                     ede_all_fission->Fill(e_energy, de_energy);
+
+                    int prompt = 0;
+                    int bg = 0;
+                    for (int i = 0 ; i < NUM_LABR_DETECTORS ; ++i){
+                        for (int j = 0 ; j < event.n_labr[i] ; ++j){
+                            double energy = CalibrateE(event.w_labr[i][j]);
+                            double tdiff = CalcTimediff(de_word, event.w_labr[i][j]);
+
+                            switch ( CheckTimeStatus(tdiff, labr_time_cuts) ) {
+                                //tdiff, time diff between de and labr
+                                case is_prompt : {
+                                    exgam_ppac_newfiss->Fill(energy, excitation);
+                                    prompt = 1;
+                                    break;
+                                }
+
+                                case is_background : {
+                                    exgam_ppac_newfiss->Fill(energy, excitation, bg_param);
+                                    bg = 1;
+                                    break;
+                                }
+
+                                case ignore :{
+                                    break;
+                                }
+                            }
+                        }
+                    }
+
                     break;
+
                 }
                 case is_background : {
-                     //was -bg_param, might be the bug
                     number_of_fissions->Fill(excitation, bg_param);
                     ede_all_fission->Fill(e_energy, de_energy, bg_param);
-                    ppac_prompt=2;
+
+                    for (int i = 0 ; i < NUM_LABR_DETECTORS ; ++i){
+                        for (int j = 0 ; j < event.n_labr[i] ; ++j){
+                            double energy = CalibrateE(event.w_labr[i][j]);
+                            double tdiff = CalcTimediff(de_word, event.w_labr[i][j]);
+
+                            switch ( CheckTimeStatus(tdiff, labr_time_cuts) ) {
+                                //tdiff, time diff between de and labr
+                                case is_prompt : {
+                                    //exgam_ppac_newfiss->Fill(energy, excitation, bg_param);
+                                    break;
+                                }
+
+                                case is_background : {
+                                    exgam_ppac_newfiss->Fill(energy, excitation, bg_param);
+                                    break;
+
+                                }
+
+                                case ignore :{
+                                    break;
+                                }
+                            }
+                        }
+                    }
+
                     break;
                 }
                 case ignore : {
@@ -1174,7 +1231,7 @@ void UserSort::AnalyzeGammaPPAC(const word_t &de_word, const word_t &e_word, con
 
 
                     switch ( CheckTimeStatus(tdiff_ppac, ppac_time_cuts) ) {
-//                        tdiff_ppac: time diff between ppac and Labr3, definere fisjon
+//                        tdiff_ppac: time diff between ppac and Labr3, define fission
                         case is_prompt : {
                             //std::cout << "true" << std::endl;
                             ppac_prompt = 1;
