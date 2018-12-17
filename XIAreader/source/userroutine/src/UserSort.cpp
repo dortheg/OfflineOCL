@@ -47,7 +47,7 @@
 const int GATING = 0;
 
 //If cut in energy_particle_time, as seen in book p 152-153
-const int GATING_EDE_TIME = 0;
+const int GATING_EDE_TIME = 1;
 
 //If line up E-detectors better
 const int E_LINEUP = 1;
