@@ -571,6 +571,10 @@ void UserSort::CreateSpectra()
 
     sprintf(tmp, "number_of_fissions");
     number_of_fissions = Spec(tmp, tmp, 1600, -1000, 15000, "Ex energy [MeV]");
+    sprintf(tmp, "number_of_fissions_all");
+    number_of_fissions_all = Spec(tmp, tmp, 1600, -1000, 15000, "Ex energy [MeV]"); //before bg-sub
+    sprintf(tmp, "number_of_fissions_bg");
+    number_of_fissions_bg = Spec(tmp, tmp, 1600, -1000, 15000, "Ex energy [MeV]"); //bg in number of fissions
 
     sprintf(tmp, "PFG_mult");
     sprintf(tmp2, "PFG multiplicity");
@@ -772,6 +776,13 @@ void UserSort::CreateSpectra()
 
     sprintf(tmp, "exgam_ppac_newfiss"); //alfna med fisjon
     exgam_ppac_newfiss = Mat(tmp, tmp, 1500, 0, 15000, "LaBr [keV]", 1600, -1000, 15000, "Ex [keV]");
+
+    sprintf(tmp, "exgam_ppac_newfiss_all"); //alfna med fisjon
+    exgam_ppac_newfiss_all = Mat(tmp, tmp, 1500, 0, 15000, "LaBr [keV]", 1600, -1000, 15000, "Ex [keV]");
+
+    sprintf(tmp, "exgam_ppac_newfiss_bg"); //alfna med fisjon
+    exgam_ppac_newfiss_bg = Mat(tmp, tmp, 1500, 0, 15000, "LaBr [keV]", 1600, -1000, 15000, "Ex [keV]");
+
 
     sprintf(tmp, "exgam_ppac_bg");
     exgam_ppac_bg = Mat(tmp, tmp, 1500, 0, 15000, "LaBr [keV]", 1600, -1000, 15000, "Ex [keV]");
@@ -1114,7 +1125,7 @@ void UserSort::AnalyzeGammaPPAC(const word_t &de_word, const word_t &e_word, con
             switch ( CheckTimeStatus(tdiff_ppac, ppac_time_cuts) ) {
                 case is_prompt : {
                     number_of_fissions->Fill(excitation);
-
+                    number_of_fissions_all->Fill(excitation);
                     ede_all_fission->Fill(e_energy, de_energy);
 
                     int prompt = 0;
@@ -1127,13 +1138,17 @@ void UserSort::AnalyzeGammaPPAC(const word_t &de_word, const word_t &e_word, con
                             switch ( CheckTimeStatus(tdiff, labr_time_cuts) ) {
                                 //tdiff, time diff between de and labr
                                 case is_prompt : {
+                                    //Rose fill
                                     exgam_ppac_newfiss->Fill(energy, excitation);
+                                    exgam_ppac_newfiss_all->Fill(energy, excitation);
                                     prompt = 1;
                                     break;
                                 }
 
                                 case is_background : {
+                                    //Rose subtract
                                     exgam_ppac_newfiss->Fill(energy, excitation, bg_param);
+                                    exgam_ppac_newfiss_bg->Fill(energy, excitation);
                                     bg = 1;
                                     break;
                                 }
@@ -1150,6 +1165,7 @@ void UserSort::AnalyzeGammaPPAC(const word_t &de_word, const word_t &e_word, con
                 }
                 case is_background : {
                     number_of_fissions->Fill(excitation, bg_param);
+                    number_of_fissions_bg->Fill(excitation);
                     ede_all_fission->Fill(e_energy, de_energy, bg_param);
 
                     for (int i = 0 ; i < NUM_LABR_DETECTORS ; ++i){
@@ -1165,7 +1181,10 @@ void UserSort::AnalyzeGammaPPAC(const word_t &de_word, const word_t &e_word, con
                                 }
 
                                 case is_background : {
+                                    //Not subtract this one after all?
+                                    //Rose subtract
                                     exgam_ppac_newfiss->Fill(energy, excitation, bg_param);
+                                    exgam_ppac_newfiss_bg->Fill(energy, excitation);
                                     break;
 
                                 }

@@ -82,7 +82,7 @@ private:
     Histogram1Dp energy_labr_raw[NUM_LABR_DETECTORS], energy_labr[NUM_LABR_DETECTORS];
     Histogram1Dp energy_labr_all, energy_labr_all_separate;
     Histogram1Dp energy_dE_raw[NUM_SI_DE_DET], energy_dE[NUM_SI_DE_DET];
-    Histogram1Dp energy_E_raw[NUM_SI_E_DET], energy_E[NUM_SI_E_DET], number_of_fissions;
+    Histogram1Dp energy_E_raw[NUM_SI_E_DET], energy_E[NUM_SI_E_DET], number_of_fissions, number_of_fissions_all, number_of_fissions_bg;
 
     // Time spectra.
     Histogram2Dp e_de_time[NUM_SI_RINGS]; // This will be a time : dE ring spectrum.
@@ -109,7 +109,7 @@ private:
 
     // Particle - gamma-ray coincidence matrix
     Histogram2Dp exgam, exgam_bg;
-    Histogram2Dp exgam_ppac, exgam_ppac_bg, exgam_ppac_newfiss;
+    Histogram2Dp exgam_ppac, exgam_ppac_bg, exgam_ppac_newfiss, exgam_ppac_newfiss_all, exgam_ppac_newfiss_bg;
     Histogram2Dp exgam_veto_ppac, exgam_veto_ppac_bg;
 
     // Gain labr
