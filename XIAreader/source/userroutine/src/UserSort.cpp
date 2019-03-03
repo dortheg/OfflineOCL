@@ -1176,7 +1176,8 @@ void UserSort::AnalyzeGammaPPAC(const word_t &de_word, const word_t &e_word, con
                             switch ( CheckTimeStatus(tdiff, labr_time_cuts) ) {
                                 //tdiff, time diff between de and labr
                                 case is_prompt : {
-                                    //exgam_ppac_newfiss->Fill(energy, excitation, bg_param);
+                                    exgam_ppac_newfiss->Fill(energy, excitation, bg_param);
+                                    exgam_ppac_newfiss_bg->Fill(energy, excitation);
                                     break;
                                 }
 
