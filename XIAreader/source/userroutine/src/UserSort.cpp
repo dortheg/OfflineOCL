@@ -41,16 +41,16 @@
 #include <stdlib.h>
 
 //If calculate with PPACS
-#define FISSION 1
+#define FISSION 0 //should be 1 in fission sorting
 
 //If gating on specified energies in ede
-const int GATING = 0;
+const int GATING = 1;
 
 //If cut in energy_particle_time, as seen in book p 152-153
-const int GATING_EDE_TIME = 1;
+const int GATING_EDE_TIME = 0; //was 1 in master-sort
 
 //If line up E-detectors better
-const int E_LINEUP = 1;
+const int E_LINEUP = 0; //was 1 in master-sort
 
 static bool set_par(Parameters& parameters, std::istream& ipar,
                     const std::string& name, int size)
@@ -73,8 +73,9 @@ static bool set_par(Parameters& parameters, std::istream& ipar,
 
 static bool set_gainshift(Parameters& parameters, std::istream& ipar)
 {
-    bool p1 = set_par(parameters, ipar, "gain_labr",    NUM_LABR_DETECTORS );
-    bool p2 = set_par(parameters, ipar, "shift_labr",   NUM_LABR_DETECTORS );
+    bool p0 = set_par(parameters, ipar, "a_labr",    NUM_LABR_DETECTORS );
+    bool p1 = set_par(parameters, ipar, "b_labr",   NUM_LABR_DETECTORS );
+    bool p2 = set_par(parameters, ipar, "c_labr",   NUM_LABR_DETECTORS );
     bool p3 = set_par(parameters, ipar, "gain_de", NUM_SI_DE_DET );
     bool p4 = set_par(parameters, ipar, "shift_de", NUM_SI_DE_DET );
     bool p5 = set_par(parameters, ipar, "gain_e", NUM_SI_DE_DET ); //Changed to DE, to get 64 coeff
@@ -83,12 +84,13 @@ static bool set_gainshift(Parameters& parameters, std::istream& ipar)
     bool p8 = set_par(parameters, ipar, "shift_time_de", NUM_SI_DE_DET );
     bool p9 = set_par(parameters, ipar, "shift_time_e", NUM_SI_E_DET );
     bool p10 = set_par(parameters, ipar, "shift_time_ppac", NUM_PPAC );
-    return (p1 && p2 && p3 && p4 && p5 && p6 && p7 && p8 && p9 && p10);
+    return (p0 && p1 && p2 && p3 && p4 && p5 && p6 && p7 && p8 && p9 && p10);
 }
 
 UserSort::UserSort()
-    : gain_labr( GetParameters(), "gain_labr", NUM_LABR_DETECTORS, 1)
-    , shift_labr( GetParameters(), "shift_labr", NUM_LABR_DETECTORS, 0)
+    : a_labr( GetParameters(), "a_labr", NUM_LABR_DETECTORS, 2) //Unsure what the last number means?
+    , b_labr( GetParameters(), "b_labr", NUM_LABR_DETECTORS, 1)
+    , c_labr( GetParameters(), "c_labr", NUM_LABR_DETECTORS, 0)
     , gain_dE( GetParameters(), "gain_de", NUM_SI_DE_DET, 1)
     , shift_dE( GetParameters(), "shift_de", NUM_SI_DE_DET, 0)
     , gain_E( GetParameters(), "gain_e", NUM_SI_DE_DET, 1) //Changed to DE, to get 64 coeff
@@ -113,7 +115,7 @@ double UserSort::CalibrateE(const word_t &w) const
     switch ( info.type ) {
 
     case labr : {
-        return gain_labr[info.detectorNum]*(w.adcdata + drand48() - 0.5) + shift_labr[info.detectorNum];
+        return a_labr[info.detectorNum]*(w.adcdata + drand48() - 0.5)*(w.adcdata + drand48() - 0.5) + b_labr[info.detectorNum]*(w.adcdata + drand48() - 0.5) + c_labr[info.detectorNum];
     }
     case deDet : {
         return gain_dE[info.detectorNum]*(w.adcdata + drand48() - 0.5) + shift_dE[info.detectorNum];
@@ -558,6 +560,15 @@ void UserSort::CreateSpectra()
         sprintf(tmp, "energy_raw_labr_%02d", i+1);
         energy_labr_raw[i] = Spec(tmp, tmp, 32768, 0, 32768, "Energy [ch]");
 
+        sprintf(tmp, "energy_raw_gated_labr_%02d", i+1);
+        energy_labr_raw_gated[i] = Spec(tmp, tmp, 32768, 0, 32768, "Energy [ch]");
+
+        sprintf(tmp, "energy_raw_particle_labr_%02d", i+1);
+        energy_labr_raw_particle[i] = Spec(tmp, tmp, 32768, 0, 32768, "Energy [ch]");
+
+        sprintf(tmp, "energy_raw_fis_veto_labr_%02d", i+1);
+        energy_labr_raw_fis_veto[i] = Spec(tmp, tmp, 32768, 0, 32768, "Energy [ch]");
+
         sprintf(tmp, "energy_labr_%02d", i+1);
         energy_labr[i] = Spec(tmp, tmp, 10000, 0, 10000, "Energy [keV]");
 
@@ -617,10 +628,18 @@ void UserSort::CreateSpectra()
             sprintf(tmp2, "E : DE raw, pad %d, ring %d", i, j);
             ede_raw[i][j] = Mat(tmp, tmp2, 2048, 0, 32768, "Back energy [ch]", 2048, 0, 32768, "Front energy [ch]");
 
+            sprintf(tmp, "ede_raw_gated_b%d_f%d", i, j);
+            sprintf(tmp2, "E : DE raw, pad %d, ring %d", i, j);
+            ede_raw_gated[i][j] = Mat(tmp, tmp2, 2048, 0, 32768, "Back energy [ch]", 2048, 0, 32768, "Front energy [ch]");
+
             // Make 'calibrated' ede spectrum.
             sprintf(tmp, "ede_b%d_f%d", i, j);
             sprintf(tmp2, "E : DE calibrated, pad %d, ring %d", i, j);
             ede[i][j] = Mat(tmp, tmp2, 2000, 0, 20000, "Back energy [keV]", 500, 0, 5000, "Front energy [keV]");
+
+            sprintf(tmp, "ede_gated_b%d_f%d", i, j);
+            sprintf(tmp2, "E : DE calibrated, pad %d, ring %d", i, j);
+            ede_gated[i][j] = Mat(tmp, tmp2, 2000, 0, 20000, "Back energy [keV]", 500, 0, 5000, "Front energy [keV]");
 
             // Make total energy spectra.
             sprintf(tmp, "h_ede_b%d_f%d", i, j);
@@ -820,13 +839,7 @@ bool UserSort::Sort(const Event &event) //det som sorterer
     // First fill some 'singles' spectra.
     for ( i = 0 ; i < NUM_LABR_DETECTORS ; ++i ){
         for ( j = 0 ; j < event.n_labr[i] ; ++j ){
-
-            if(GATING==1){
-                //not fill energy_labr_raw here
-            }
-            else if(GATING==0){
-                energy_labr_raw[i]->Fill(event.w_labr[i][j].adcdata); //comment out this if gating on event with given energy
-            }
+            energy_labr_raw[i]->Fill(event.w_labr[i][j].adcdata); //comment out this if gating on event with given energy
 
             energy = CalibrateE(event.w_labr[i][j]);
             energy_labr[i]->Fill(energy);
@@ -914,24 +927,31 @@ bool UserSort::Sort(const Event &event) //det som sorterer
 
 
         // Fill DE - E matrices.
-        if(GATING==0){
-            ede_raw[tel][ring]->Fill(e_word.adcdata, de_word.adcdata);
-        }
+        ede_raw[tel][ring]->Fill(e_word.adcdata, de_word.adcdata);
+
         //If energy gate
         double E = e_word.adcdata;
         double DE = de_word.adcdata;
-        double E1_E = 8400.0;
-        double E2_E = 9000.0;
-        double E1_DE = 100.0;
-        double E2_DE = 4000.0;
+        double E1_E = 11500.0;
+        double E2_E = 11800.0;
+        double E1_DE = 830.0;
+        double E2_DE = 1050.0;
         if (E>E1_E && E<E2_E && DE>E1_DE &&DE<E2_DE && GATING==1){
-            ede_raw[tel][ring]->Fill(E, DE);
+            ede_raw_gated[tel][ring]->Fill(E, DE);
         }
 
         double e_energy = CalibrateOnlyE(e_word, de_word);
         double de_energy = CalibrateE(de_word);
 
         ede[tel][ring]->Fill(e_energy, de_energy);
+
+        double E1 = 7700.0;
+        double E2 = 8000.0;
+        double DE1 = 1150.0;
+        double DE2 = 1500.0;
+        if (e_energy>E1 && e_energy<E2 && de_energy>DE1 && de_energy<DE2 && GATING==1){
+            ede_gated[tel][ring]->Fill(e_energy, de_energy);
+        }
 
         // Seems like we may have some issues with the dE rings 6 & 7 (0-7). We will end our
         // sorting here if we have either 6 or 7.
@@ -981,9 +1001,9 @@ bool UserSort::Sort(const Event &event) //det som sorterer
                  ede_gate->Fill(e_energy, de_energy);
             }
 
-            else if(GATING_EDE_TIME==0){
-                energy_particle_time_e_de_all_gate->Fill(e_tot, tdiff_ede);
-                ede_gate->Fill(e_energy, de_energy);
+            energy_particle_time_e_de_all_gate->Fill(e_tot, tdiff_ede);
+            if (GATING_EDE_TIME==0 ){
+                 ede_gate->Fill(e_energy, de_energy);
             }
 
 
@@ -997,7 +1017,7 @@ bool UserSort::Sort(const Event &event) //det som sorterer
             ex *= 1000; // Back to keV units!
 
             //Here change ex to ex_new! In order to make the known peaks fit ex-energies
-            ex = 1.0458313*ex + 2.88477418; //low
+            //ex = 1.0458313*ex + 2.88477418; //low, used this in Master
             //ex = 1.08774584*ex + 20.31316188; //high
 
 
@@ -1060,15 +1080,17 @@ void UserSort::AnalyzeGamma(const word_t &de_word, const double &excitation,cons
             switch ( CheckTimeStatus(tdiff, labr_time_cuts) ) {
                 case is_prompt : {
                     exgam->Fill(energy, excitation);
-
+                    energy_labr_raw_particle[i]->Fill(event.w_labr[i][j].adcdata);
                     //Gate on event in e-de with given energy, only filling labr energy raw with these events
                     word_t e_word = event.trigger;
-                    double E = e_word.adcdata;
-                    double E1 = 8100.0;
-                    double E2 = 8300.0;
-
-                    if (E>E1 && E<E2 && GATING==1){
-                        energy_labr_raw[i]->Fill(event.w_labr[i][j].adcdata);
+                    double E = CalibrateOnlyE(e_word, de_word);
+                    double DE = CalibrateE(de_word);
+                    double E1 = 7700.0;
+                    double E2 = 8000.0;
+                    double DE1 = 1150.0;
+                    double DE2 = 1500.0;
+                    if (E>E1 && E<E2 && DE>DE1 && DE<DE2 && GATING==1){
+                        energy_labr_raw_gated[i]->Fill(event.w_labr[i][j].adcdata);
                     }
 
                     break;
@@ -1076,12 +1098,17 @@ void UserSort::AnalyzeGamma(const word_t &de_word, const double &excitation,cons
                 case is_background : {
                     exgam->Fill(energy, excitation, -1);
                     exgam_bg->Fill(energy, excitation);
+                    energy_labr_raw_particle[i]->Fill(event.w_labr[i][j].adcdata, -1);
+
                     word_t e_word = event.trigger;
-                    double E = e_word.adcdata;
-                    double E1 = 8100.0;
-                    double E2 = 8300.0;
-                    if (E>E1 && E<E2 &&GATING==1){
-                        energy_labr_raw[i]->Fill(event.w_labr[i][j].adcdata, -1);
+                    double E = CalibrateOnlyE(e_word, de_word);
+                    double DE = CalibrateE(de_word);
+                    double E1 = 7700.0;
+                    double E2 = 8000.0;
+                    double DE1 = 1150.0;
+                    double DE2 = 1500.0;
+                    if (E>E1 && E<E2 && DE>DE1 && DE<DE2 && GATING==1){
+                        energy_labr_raw_gated[i]->Fill(event.w_labr[i][j].adcdata, -1);
                     }
                     break;
                 }
@@ -1211,6 +1238,7 @@ void UserSort::AnalyzeGammaPPAC(const word_t &de_word, const word_t &e_word, con
     // Things with gamma
     for (int i = 0 ; i < NUM_LABR_DETECTORS ; ++i){
         for (int j = 0 ; j < event.n_labr[i] ; ++j){
+            // Isn't this also wrong? As we say we need a photon to start counting fissions -> should be other way around
 
             // Get energy and time of the gamma-ray.
             double energy = CalibrateE(event.w_labr[i][j]);
@@ -1285,7 +1313,7 @@ void UserSort::AnalyzeGammaPPAC(const word_t &de_word, const word_t &e_word, con
                     double DE1 = 100.0;
                     double DE2 = 4000.0;
                     if (E>E1 && E<E2 && DE>DE1 &&DE<DE2 && GATING==1){
-                        energy_labr_raw[i]->Fill(event.w_labr[i][j].adcdata);
+                        energy_labr_raw_gated[i]->Fill(event.w_labr[i][j].adcdata);
                     }
                     double e_energy = CalibrateOnlyE(e_word, de_word);
                     double de_energy = CalibrateE(de_word);
@@ -1304,6 +1332,7 @@ void UserSort::AnalyzeGammaPPAC(const word_t &de_word, const word_t &e_word, con
                     else{
                          //de, labr are prompt, but not ppac -> not fission
                          exgam_veto_ppac->Fill(energy, excitation);
+                         energy_labr_raw_fis_veto[i]->Fill(event.w_labr[i][j].adcdata);
                          ede_all_nofission->Fill(e_energy, de_energy);
                          if(ppac_prompt==2){
                              //ede_all_fission->Fill(e_energy, de_energy, bg_param);
@@ -1325,7 +1354,7 @@ void UserSort::AnalyzeGammaPPAC(const word_t &de_word, const word_t &e_word, con
                     double DE1 = 100.0;
                     double DE2 = 4000.0;
                     if (E>E1 && E<E2 && DE>DE1 &&DE<DE2 && GATING==1){
-                         energy_labr_raw[i]->Fill(event.w_labr[i][j].adcdata,-1);
+                         energy_labr_raw_gated[i]->Fill(event.w_labr[i][j].adcdata,-1);
                     }
                     double e_energy = CalibrateOnlyE(e_word, de_word);
                     double de_energy = CalibrateE(de_word);
