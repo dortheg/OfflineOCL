@@ -90,16 +90,15 @@ private:
     Histogram2Dp ppac_vs_dE_time; //Dortheas attempt
     Histogram2Dp labr_align_time;  // LaBr as stop and dE as start. For aligning the LaBr detectors. Axis is x: time, y: LaBr detector nr.
     Histogram2Dp ppac_align_time;   // LaBr 0 as start and PPAC as stop. For aligning the PPACs.
-    Histogram2Dp ppac_align_time_all;  // LaBr as stop and dE as start. For aligning the LaBr detectors. Axis is x: time, y: LaBr detector nr.
-    Histogram2Dp energy_time_labr[NUM_LABR_DETECTORS], energy_time_labr_above[NUM_LABR_DETECTORS];
+    Histogram2Dp energy_time_labr_above[NUM_LABR_DETECTORS];
     Histogram2Dp excitation_time_ppac[NUM_PPAC];
     Histogram2Dp energy_time_ppac[NUM_PPAC];
-    Histogram2Dp energy_time_labr_all, time_energy_labr, time_energy_labr_fission;  // Energy vs. time in labr for all labr detectors.
+    Histogram2Dp time_energy_labr, time_energy_labr_fission;  // Energy vs. time in labr for all labr detectors.
 
 
     // dE vs E
     Histogram2Dp ede_raw[NUM_SI_RINGS][NUM_SI_RINGS], ede_raw_gated[NUM_SI_RINGS][NUM_SI_RINGS], ede[NUM_SI_RINGS][NUM_SI_RINGS], ede_gated[NUM_SI_RINGS][NUM_SI_RINGS];
-    Histogram2Dp ede_all, ede_EDEgate, ede_gate, ede_all_except_pad7, ede_all_bg, energy_time_e_de_all, energy_particle_time_e_de_all, energy_particle_time_e_de_all_gate, energy_E_particle_time_e_de_all, ede_all_fission, ede_all_fission_bg, ede_all_fission_nobgsub,ede_all_nofission,prompt_peak_movement, ede_all_doublepeak;
+    Histogram2Dp ede_all, ede_EDEgate, ede_gate, ede_all_bg, energy_time_e_de_all, energy_particle_time_e_de_all, energy_particle_time_e_de_all_gate, energy_E_particle_time_e_de_all, ede_all_fission, ede_all_fission_bg, ede_all_fission_nobgsub,ede_all_nofission;
     Histogram2Dp filling_test, PFG_mult;
     // Misc. dE/E coincidence spectra stuff.
     Histogram1Dp h_thick;   // "Apparent" thickness spectra.
@@ -109,7 +108,7 @@ private:
 
     // Particle - gamma-ray coincidence matrix
     Histogram2Dp exgam, exgam_bg;
-    Histogram2Dp exgam_ppac, exgam_ppac_bg, exgam_ppac_newfiss, exgam_ppac_newfiss_all, exgam_ppac_newfiss_bg;
+    Histogram2Dp exgam_ppac, exgam_ppac_bg, exgam_ppac_all;
     Histogram2Dp exgam_veto_ppac, exgam_veto_ppac_bg;
 
     // Gain labr

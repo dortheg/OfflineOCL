@@ -41,7 +41,7 @@
 #include <stdlib.h>
 
 //If calculate with PPACS
-#define FISSION 0 //should be 1 in fission sorting
+#define FISSION 1 //should be 1 in fission sorting
 
 //If gating on specified energies in ede
 const int GATING = 1;
@@ -316,9 +316,6 @@ void UserSort::CreateSpectra()
         sprintf(tmp, "energy_labr_%02d", i+1);
         energy_labr[i] = Spec(tmp, tmp, 10000, 0, 10000, "Energy [keV]");
 
-        sprintf(tmp, "energy_time_labr_%02d", i+1);
-        energy_time_labr[i] = Mat(tmp, tmp, 1000, 0, 16000, "LaBr energy [keV]", 2000, -100, 100, "Time difference [ns]");
-
         sprintf(tmp, "energy_time_labr_aboveSn_%02d", i+1);
         //Mat(tmp,tmp,nrbins,start,stop, name of xaxis, and then if 2D, again)
         energy_time_labr_above[i] = Mat(tmp, tmp, 1000, 0, 16000, "LaBr energy [keV]", 2000, -100, 100, "Time difference [ns]");
@@ -409,10 +406,6 @@ void UserSort::CreateSpectra()
         energy_time_ppac[i] = Mat(tmp, tmp2, 2000, 0, 10000, "LaBr energy [keV]", 2000, -100, 100, "t_{PPAC} - t_{LaBr} [ns]");
     }
 
-    sprintf(tmp, "prompt_peak_movement");
-    sprintf(tmp2, "Movement of prompt peak in energy spectrum");
-    prompt_peak_movement = Mat(tmp, tmp2, 100, -50, 50, "t_{LaBr} - t_{dE ANY} [ns]", 100, 2900e9, 3200e9, "t_{Labr}");
-
     sprintf(tmp, "energy_time_e_de_all");
     sprintf(tmp2, "LaBr energy : e-de time diff, all");
     energy_time_e_de_all = Mat(tmp, tmp2, 5000, 0, 6000, "LaBr energy [keV]", 5000, 0, 300, "t_{DE} - t_{E} [ns]");
@@ -463,16 +456,8 @@ void UserSort::CreateSpectra()
     labr_align_time = Mat(tmp, tmp2, 5000, -1500, 1500, "t_{LaBr} - t_{dE ANY} [ns]", NUM_LABR_DETECTORS, 0, NUM_LABR_DETECTORS, "LaBr detector id.");
 
     sprintf(tmp, "ppac_align_time");
-    sprintf(tmp2, "t_{PPAC} - t_{LaBr nr. 1}");
-    ppac_align_time = Mat(tmp, tmp2, 3100, -1500, 1500, "t_{PPAC} - t_{LaBr nr. 1} [ns]", NUM_PPAC, 0, NUM_PPAC, "PPAC id.");
-
-    sprintf(tmp, "ppac_align_time_all");
-    sprintf(tmp2, "t_{PPAC} - t_{LaBr ANY (?)}");
-    ppac_align_time_all = Mat(tmp, tmp2, 3100, -1500, 1500, "t_{PPAC} - t_{LaBr} [ns]", NUM_PPAC, 0, NUM_PPAC, "PPAC id.");
-
-    sprintf(tmp, "energy_time_labr_all");
-    sprintf(tmp2, "E_{LaBr} : t_{LaBr} - t_{dE ANY}, all");
-    energy_time_labr_all = Mat(tmp, tmp2, 5000, 0, 16000, "Energy LaBr [keV]", 2000, -50, 50, "t_{LaBr} - t_{DE} [ns]");
+    sprintf(tmp2, "t_{PPAC} - t_{dE ANY}");
+    ppac_align_time = Mat(tmp, tmp2, 3100, -1500, 1500, "t_{PPAC} - t_{dE ANY} [ns]", NUM_PPAC, 0, NUM_PPAC, "PPAC id.");
 
     sprintf(tmp, "time_energy_labr");
     sprintf(tmp2, "t_{LaBr} - t_{dE ANY} : E_{LaBr}");
@@ -482,15 +467,9 @@ void UserSort::CreateSpectra()
     sprintf(tmp2, "t_{LaBr} - t_{dE ANY} : E_{LaBr}");
     time_energy_labr_fission = Mat(tmp, tmp2, 2000, -50, 50, "t_{LaBr} - t_{DE} [ns]", 5000, 0, 10000, "Energy LaBr [keV]");
 
-
-
     sprintf(tmp, "ede_all");
     sprintf(tmp2, "E : DE, all");
     ede_all = Mat(tmp, tmp2, 10000, 0, 20000, "Back energy [keV]", 1000, 0, 5000, "Front energy [keV]");
-
-    sprintf(tmp, "ede_all_doublepeak");
-    sprintf(tmp2, "E : DE, all");
-    ede_all_doublepeak = Mat(tmp, tmp2, 10000, 0, 20000, "Back energy [keV]", 1000, 0, 5000, "Front energy [keV]");
 
     sprintf(tmp, "ede_all_fission");
     sprintf(tmp2, "E : DE, all");
@@ -513,10 +492,6 @@ void UserSort::CreateSpectra()
     sprintf(tmp2, "E : DE, all, background");
     ede_all_bg = Mat(tmp, tmp2, 10000, 0, 20000, "Back energy [keV]", 1000, 0, 5000, "Front energy [keV]");
 
-    sprintf(tmp, "ede_all_except_pad7");
-    sprintf(tmp2, "E : DE, all");
-    ede_all_except_pad7 = Mat(tmp, tmp2, 10000, 0, 20000, "Back energy [keV]", 1000, 0, 5000, "Front energy [keV]");
-
     sprintf(tmp, "ede_gate");
     sprintf(tmp2, "E : DE, after particle gate");
     ede_gate = Mat(tmp, tmp2, 1000, 0, 20000, "Back energy [keV]", 250, 0, 5000, "Front energy [keV]");
@@ -524,7 +499,6 @@ void UserSort::CreateSpectra()
     sprintf(tmp, "ede_EDEgate");
     sprintf(tmp2, "E : DE, after particle gate");
     ede_EDEgate = Mat(tmp, tmp2, 1000, 0, 20000, "Back energy [keV]", 250, 0, 5000, "Front energy [keV]");
-
 
     sprintf(tmp, "h_thick");
     sprintf(tmp2, "Apparent thickness of #Delta E");
@@ -547,15 +521,8 @@ void UserSort::CreateSpectra()
     sprintf(tmp, "exgam_ppac"); //alfna med fisjon
     exgam_ppac = Mat(tmp, tmp, 1500, 0, 15000, "LaBr [keV]", 1600, -1000, 15000, "Ex [keV]");
 
-    sprintf(tmp, "exgam_ppac_newfiss"); //alfna med fisjon
-    exgam_ppac_newfiss = Mat(tmp, tmp, 1500, 0, 15000, "LaBr [keV]", 1600, -1000, 15000, "Ex [keV]");
-
-    sprintf(tmp, "exgam_ppac_newfiss_all"); //alfna med fisjon
-    exgam_ppac_newfiss_all = Mat(tmp, tmp, 1500, 0, 15000, "LaBr [keV]", 1600, -1000, 15000, "Ex [keV]");
-
-    sprintf(tmp, "exgam_ppac_newfiss_bg"); //alfna med fisjon
-    exgam_ppac_newfiss_bg = Mat(tmp, tmp, 1500, 0, 15000, "LaBr [keV]", 1600, -1000, 15000, "Ex [keV]");
-
+    sprintf(tmp, "exgam_ppac_all"); //alfna med fisjon
+    exgam_ppac_all = Mat(tmp, tmp, 1500, 0, 15000, "LaBr [keV]", 1600, -1000, 15000, "Ex [keV]");
 
     sprintf(tmp, "exgam_ppac_bg");
     exgam_ppac_bg = Mat(tmp, tmp, 1500, 0, 15000, "LaBr [keV]", 1600, -1000, 15000, "Ex [keV]");
@@ -675,7 +642,6 @@ bool UserSort::Sort(const Event &event) //det som sorterer
             for (int j = 0 ; j < event.n_ppac[i] ; ++j){
                 tdiff = CalcTimediff(de_word, event.w_ppac[i][j]);
                 ppac_align_time->Fill(tdiff, i);
-                ppac_align_time_all->Fill(tdiff, i);
             }
         }
 
@@ -707,19 +673,8 @@ bool UserSort::Sort(const Event &event) //det som sorterer
             ede_gated[tel][ring]->Fill(e_energy, de_energy);
         }
 
-        // Seems like we may have some issues with the dE rings 6 & 7 (0-7). We will end our
-        // sorting here if we have either 6 or 7.
-        //if (ring == 6 || ring == 7)
-        //    return true;
-
-        if(tel!=7){
-            ede_all_except_pad7->Fill(e_energy, de_energy);
-        }
-
-        //ede time cuts
-        //Dorthea made
+        //EDE time gate
         tdiff_ede = CalcTimediff(e_word, de_word);
-
         ede_all->Fill(e_energy, de_energy);
 
         // Calculate 'apparent thickness'
@@ -822,9 +777,6 @@ void UserSort::AnalyzeGamma(const word_t &de_word, const double &excitation,cons
 
             // Fill time spectra.
             labr_align_time->Fill(tdiff, i);
-
-            energy_time_labr[i]->Fill(energy, tdiff);
-            energy_time_labr_all->Fill(energy, tdiff);
             time_energy_labr->Fill(tdiff, energy);
 
             if ( excitation > 8473.60 ) //Insert Sn for Pu!
@@ -897,6 +849,24 @@ void UserSort::AnalyzeGammaPPAC(const word_t &de_word, const word_t &e_word, con
         }
     }
 
+    //Things with gamma
+    for (int i = 0 ; i < NUM_LABR_DETECTORS ; ++i){
+        for (int j = 0 ; j < event.n_labr[i] ; ++j){
+
+            double energy = CalibrateE(event.w_labr[i][j]);
+            double tdiff = CalcTimediff(de_word, event.w_labr[i][j]);
+
+            labr_align_time->Fill(tdiff, i);
+            time_energy_labr->Fill(tdiff, energy);
+
+            word_t e_word = event.trigger;
+            double tdiff_ede;
+            tdiff_ede = CalcTimediff(e_word, de_word);
+            energy_time_e_de_all->Fill(energy, tdiff_ede);
+        }
+    }
+
+
     //fission counting
     //count same ff several times, in the case two de's from different e's fired?
     for (int n = 0 ; n < NUM_PPAC ; ++n){
@@ -924,16 +894,16 @@ void UserSort::AnalyzeGammaPPAC(const word_t &de_word, const word_t &e_word, con
                                 //tdiff, time diff between de and labr
                                 case is_prompt : {
                                     //Rose fill
-                                    exgam_ppac_newfiss->Fill(energy, excitation);
-                                    exgam_ppac_newfiss_all->Fill(energy, excitation);
+                                    exgam_ppac->Fill(energy, excitation);
+                                    exgam_ppac_all->Fill(energy, excitation);
                                     prompt = 1;
                                     break;
                                 }
 
                                 case is_background : {
                                     //Rose subtract
-                                    exgam_ppac_newfiss->Fill(energy, excitation, bg_param);
-                                    exgam_ppac_newfiss_bg->Fill(energy, excitation);
+                                    exgam_ppac->Fill(energy, excitation, bg_param);
+                                    exgam_ppac_bg->Fill(energy, excitation);
                                     bg = 1;
                                     break;
                                 }
@@ -961,16 +931,16 @@ void UserSort::AnalyzeGammaPPAC(const word_t &de_word, const word_t &e_word, con
                             switch ( CheckTimeStatus(tdiff, labr_time_cuts) ) {
                                 //tdiff, time diff between de and labr
                                 case is_prompt : {
-                                    exgam_ppac_newfiss->Fill(energy, excitation, bg_param);
-                                    exgam_ppac_newfiss_bg->Fill(energy, excitation);
+                                    exgam_ppac->Fill(energy, excitation, bg_param);
+                                    exgam_ppac_bg->Fill(energy, excitation);
                                     break;
                                 }
 
                                 case is_background : {
                                     //Not subtract this one after all?
                                     //Rose subtract
-                                    exgam_ppac_newfiss->Fill(energy, excitation, bg_param);
-                                    exgam_ppac_newfiss_bg->Fill(energy, excitation);
+                                    exgam_ppac->Fill(energy, excitation, bg_param);
+                                    exgam_ppac_bg->Fill(energy, excitation);
                                     break;
 
                                 }
@@ -992,170 +962,7 @@ void UserSort::AnalyzeGammaPPAC(const word_t &de_word, const word_t &e_word, con
         }
 
     }
-
-    // Things with gamma
-    for (int i = 0 ; i < NUM_LABR_DETECTORS ; ++i){
-        for (int j = 0 ; j < event.n_labr[i] ; ++j){
-            // Isn't this also wrong? As we say we need a photon to start counting fissions -> should be other way around
-
-            // Get energy and time of the gamma-ray.
-            double energy = CalibrateE(event.w_labr[i][j]);
-            double tdiff = CalcTimediff(de_word, event.w_labr[i][j]);
-            double tabs = CalcAbsTime(event.w_labr[i][j]);
-
-            //For one labr, check movement of peak
-            if(i ==3) {
-                prompt_peak_movement->Fill(tdiff, tabs);
-
-            }
-
-            // Fill time spectra.
-            labr_align_time->Fill(tdiff, i);
-            energy_time_labr[i]->Fill(energy, tdiff);
-            energy_time_labr_all->Fill(energy, tdiff);
-            time_energy_labr->Fill(tdiff, energy);
-
-
-            word_t e_word = event.trigger;
-            double tdiff_ede;
-            tdiff_ede = CalcTimediff(e_word, de_word);
-            energy_time_e_de_all->Fill(energy, tdiff_ede);
-
-            int ppac_prompt = 0;
-
-            //Is this correct? Doesnt it loop through all events, and changes ppac_prompt between true and false?
-            for (int n = 0 ; n < NUM_PPAC ; ++n){
-                //std::cout << "m: " << event.n_ppac[n] << std::endl;
-                //Number of PPAC
-                for (int m = 0 ; m < event.n_ppac[n] ; ++m){
-                    //All events in ppacs
-                    //double tdiff_ppac = CalcTimediff(event.w_labr[0][0], event.w_ppac[n][m]);
-                    //double tdiff_ppac = CalcTimediff(event.w_labr[i][j], event.w_ppac[n][m]);
-                    double tdiff_ppac = CalcTimediff(de_word, event.w_ppac[n][m]);
-
-                    ppac_align_time_all->Fill(tdiff_ppac, n);
-                    energy_time_ppac[n]->Fill(energy, tdiff_ppac); //if aligned, can use this for PFG/PFN separations
-
-
-                    switch ( CheckTimeStatus(tdiff_ppac, ppac_time_cuts) ) {
-//                        tdiff_ppac: time diff between ppac and Labr3, define fission
-                        case is_prompt : {
-                            //std::cout << "true" << std::endl;
-                            ppac_prompt = 1;
-                            break;
-                        }
-                        case is_background : {
-                            //std::cout << "false" << std::endl;
-                            ppac_prompt = 2;
-                            break;
-                        }
-                        case ignore : {
-                            //std::cout << "ignore" << std::endl;
-                            break;
-                        }
-                    }
-                }
-
-            }
-            //std::cout << "---" << std::endl;
-
-            // Check time gate.
-            switch ( CheckTimeStatus(tdiff, labr_time_cuts) ) {
-                //tdiff, time diff between de and labr
-                case is_prompt : {
-                    //Gate on event in e-de with given energy, only filling labr energy raw with these events
-                    word_t e_word = event.trigger;
-                    //Here, E and DE are not calibrated!
-                    double E = e_word.adcdata;
-                    double E1 = 12000.0;
-                    double E2 = 17000.0;
-                    double DE = de_word.adcdata;
-                    double DE1 = 600.0;
-                    double DE2 = 1300.0;
-                    if (E>E1 && E<E2 && DE>DE1 &&DE<DE2 && GATING==1){
-                        energy_labr_raw_gated[i]->Fill(event.w_labr[i][j].adcdata);
-                    }
-                    double e_energy = CalibrateOnlyE(e_word, de_word);
-                    double de_energy = CalibrateE(de_word);
-                    if(i==0||i==1||i==2||i==3){
-                        ede_all_doublepeak->Fill(e_energy, de_energy);
-                    }
-
-                    exgam->Fill(energy, excitation);
-                    if (ppac_prompt==1){
-                         //de, labr and ppac are prompt->Fission
-                        //ede_all_fission should not be filled here, means it is filled for each gamma, not for each ede... not important though
-                        //ede_all_fission->Fill(e_energy, de_energy);
-                        //ede_all_fission_nobgsub->Fill(e_energy, de_energy);
-                        exgam_ppac->Fill(energy, excitation);
-                    }
-                    else{
-                         //de, labr are prompt, but not ppac -> not fission
-                         exgam_veto_ppac->Fill(energy, excitation);
-                         energy_labr_raw_fis_veto[i]->Fill(event.w_labr[i][j].adcdata);
-                         ede_all_nofission->Fill(e_energy, de_energy);
-                         if(ppac_prompt==2){
-                             //ede_all_fission->Fill(e_energy, de_energy, bg_param);
-                             //ede_all_fission_bg->Fill(e_energy, de_energy);
-                             exgam_ppac->Fill(energy, excitation, bg_param);
-                             exgam_ppac_bg->Fill(energy, excitation);
-                        }
-                    }
-                    break;
-                }
-
-
-                case is_background : {
-                    word_t e_word = event.trigger;
-                    double E = e_word.adcdata;
-                    double E1 = 12000.0;
-                    double E2 = 17000.0;
-                    double DE = de_word.adcdata;
-                    double DE1 = 600.0;
-                    double DE2 = 1300.0;
-                    if (E>E1 && E<E2 && DE>DE1 &&DE<DE2 && GATING==1){
-                         energy_labr_raw_gated[i]->Fill(event.w_labr[i][j].adcdata,-1);
-                    }
-                    double e_energy = CalibrateOnlyE(e_word, de_word);
-                    double de_energy = CalibrateE(de_word);
-
-                    if(i==0||i==1||i==2||i==3){
-                        ede_all_doublepeak->Fill(e_energy, de_energy, -1);
-                      }
-
-                    //Cuts in energy_particle_time -> Get rid of background
-                    exgam->Fill(energy, excitation, -1);
-                    exgam_bg->Fill(energy, excitation);
-
-                    if (ppac_prompt==1){
-                        exgam_ppac->Fill(energy, excitation, bg_param);
-                        exgam_ppac_bg->Fill(energy, excitation);
-                        //ede_all_fission->Fill(e_energy, de_energy, bg_param);
-                        //ede_all_fission_bg->Fill(e_energy, de_energy);
-                    }
-
-                    else {
-                        if(ppac_prompt==2){
-                            //ede_all_fission->Fill(e_energy, de_energy, bg_param);
-                            //ede_all_fission_bg->Fill(e_energy, de_energy);
-                            exgam_ppac->Fill(energy, excitation, bg_param);
-                            exgam_ppac_bg->Fill(energy, excitation);
-                        }
-
-                        exgam_veto_ppac->Fill(energy, excitation, -1);
-                        exgam_veto_ppac_bg->Fill(energy, excitation);
-                    }
-                    break;
-                }
-
-                case ignore : {
-                        break;
-                }
-            }
-        }
-    }
 }
-
 
 
 
