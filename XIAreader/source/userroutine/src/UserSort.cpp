@@ -467,6 +467,10 @@ void UserSort::CreateSpectra()
     sprintf(tmp2, "t_{LaBr} - t_{dE ANY} : E_{LaBr}");
     time_energy_labr_fission = Mat(tmp, tmp2, 2000, -50, 50, "t_{LaBr} - t_{DE} [ns]", 5000, 0, 10000, "Energy LaBr [keV]");
 
+    sprintf(tmp, "time_de_labr_ppac");
+    sprintf(tmp2, "t_{LaBr} - t_{dE ANY} : t_{PPAC} - t_{dE ANY}");
+    time_energy_labr = Mat(tmp, tmp2, 10000, -1500, 1500, "t_{LaBr} - t_{DE} [ns]", 10000, -1500, 1500, "t_{PPAC} - t_{DE} [ns]");
+
     sprintf(tmp, "ede_all");
     sprintf(tmp2, "E : DE, all");
     ede_all = Mat(tmp, tmp2, 10000, 0, 20000, "Back energy [keV]", 1000, 0, 5000, "Front energy [keV]");
@@ -841,11 +845,9 @@ void UserSort::AnalyzeGammaPPAC(const word_t &de_word, const word_t &e_word, con
     for (int i = 0 ; i < NUM_PPAC ; ++i){
         for (int j = 0 ; j < event.n_ppac[i] ; ++j){
 
-            double tdiff = CalcTimediff(de_word, event.w_ppac[i][j]);
-            excitation_time_ppac[i]->Fill(excitation, tdiff);
-            //Dortheas attempt
-            ppac_vs_dE_time->Fill(tdiff,i);
-
+            double tdiff_ppac = CalcTimediff(de_word, event.w_ppac[i][j]);
+            excitation_time_ppac[i]->Fill(excitation, tdiff_ppac);
+            ppac_vs_dE_time->Fill(tdiff_ppac,i);
         }
     }
 

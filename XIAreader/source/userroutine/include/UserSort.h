@@ -90,6 +90,7 @@ private:
     Histogram2Dp ppac_vs_dE_time; //Dortheas attempt
     Histogram2Dp labr_align_time;  // LaBr as stop and dE as start. For aligning the LaBr detectors. Axis is x: time, y: LaBr detector nr.
     Histogram2Dp ppac_align_time;   // LaBr 0 as start and PPAC as stop. For aligning the PPACs.
+    Histogram2Dp time_de_labr_ppac; //t_Labr - t_DE : t_PPAC - t_DE
     Histogram2Dp energy_time_labr_above[NUM_LABR_DETECTORS];
     Histogram2Dp excitation_time_ppac[NUM_PPAC];
     Histogram2Dp energy_time_ppac[NUM_PPAC];
