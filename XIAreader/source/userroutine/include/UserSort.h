@@ -100,7 +100,7 @@ private:
     // dE vs E
     Histogram2Dp ede_raw[NUM_SI_RINGS][NUM_SI_RINGS], ede_raw_gated[NUM_SI_RINGS][NUM_SI_RINGS], ede[NUM_SI_RINGS][NUM_SI_RINGS], ede_gated[NUM_SI_RINGS][NUM_SI_RINGS];
     Histogram2Dp ede_all, ede_EDEgate, ede_gate, ede_all_bg, energy_time_e_de_all, energy_particle_time_e_de_all, energy_particle_time_e_de_all_gate, energy_E_particle_time_e_de_all, ede_all_fission, ede_all_fission_bg, ede_all_fission_nobgsub,ede_all_nofission;
-    Histogram2Dp filling_test, PFG_mult;
+    Histogram2Dp PFG_mult;
     // Misc. dE/E coincidence spectra stuff.
     Histogram1Dp h_thick;   // "Apparent" thickness spectra.
     Histogram1Dp h_ede[NUM_SI_RINGS][NUM_SI_RINGS], h_ede_all; // Total energy deposited after particle gate.
@@ -108,7 +108,7 @@ private:
 
 
     // Particle - gamma-ray coincidence matrix
-    Histogram2Dp exgam, exgam_bg;
+    Histogram2Dp exgam, exgam_bg;//, labr_vs_ppac_time;
     Histogram2Dp exgam_ppac, exgam_ppac_bg, exgam_ppac_all;
     Histogram2Dp exgam_veto_ppac, exgam_veto_ppac_bg;
 

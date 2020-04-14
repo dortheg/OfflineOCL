@@ -423,11 +423,6 @@ void UserSort::CreateSpectra()
     sprintf(tmp2, "Particle energy : e-de time diff, all, gated");
     energy_particle_time_e_de_all_gate = Mat(tmp, tmp2, 5000, 0, 20000, "Particle energy [keV]", 5000, 0, 300, "t_{DE} - t_{E} [ns]");
 
-    sprintf(tmp, "filling_test");
-    sprintf(tmp2, "Particle energy : e-de time diff, all, gated, test");
-    filling_test = Mat(tmp, tmp2, 5000, 0, 20000, "Particle energy [keV]", 5000, 0, 300, "t_{DE} - t_{E} [ns]");
-
-
     //Dorthea attempt to create one spectrum with all labr
     sprintf(tmp, "energy_labr_all");
     energy_labr_all = Spec(tmp, tmp, 10000, 0, 10000, "Energy [keV]");
@@ -445,8 +440,9 @@ void UserSort::CreateSpectra()
     sprintf(tmp2, "t_{dE} - t_{LaBr nr. 3}");
     de_align_time_3 = Mat(tmp, tmp2, 5000, -1500, 1500, "t_{dE} - t_{LaBr nr. 3} [ns]", NUM_SI_DE_DET, 0, NUM_SI_DE_DET, "#Delta E detector id.");
 
+    //sprintf(tmp, "labr_vs_ppac_time");
+    //labr_vs_ppac_time = Mat(tmp, tmp, 5000, -1500, 1500, "t_{LaBr} - t_{DE} [ns]", 5000, -1500, 1500, "t_{PPAC} - t_{DE} [ns]");
 
-    //Tried to write
     sprintf(tmp, "ppac_vs_dE_time");
     sprintf(tmp2, "t_{PPAC} - t_{dE ANY}");
     ppac_vs_dE_time = Mat(tmp, tmp2, 4000, -1500, 1500, "t_{PPAC 1} - t_{dE ANY} [ns]", NUM_PPAC, 0, NUM_PPAC, "PPAC id.");
@@ -870,7 +866,6 @@ void UserSort::AnalyzeGammaPPAC(const word_t &de_word, const word_t &e_word, con
 
 
     //fission counting
-    //count same ff several times, in the case two de's from different e's fired?
     for (int n = 0 ; n < NUM_PPAC ; ++n){
         for (int m = 0 ; m < event.n_ppac[n] ; ++m){
             //All events in ppacs
@@ -891,6 +886,7 @@ void UserSort::AnalyzeGammaPPAC(const word_t &de_word, const word_t &e_word, con
                         for (int j = 0 ; j < event.n_labr[i] ; ++j){
                             double energy = CalibrateE(event.w_labr[i][j]);
                             double tdiff = CalcTimediff(de_word, event.w_labr[i][j]);
+                            //labr_vs_ppac_time->Fill(tdiff, tdiff_ppac);
 
                             switch ( CheckTimeStatus(tdiff, labr_time_cuts) ) {
                                 //tdiff, time diff between de and labr
@@ -929,6 +925,8 @@ void UserSort::AnalyzeGammaPPAC(const word_t &de_word, const word_t &e_word, con
                         for (int j = 0 ; j < event.n_labr[i] ; ++j){
                             double energy = CalibrateE(event.w_labr[i][j]);
                             double tdiff = CalcTimediff(de_word, event.w_labr[i][j]);
+                            //labr_vs_ppac_time->Fill(tdiff, tdiff_ppac);
+
 
                             switch ( CheckTimeStatus(tdiff, labr_time_cuts) ) {
                                 //tdiff, time diff between de and labr
@@ -957,7 +955,13 @@ void UserSort::AnalyzeGammaPPAC(const word_t &de_word, const word_t &e_word, con
                     break;
                 }
                 case ignore : {
-                    break;
+                    for (int i = 0 ; i < NUM_LABR_DETECTORS ; ++i){
+                        for (int j = 0 ; j < event.n_labr[i] ; ++j){
+                            double tdiff = CalcTimediff(de_word, event.w_labr[i][j]);
+                            //labr_vs_ppac_time->Fill(tdiff, tdiff_ppac);
+
+                        }
+                    }
                 }
             }
 
