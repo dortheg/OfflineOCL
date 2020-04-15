@@ -80,7 +80,7 @@ private:
 
     // SINGLES histograms.
     Histogram1Dp energy_labr_raw[NUM_LABR_DETECTORS], energy_labr_raw_gated[NUM_LABR_DETECTORS], energy_labr_raw_particle[NUM_LABR_DETECTORS], energy_labr_raw_fis_veto[NUM_LABR_DETECTORS], energy_labr[NUM_LABR_DETECTORS];
-    Histogram1Dp energy_labr_all, energy_labr_all_separate, energy_labr_gated_all;
+    Histogram1Dp energy_labr_all, energy_labr_gated_all;
     Histogram1Dp energy_dE_raw[NUM_SI_DE_DET], energy_dE[NUM_SI_DE_DET];
     Histogram1Dp energy_E_raw[NUM_SI_E_DET], energy_E[NUM_SI_E_DET], number_of_fissions, number_of_fissions_all, number_of_fissions_bg;
 
@@ -99,7 +99,7 @@ private:
 
     // dE vs E
     Histogram2Dp ede_raw[NUM_SI_RINGS][NUM_SI_RINGS], ede_raw_gated[NUM_SI_RINGS][NUM_SI_RINGS], ede[NUM_SI_RINGS][NUM_SI_RINGS], ede_gated[NUM_SI_RINGS][NUM_SI_RINGS];
-    Histogram2Dp ede_all, ede_EDEgate, ede_gate, ede_all_bg, energy_time_e_de_all, energy_particle_time_e_de_all, energy_particle_time_e_de_all_gate, energy_E_particle_time_e_de_all, ede_all_fission, ede_all_fission_bg, ede_all_fission_nobgsub,ede_all_nofission;
+    Histogram2Dp ede_all, ede_EDEgate, ede_gate, ede_all_bg, energy_labr_time_e_de, energy_E_particle_time_e_de_gate, energy_E_particle_time_e_de, ede_all_fission, ede_all_fission_bg, ede_all_fission_nobgsub,ede_all_nofission;
     Histogram2Dp PFG_mult;
     // Misc. dE/E coincidence spectra stuff.
     Histogram1Dp h_thick;   // "Apparent" thickness spectra.
@@ -108,7 +108,7 @@ private:
 
 
     // Particle - gamma-ray coincidence matrix
-    Histogram2Dp exgam, exgam_bg;//, labr_vs_ppac_time;
+    Histogram2Dp exgam, exgam_bg, labr_vs_ppac_time;
     Histogram2Dp exgam_ppac, exgam_ppac_bg, exgam_ppac_all;
     Histogram2Dp exgam_veto_ppac, exgam_veto_ppac_bg;
 
