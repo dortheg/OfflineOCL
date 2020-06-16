@@ -86,7 +86,7 @@ private:
 
     // Time spectra.
     Histogram2Dp e_de_time[NUM_SI_RINGS]; // This will be a time : dE ring spectrum.
-    Histogram2Dp de_align_time, de_align_time_3;  // LaBr 0 as start? and dE as start. For aligning the dE detectors. Axis is x: time, y: dE detector nr.
+    Histogram2Dp de_align_time;  // LaBr 0 as start? and dE as start. For aligning the dE detectors. Axis is x: time, y: dE detector nr.
     Histogram2Dp ppac_vs_dE_time; //Dortheas attempt
     Histogram2Dp labr_align_time;  // LaBr as stop and dE as start. For aligning the LaBr detectors. Axis is x: time, y: LaBr detector nr.
     Histogram2Dp ppac_align_time;   // LaBr 0 as start and PPAC as stop. For aligning the PPACs.
@@ -99,7 +99,7 @@ private:
 
     // dE vs E
     Histogram2Dp ede_raw[NUM_SI_RINGS][NUM_SI_RINGS], ede_raw_gated[NUM_SI_RINGS][NUM_SI_RINGS], ede[NUM_SI_RINGS][NUM_SI_RINGS], ede_gated[NUM_SI_RINGS][NUM_SI_RINGS];
-    Histogram2Dp ede_all, ede_EDEgate, ede_gate, ede_all_bg, energy_labr_time_e_de, energy_E_particle_time_e_de_gate, energy_E_particle_time_e_de, ede_fission, ede_fission_bg, ede_fission_nobgsub,ede_all_nofission;
+    Histogram2Dp ede_all, ede_gate, ede_all_bg, energy_labr_time_e_de, energy_E_particle_time_e_de, ede_fission, ede_fission_bg, ede_fission_nobgsub,ede_all_nofission;
     Histogram2Dp ede_gamma_fission, ede_gamma_fission_nobgsub, ede_gamma_fission_bg;
     Histogram2Dp PFG_mult;
     // Misc. dE/E coincidence spectra stuff.

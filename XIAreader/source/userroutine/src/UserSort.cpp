@@ -46,9 +46,6 @@
 //If gating on specified energies in ede
 const int GATING = 1;
 
-//If cut in energy_particle_time, as seen in book p 152-153
-const int GATING_EDE_TIME = 0; //was 1 in master-sort
-
 static bool set_par(Parameters& parameters, std::istream& ipar,
                     const std::string& name, int size)
 {
@@ -411,20 +408,12 @@ void UserSort::CreateSpectra()
     sprintf(tmp2, "E energy : e-de time diff");
     energy_E_particle_time_e_de = Mat(tmp, tmp2, 5000, 0, 20000, "E energy [keV]", 5000, 0, 300, "t_{DE} - t_{E} [ns]");
 
-    sprintf(tmp, "energy_E_particle_time_e_de_gate");
-    sprintf(tmp2, "E energy : e-de time diff, gated");
-    energy_E_particle_time_e_de_gate = Mat(tmp, tmp2, 5000, 0, 20000, "E energy [keV]", 5000, 0, 300, "t_{DE} - t_{E} [ns]");
-
     sprintf(tmp, "energy_labr_all");
     energy_labr_all = Spec(tmp, tmp, 10000, 0, 10000, "Energy [keV]");
 
     sprintf(tmp, "de_align_time");
     sprintf(tmp2, "t_{dE} - t_{LaBr nr. 1}");
     de_align_time = Mat(tmp, tmp2, 5000, -1500, 1500, "t_{dE} - t_{LaBr nr. 1} [ns]", NUM_SI_DE_DET, 0, NUM_SI_DE_DET, "#Delta E detector id.");
-
-    sprintf(tmp, "de_align_time_3");
-    sprintf(tmp2, "t_{dE} - t_{LaBr nr. 3}");
-    de_align_time_3 = Mat(tmp, tmp2, 5000, -1500, 1500, "t_{dE} - t_{LaBr nr. 3} [ns]", NUM_SI_DE_DET, 0, NUM_SI_DE_DET, "#Delta E detector id.");
 
     sprintf(tmp, "labr_vs_ppac_time");
     labr_vs_ppac_time = Mat(tmp, tmp, 5000, -1500, 1500, "t_{LaBr} - t_{DE} [ns]", 5000, -1500, 1500, "t_{PPAC} - t_{DE} [ns]");
@@ -491,10 +480,6 @@ void UserSort::CreateSpectra()
     sprintf(tmp, "ede_gate");
     sprintf(tmp2, "E : DE, after particle gate");
     ede_gate = Mat(tmp, tmp2, 1000, 0, 20000, "Back energy [keV]", 250, 0, 5000, "Front energy [keV]");
-
-    sprintf(tmp, "ede_EDEgate");
-    sprintf(tmp2, "E : DE, after particle gate");
-    ede_EDEgate = Mat(tmp, tmp2, 1000, 0, 20000, "Back energy [keV]", 250, 0, 5000, "Front energy [keV]");
 
     sprintf(tmp, "h_thick");
     sprintf(tmp2, "Apparent thickness of #Delta E");
@@ -620,14 +605,6 @@ bool UserSort::Sort(const Event &event)
         tdiff = CalcTimediff(e_word, de_word);
         e_de_time[tel]->Fill(tdiff, ring);
 
-        // Align the dE times...
-        if(event.n_labr[2] == 1){
-            //Check alignment against Labr03
-            tdiff = CalcTimediff(event.w_labr[2][0], de_word);
-            de_align_time_3->Fill(tdiff, GetDetector(de_word.address).detectorNum);
-        }
-
-
         if ( event.n_labr[0] == 1){
             tdiff = CalcTimediff(event.w_labr[0][0], de_word);
             de_align_time->Fill(tdiff, GetDetector(de_word.address).detectorNum);
@@ -680,32 +657,16 @@ bool UserSort::Sort(const Event &event)
         // Calculate the particle energy.
         double e_tot = e_energy + de_energy;
 
-        //Dorthea made
-        double y_upper = 0.0062125*e_tot + 205.926;
-        double y_lower = 0.0058352*e_tot + 60;
-
-        if (tdiff_ede < y_upper && tdiff_ede > y_lower && GATING_EDE_TIME==1 ){
-             ede_EDEgate->Fill(e_energy, de_energy);
-        }
 
         // Check if correct particle
         if ( thick >= thick_range[0] && thick <= thick_range[1] ){
-
-            //ede_gate->Fill(e_energy, de_energy);
 
             // Filling 'total particle energy' spectrum.
             h_ede[tel][ring]->Fill( e_tot );
             h_ede[tel][ring]->Fill( e_tot );
             h_ede_all->Fill( e_tot );
 
-            if (tdiff_ede < y_upper && tdiff_ede > y_lower && GATING_EDE_TIME==1 ){
-                 energy_E_particle_time_e_de_gate->Fill(e_energy, tdiff_ede);
-                 ede_gate->Fill(e_energy, de_energy);
-            }
-
-            if (GATING_EDE_TIME==0 ){
-                 ede_gate->Fill(e_energy, de_energy);
-            }
+            ede_gate->Fill(e_energy, de_energy);
 
             energy_E_particle_time_e_de->Fill(e_energy, tdiff_ede);
 
@@ -722,23 +683,10 @@ bool UserSort::Sort(const Event &event)
             // Analyze gamma rays.
         #if FISSION
             word_t e_word = event.trigger;
-            double e_energy = CalibrateOnlyE(e_word, de_word);
-            double de_energy = CalibrateE(de_word);
-            double e_tot = e_energy + de_energy;
-            double tdiff_ede = CalcTimediff(e_word, de_word);
-            //Cuts in energy_particle_time -> Get rid of background
-            double y_upper = 0.0062125*e_tot + 205.926;
-            double y_lower = 0.0058352*e_tot + 60;
-
-            if (tdiff_ede < y_upper && e_tot>4000 && tdiff_ede > y_lower && GATING_EDE_TIME==1){
-                AnalyzeGammaPPAC(de_word, e_word, ex, event);
-            }
-            else if(GATING_EDE_TIME==0){
-                AnalyzeGammaPPAC(de_word, e_word, ex, event);
-            }
+            AnalyzeGammaPPAC(de_word, e_word, ex, event);
         #else
             AnalyzeGamma(de_word, ex, event);
-        #endif // FISSION
+        #endif
 
        }
     }
