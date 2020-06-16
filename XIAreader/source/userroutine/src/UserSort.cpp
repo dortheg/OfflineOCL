@@ -453,21 +453,35 @@ void UserSort::CreateSpectra()
     sprintf(tmp2, "E : DE, all");
     ede_all = Mat(tmp, tmp2, 10000, 0, 20000, "Back energy [keV]", 1000, 0, 5000, "Front energy [keV]");
 
-    sprintf(tmp, "ede_all_fission");
+    //Checking where the particles in correlation with fission comes from
+    sprintf(tmp, "ede_fission");
     sprintf(tmp2, "E : DE, all");
-    ede_all_fission = Mat(tmp, tmp2, 10000, 0, 20000, "Back energy [keV]", 1000, 0, 5000, "Front energy [keV]");
+    ede_fission = Mat(tmp, tmp2, 10000, 0, 20000, "Back energy [keV]", 1000, 0, 5000, "Front energy [keV]");
 
-    sprintf(tmp, "ede_all_fission_nobgsub");
+    sprintf(tmp, "ede_fission_nobgsub");
     sprintf(tmp2, "E : DE, all");
-    ede_all_fission_nobgsub = Mat(tmp, tmp2, 10000, 0, 20000, "Back energy [keV]", 1000, 0, 5000, "Front energy [keV]");
+    ede_fission_nobgsub = Mat(tmp, tmp2, 10000, 0, 20000, "Back energy [keV]", 1000, 0, 5000, "Front energy [keV]");
 
-    sprintf(tmp, "ede_all_fission_bg");
+    sprintf(tmp, "ede_fission_bg");
     sprintf(tmp2, "E : DE, all");
-    ede_all_fission_bg = Mat(tmp, tmp2, 10000, 0, 20000, "Back energy [keV]", 1000, 0, 5000, "Front energy [keV]");
+    ede_fission_bg = Mat(tmp, tmp2, 10000, 0, 20000, "Back energy [keV]", 1000, 0, 5000, "Front energy [keV]");
 
     sprintf(tmp, "ede_all_nofission");
     sprintf(tmp2, "E : DE, all");
     ede_all_nofission = Mat(tmp, tmp2, 10000, 0, 20000, "Back energy [keV]", 1000, 0, 5000, "Front energy [keV]");
+
+    //Checking where the gammas in coincidence with a particle and fission come from
+    sprintf(tmp, "ede_gamma_fission");
+    sprintf(tmp2, "E : DE, all");
+    ede_gamma_fission = Mat(tmp, tmp2, 10000, 0, 20000, "Back energy [keV]", 1000, 0, 5000, "Front energy [keV]");
+
+    sprintf(tmp, "ede_gamma_fission_nobgsub");
+    sprintf(tmp2, "E : DE, all");
+    ede_gamma_fission_nobgsub = Mat(tmp, tmp2, 10000, 0, 20000, "Back energy [keV]", 1000, 0, 5000, "Front energy [keV]");
+
+    sprintf(tmp, "ede_gamma_fission_bg");
+    sprintf(tmp2, "E : DE, all");
+    ede_gamma_fission_bg = Mat(tmp, tmp2, 10000, 0, 20000, "Back energy [keV]", 1000, 0, 5000, "Front energy [keV]");
 
 
     sprintf(tmp, "ede_all_bg");
@@ -524,7 +538,7 @@ void UserSort::CreateSpectra()
 }
 
 
-bool UserSort::Sort(const Event &event) //det som sorterer
+bool UserSort::Sort(const Event &event)
 {
     int i, j;
     double energy;
@@ -542,11 +556,10 @@ bool UserSort::Sort(const Event &event) //det som sorterer
     // First fill some 'singles' spectra.
     for ( i = 0 ; i < NUM_LABR_DETECTORS ; ++i ){
         for ( j = 0 ; j < event.n_labr[i] ; ++j ){
-            energy_labr_raw[i]->Fill(event.w_labr[i][j].adcdata); //comment out this if gating on event with given energy
+            energy_labr_raw[i]->Fill(event.w_labr[i][j].adcdata);
 
             energy = CalibrateE(event.w_labr[i][j]);
             energy_labr[i]->Fill(energy);
-            //Dorthea attempt at creating labr energy spectrum with all Labr
             energy_labr_all->Fill(energy);
         }
 
@@ -701,15 +714,6 @@ bool UserSort::Sort(const Event &event) //det som sorterer
             ex += ex_from_ede[3*ring + 1]*(e_tot*1e-3); // Linear part.
             ex += ex_from_ede[3*ring + 2]*( e_tot*1e-3 )*( e_tot*1e-3 ); // Quadratic term.
             ex *= 1000; // Back to keV units!
-
-            //Should maybe not have new ex?
-            //Here change ex to ex_new! In order to make the known peaks fit ex-energies
-            //ex = 1.0458313*ex + 2.88477418; //low, used this in Master
-            //ex = 1.08774584*ex + 20.31316188; //high
-
-            //ex = 1.0458313*ex; //low
-            //ex = 1.073738680465718*ex; //high
-
 
             h_ex[tel][ring]->Fill(ex);
             h_ex_all->Fill(ex);
@@ -872,8 +876,8 @@ void UserSort::AnalyzeGammaPPAC(const word_t &de_word, const word_t &e_word, con
                 case is_prompt : {
                     number_of_fissions->Fill(excitation);
                     number_of_fissions_all->Fill(excitation);
-                    ede_all_fission->Fill(e_energy, de_energy);
-                    ede_all_fission_nobgsub->Fill(e_energy, de_energy);
+                    ede_fission->Fill(e_energy, de_energy);
+                    ede_fission_nobgsub->Fill(e_energy, de_energy);
 
                     for (int i = 0 ; i < NUM_LABR_DETECTORS ; ++i){
                         for (int j = 0 ; j < event.n_labr[i] ; ++j){
@@ -885,16 +889,23 @@ void UserSort::AnalyzeGammaPPAC(const word_t &de_word, const word_t &e_word, con
 
                             switch ( CheckTimeStatus(tdiff, labr_time_cuts) ) {
                                 case is_prompt : {
-                                    //Rose fill
+                                    //Fill
                                     exgam_ppac->Fill(energy, excitation);
                                     exgam_ppac_all->Fill(energy, excitation);
+
+                                    ede_gamma_fission->Fill(e_energy, de_energy);
+                                    ede_gamma_fission_nobgsub->Fill(e_energy, de_energy);
                                     break;
                                 }
 
                                 case is_background : {
-                                    //Rose subtract
+                                    //Subtract
                                     exgam_ppac->Fill(energy, excitation, bg_param);
                                     exgam_ppac_bg->Fill(energy, excitation, -bg_param);
+
+                                    ede_gamma_fission->Fill(e_energy, de_energy, bg_param);
+                                    ede_gamma_fission_bg->Fill(e_energy, de_energy, -bg_param);
+
                                     break;
                                 }
 
@@ -911,8 +922,8 @@ void UserSort::AnalyzeGammaPPAC(const word_t &de_word, const word_t &e_word, con
                 case is_background : {
                     number_of_fissions->Fill(excitation, bg_param);
                     number_of_fissions_bg->Fill(excitation);
-                    ede_all_fission->Fill(e_energy, de_energy, bg_param);
-                    ede_all_fission_bg->Fill(e_energy, de_energy, -bg_param);
+                    ede_fission->Fill(e_energy, de_energy, bg_param);
+                    ede_fission_bg->Fill(e_energy, de_energy, -bg_param);
 
                     for (int i = 0 ; i < NUM_LABR_DETECTORS ; ++i){
                         for (int j = 0 ; j < event.n_labr[i] ; ++j){
@@ -923,15 +934,22 @@ void UserSort::AnalyzeGammaPPAC(const word_t &de_word, const word_t &e_word, con
 
                             switch ( CheckTimeStatus(tdiff, labr_time_cuts) ) {
                                 case is_prompt : {
+                                    //Subtract
                                     exgam_ppac->Fill(energy, excitation, bg_param);
                                     exgam_ppac_bg->Fill(energy, excitation, -bg_param);
+
+                                    ede_gamma_fission->Fill(e_energy, de_energy, bg_param);
+                                    ede_gamma_fission_bg->Fill(e_energy, de_energy, -bg_param);
                                     break;
                                 }
 
                                 case is_background : {
-                                    //Rose subtract
+                                    //Subtract
                                     exgam_ppac->Fill(energy, excitation, bg_param);
                                     exgam_ppac_bg->Fill(energy, excitation, -bg_param);
+
+                                    ede_gamma_fission->Fill(e_energy, de_energy, bg_param);
+                                    ede_gamma_fission_bg->Fill(e_energy, de_energy, -bg_param);
 
                                     break;
 
