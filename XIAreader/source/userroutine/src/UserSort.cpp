@@ -316,11 +316,11 @@ void UserSort::CreateSpectra()
     }
 
     sprintf(tmp, "number_of_fissions");
-    number_of_fissions = Spec(tmp, tmp, 1600, -1000, 15000, "Ex energy [MeV]");
+    number_of_fissions = Spec(tmp, tmp, 1500, 0, 15000, "Ex energy [MeV]");
     sprintf(tmp, "number_of_fissions_all");
-    number_of_fissions_all = Spec(tmp, tmp, 1600, -1000, 15000, "Ex energy [MeV]"); //before bg-sub
+    number_of_fissions_all = Spec(tmp, tmp, 1500, 0, 15000, "Ex energy [MeV]"); //before bg-sub
     sprintf(tmp, "number_of_fissions_bg");
-    number_of_fissions_bg = Spec(tmp, tmp, 1600, -1000, 15000, "Ex energy [MeV]"); //bg in number of fissions
+    number_of_fissions_bg = Spec(tmp, tmp, 1500, 0, 15000, "Ex energy [MeV]"); //bg in number of fissions
 
     sprintf(tmp, "PFG_mult");
     sprintf(tmp2, "PFG multiplicity");
@@ -500,19 +500,19 @@ void UserSort::CreateSpectra()
     exgam_bg = Mat(tmp, tmp, 1500, 0, 15000, "LaBr [keV]", 1600, -1000, 15000, "Ex [keV]");
 
     sprintf(tmp, "exgam_ppac"); //alfna med fisjon
-    exgam_ppac = Mat(tmp, tmp, 1500, 0, 15000, "LaBr [keV]", 1600, -1000, 15000, "Ex [keV]");
+    exgam_ppac = Mat(tmp, tmp, 1500, 0, 15000, "LaBr [keV]", 1500, 0, 15000, "Ex [keV]");
 
     sprintf(tmp, "exgam_ppac_all"); //alfna med fisjon, ingen bg-sub
-    exgam_ppac_all = Mat(tmp, tmp, 1500, 0, 15000, "LaBr [keV]", 1600, -1000, 15000, "Ex [keV]");
+    exgam_ppac_all = Mat(tmp, tmp, 1500, 0, 15000, "LaBr [keV]", 1500, 0, 15000, "Ex [keV]");
 
     sprintf(tmp, "exgam_ppac_bg"); //the bg subtratcted from exgam_ppac
-    exgam_ppac_bg = Mat(tmp, tmp, 1500, 0, 15000, "LaBr [keV]", 1600, -1000, 15000, "Ex [keV]");
+    exgam_ppac_bg = Mat(tmp, tmp, 1500, 0, 15000, "LaBr [keV]", 1500, 0, 15000, "Ex [keV]");
 
     sprintf(tmp, "exgam_veto_ppac"); //alfna uten fisjon
-    exgam_veto_ppac = Mat(tmp, tmp, 1500, 0, 15000, "LaBr [keV]", 1600, -1000, 15000, "Ex [keV]");
+    exgam_veto_ppac = Mat(tmp, tmp, 1500, 0, 15000, "LaBr [keV]", 1500, 0, 15000, "Ex [keV]");
 
     sprintf(tmp, "exgam_veto_ppac_bg");
-    exgam_veto_ppac_bg = Mat(tmp, tmp, 1500, 0, 15000, "LaBr [keV]", 1600, -1000, 15000, "Ex [keV]");
+    exgam_veto_ppac_bg = Mat(tmp, tmp, 1500, 0, 15000, "LaBr [keV]", 1500, 0, 15000, "Ex [keV]");
 
 
     n_fail_e = 0;
