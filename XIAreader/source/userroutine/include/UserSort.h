@@ -95,7 +95,10 @@ private:
     Histogram2Dp excitation_time_ppac[NUM_PPAC];
     Histogram2Dp energy_time_ppac[NUM_PPAC];
     Histogram2Dp time_energy_labr, time_energy_labr_fission;  // Energy vs. time in labr for all labr detectors.
+    Histogram2Dp excitation_vs_labr_time, E_energy_vs_labr_time;
 
+    Histogram1Dp multiple_fission_events;
+    Histogram2Dp multiple_fission_events_prompt_bg;
 
     // dE vs E
     Histogram2Dp ede_raw[NUM_SI_RINGS][NUM_SI_RINGS], ede_raw_gated[NUM_SI_RINGS][NUM_SI_RINGS], ede[NUM_SI_RINGS][NUM_SI_RINGS], ede_gated[NUM_SI_RINGS][NUM_SI_RINGS];
@@ -110,7 +113,7 @@ private:
 
     // Particle - gamma-ray coincidence matrix
     Histogram2Dp exgam, exgam_bg, labr_vs_ppac_time;
-    Histogram2Dp exgam_ppac, exgam_ppac_bg, exgam_ppac_all;
+    Histogram2Dp exgam_ppac, exgam_ppac_bg, exgam_ppac_all, exgam_ppac_neutron, exgam_ppac_neutron_all, exgam_ppac_neutron_bg;
     Histogram2Dp exgam_veto_ppac, exgam_veto_ppac_bg;
 
     // Gain labr
@@ -161,6 +164,9 @@ private:
 
     // Time gates for the ppacs.
     Parameter ppac_time_cuts;
+
+    // Time gates for the ppacs.
+    Parameter neutron_time_cuts;
 
     // Time gates for the ppacs.
     Parameter ede_time_cuts;

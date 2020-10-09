@@ -98,6 +98,7 @@ UserSort::UserSort()
     , thick_range    ( GetParameters(), "thick_range", 2      )
     , labr_time_cuts  ( GetParameters(), "labr_time_cuts", 2*2  )
     , ppac_time_cuts ( GetParameters(), "ppac_time_cuts", 2*2 )
+    , neutron_time_cuts ( GetParameters(), "neutron_time_cuts", 2*2 )
     , ede_time_cuts ( GetParameters(), "ede_time_cuts", 2*2 )
 {
 }
@@ -315,6 +316,8 @@ void UserSort::CreateSpectra()
         energy_time_labr_above[i] = Mat(tmp, tmp, 1000, 0, 16000, "LaBr energy [keV]", 2000, -100, 100, "Time difference [ns]");
     }
 
+
+
     sprintf(tmp, "number_of_fissions");
     number_of_fissions = Spec(tmp, tmp, 1500, 0, 15000, "Ex energy [MeV]");
     sprintf(tmp, "number_of_fissions_all");
@@ -407,6 +410,15 @@ void UserSort::CreateSpectra()
     sprintf(tmp, "energy_E_particle_time_e_de");
     sprintf(tmp2, "E energy : e-de time diff");
     energy_E_particle_time_e_de = Mat(tmp, tmp2, 5000, 0, 20000, "E energy [keV]", 5000, 0, 300, "t_{DE} - t_{E} [ns]");
+
+    sprintf(tmp, "excitation_vs_labr_time");
+    sprintf(tmp2, "Excitation : t_{LaBr} - t_{dE ANY}");
+    excitation_vs_labr_time = Mat(tmp, tmp2, 2000, 0, 10000, "Excitation energy [keV]", 5000, -1500, 1500, "t_{LaBr} - t_{DE} [ns]");
+
+    sprintf(tmp, "E_energy_vs_labr_time");
+    sprintf(tmp2, "E energy : t_{LaBr} - t_{dE ANY}");
+    E_energy_vs_labr_time = Mat(tmp, tmp2, 2000, 0, 10000, "Excitation energy [keV]", 5000, -1500, 1500, "t_{LaBr} - t_{DE} [ns]");
+
 
     sprintf(tmp, "energy_labr_all");
     energy_labr_all = Spec(tmp, tmp, 10000, 0, 10000, "Energy [keV]");
@@ -513,6 +525,22 @@ void UserSort::CreateSpectra()
 
     sprintf(tmp, "exgam_veto_ppac_bg");
     exgam_veto_ppac_bg = Mat(tmp, tmp, 1500, 0, 15000, "LaBr [keV]", 1500, 0, 15000, "Ex [keV]");
+
+    sprintf(tmp, "exgam_ppac_neutron");
+    exgam_ppac_neutron = Mat(tmp, tmp, 1500, 0, 15000, "LaBr [keV]", 1500, 0, 15000, "Ex [keV]");
+
+    sprintf(tmp, "exgam_ppac_neutron_all");
+    exgam_ppac_neutron_all = Mat(tmp, tmp, 1500, 0, 15000, "LaBr [keV]", 1500, 0, 15000, "Ex [keV]");
+
+    sprintf(tmp, "exgam_ppac_neutron_bg");
+    exgam_ppac_neutron_bg = Mat(tmp, tmp, 1500, 0, 15000, "LaBr [keV]", 1500, 0, 15000, "Ex [keV]");
+
+    sprintf(tmp, "multiple_fission_events");
+    multiple_fission_events = Spec(tmp, tmp, 20, 0, 20, "Counts");
+
+    sprintf(tmp, "multiple_fission_events_prompt_bg");
+    multiple_fission_events_prompt_bg = Mat(tmp, tmp, 20, 0, 20, "prompt fission fragment", 20, 0, 20, "bg fission fragment");
+
 
 
     n_fail_e = 0;
@@ -789,8 +817,12 @@ void UserSort::AnalyzeGammaPPAC(const word_t &de_word, const word_t &e_word, con
 
             word_t e_word = event.trigger;
             double tdiff_ede;
+            double e_energy = CalibrateOnlyE(e_word, de_word);
             tdiff_ede = CalcTimediff(e_word, de_word);
             energy_labr_time_e_de->Fill(energy, tdiff_ede);
+
+            excitation_vs_labr_time->Fill(excitation,tdiff);
+            E_energy_vs_labr_time->Fill(e_energy,tdiff);
 
             switch ( CheckTimeStatus(tdiff, labr_time_cuts) ) {
                 case is_prompt : {
@@ -812,8 +844,14 @@ void UserSort::AnalyzeGammaPPAC(const word_t &de_word, const word_t &e_word, con
 
 
     //Creating fission spectra
+    int multiple_fission_counter = 0;
+
+    int prompt_ff = 0;
+    int bg_ff = 0;
+
     for (int n = 0 ; n < NUM_PPAC ; ++n){
         for (int m = 0 ; m < event.n_ppac[n] ; ++m){
+            multiple_fission_counter += 1;
             //All events in ppacs
             word_t e_word = event.trigger;
             double e_energy = CalibrateOnlyE(e_word, de_word);
@@ -822,10 +860,13 @@ void UserSort::AnalyzeGammaPPAC(const word_t &de_word, const word_t &e_word, con
 
             switch ( CheckTimeStatus(tdiff_ppac, ppac_time_cuts) ) {
                 case is_prompt : {
+
+                    prompt_ff += 1;
                     number_of_fissions->Fill(excitation);
                     number_of_fissions_all->Fill(excitation);
                     ede_fission->Fill(e_energy, de_energy);
                     ede_fission_nobgsub->Fill(e_energy, de_energy);
+
 
                     for (int i = 0 ; i < NUM_LABR_DETECTORS ; ++i){
                         for (int j = 0 ; j < event.n_labr[i] ; ++j){
@@ -868,6 +909,9 @@ void UserSort::AnalyzeGammaPPAC(const word_t &de_word, const word_t &e_word, con
 
                 }
                 case is_background : {
+
+                    bg_ff += 1;
+
                     number_of_fissions->Fill(excitation, bg_param);
                     number_of_fissions_bg->Fill(excitation);
                     ede_fission->Fill(e_energy, de_energy, bg_param);
@@ -926,6 +970,93 @@ void UserSort::AnalyzeGammaPPAC(const word_t &de_word, const word_t &e_word, con
         }
 
     }
+    if(multiple_fission_counter > 0){
+        multiple_fission_events->Fill(multiple_fission_counter);
+    }
+
+    if(prompt_ff > 0 || bg_ff > 0){
+        multiple_fission_events_prompt_bg->Fill(prompt_ff,bg_ff);
+    }
+
+
+    //Creating neutron spectrum
+    for (int n = 0 ; n < NUM_PPAC ; ++n){
+        for (int m = 0 ; m < event.n_ppac[n] ; ++m){
+            word_t e_word = event.trigger;
+            double tdiff_ppac = CalcTimediff(de_word, event.w_ppac[n][m]);
+
+            switch ( CheckTimeStatus(tdiff_ppac, ppac_time_cuts) ) {
+                case is_prompt : {
+
+                    for (int i = 0 ; i < NUM_LABR_DETECTORS ; ++i){
+                        for (int j = 0 ; j < event.n_labr[i] ; ++j){
+                            double tdiff = CalcTimediff(de_word, event.w_labr[i][j]);
+                            double energy = CalibrateE(event.w_labr[i][j]);
+
+                            switch ( CheckTimeStatus(tdiff, neutron_time_cuts) ) {
+                                case is_prompt : {
+                                    exgam_ppac_neutron->Fill(energy, excitation);
+                                    exgam_ppac_neutron_all->Fill(energy, excitation);
+                                    break;
+                                }
+
+                                case is_background : {
+                                    exgam_ppac_neutron->Fill(energy, excitation,bg_param);
+                                    exgam_ppac_neutron_bg->Fill(energy, excitation,-bg_param);
+                                    break;
+                                }
+
+                                case ignore :{
+                                    break;
+                                }
+                            }
+                        }
+                    }
+
+                    break;
+                }
+                case is_background : {
+                    for (int i = 0 ; i < NUM_LABR_DETECTORS ; ++i){
+                        for (int j = 0 ; j < event.n_labr[i] ; ++j){
+                            double energy = CalibrateE(event.w_labr[i][j]);
+                            double tdiff = CalcTimediff(de_word, event.w_labr[i][j]);
+
+
+                            switch ( CheckTimeStatus(tdiff, labr_time_cuts) ) {
+                                case is_prompt : {
+                                    //Subtract
+                                    exgam_ppac_neutron->Fill(energy, excitation,bg_param);
+                                    exgam_ppac_neutron_bg->Fill(energy, excitation,-bg_param);
+                                    break;
+                                }
+
+                                case is_background : {
+                                    //Subtract
+                                    exgam_ppac_neutron->Fill(energy, excitation,bg_param);
+                                    exgam_ppac_neutron_bg->Fill(energy, excitation,-bg_param);
+                                    break;
+                                }
+
+                                case ignore :{
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                    break;
+                }
+
+                case ignore : {
+                break;
+                }
+            }
+
+        }
+
+    }
+
+
+
 
     // Creating fission veto spectrum
     for (int i = 0 ; i < NUM_LABR_DETECTORS ; ++i){
