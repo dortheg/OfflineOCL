@@ -83,6 +83,8 @@ private:
     Histogram1Dp energy_labr_all, energy_labr_gated_all;
     Histogram1Dp energy_dE_raw[NUM_SI_DE_DET], energy_dE[NUM_SI_DE_DET];
     Histogram1Dp energy_E_raw[NUM_SI_E_DET], energy_E[NUM_SI_E_DET], number_of_fissions, number_of_fissions_all, number_of_fissions_bg;
+    Histogram1Dp energy_labr_crosstalk_1_2, energy_labr_crosstalk_1_2_test, energy_labr_crosstalk_1_3, energy_labr_crosstalk_1_4, energy_labr_crosstalk_1_5, energy_labr_crosstalk_1_6, energy_labr_crosstalk_1_8, energy_labr_crosstalk_1_29;
+    Histogram1Dp energy_labr_crosstalk_A, energy_labr_crosstalk_B, energy_labr_crosstalk_C, energy_labr_crosstalk_D;
 
     // Time spectra.
     Histogram2Dp e_de_time[NUM_SI_RINGS]; // This will be a time : dE ring spectrum.

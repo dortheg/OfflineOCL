@@ -41,7 +41,7 @@
 #include <stdlib.h>
 
 //If calculate with PPACS
-#define FISSION 1 //should be 1 in fission sorting
+#define FISSION 0 //should be 1 in fission sorting
 
 //If gating on specified energies in ede
 const int GATING = 1;
@@ -316,6 +316,42 @@ void UserSort::CreateSpectra()
         energy_time_labr_above[i] = Mat(tmp, tmp, 1000, 0, 16000, "LaBr energy [keV]", 2000, -100, 100, "Time difference [ns]");
     }
 
+    sprintf(tmp, "energy_labr_crosstalk_1_2");
+    energy_labr_crosstalk_1_2 = Spec(tmp, tmp, 2000, 0, 10000, "Energy [keV]");
+
+    sprintf(tmp, "energy_labr_crosstalk_1_2_test");
+    energy_labr_crosstalk_1_2_test = Spec(tmp, tmp, 2000, 0, 10000, "Energy [keV]");
+
+    sprintf(tmp, "energy_labr_crosstalk_1_5");
+    energy_labr_crosstalk_1_5 = Spec(tmp, tmp, 2000, 0, 10000, "Energy [keV]");
+
+    sprintf(tmp, "energy_labr_crosstalk_1_6");
+    energy_labr_crosstalk_1_6 = Spec(tmp, tmp, 2000, 0, 10000, "Energy [keV]");
+
+    sprintf(tmp, "energy_labr_crosstalk_1_8");
+    energy_labr_crosstalk_1_8 = Spec(tmp, tmp, 2000, 0, 10000, "Energy [keV]");
+
+    sprintf(tmp, "energy_labr_crosstalk_1_3");
+    energy_labr_crosstalk_1_3 = Spec(tmp, tmp, 2000, 0, 10000, "Energy [keV]");
+
+    sprintf(tmp, "energy_labr_crosstalk_1_4");
+    energy_labr_crosstalk_1_4 = Spec(tmp, tmp, 2000, 0, 10000, "Energy [keV]");
+
+    sprintf(tmp, "energy_labr_crosstalk_1_29");
+    energy_labr_crosstalk_1_29 = Spec(tmp, tmp, 2000, 0, 10000, "Energy [keV]");
+
+    //Needed to fill in root
+    sprintf(tmp, "energy_labr_crosstalk_A");
+    energy_labr_crosstalk_A = Spec(tmp, tmp, 2000, 0, 10000, "Energy [keV]");
+
+    sprintf(tmp, "energy_labr_crosstalk_B");
+    energy_labr_crosstalk_B = Spec(tmp, tmp, 2000, 0, 10000, "Energy [keV]");
+
+    sprintf(tmp, "energy_labr_crosstalk_C");
+    energy_labr_crosstalk_C = Spec(tmp, tmp, 2000, 0, 10000, "Energy [keV]");
+
+    sprintf(tmp, "energy_labr_crosstalk_D");
+    energy_labr_crosstalk_D = Spec(tmp, tmp, 2000, 0, 10000, "Energy [keV]");
 
 
     sprintf(tmp, "number_of_fissions");
@@ -727,6 +763,112 @@ bool UserSort::Sort(const Event &event)
 void UserSort::AnalyzeGamma(const word_t &de_word, const double &excitation,const Event &event)
 {
 
+    //Checking crosstalk
+    if(event.n_labr[0] > 0 && event.n_labr[1] > 0){
+
+        for (int j = 0 ; j < event.n_labr[0] ; ++j){
+            double energy = CalibrateE(event.w_labr[0][j]);
+            energy_labr_crosstalk_1_2->Fill(energy);
+        }
+
+        for (int j = 0 ; j < event.n_labr[1] ; ++j){
+            double energy = CalibrateE(event.w_labr[1][j]);
+            energy_labr_crosstalk_1_2->Fill(energy);
+        }
+    }
+
+
+    for (int j = 0 ; j < event.n_labr[0] ; ++j){
+        double energy = CalibrateE(event.w_labr[0][j]);
+        energy_labr_crosstalk_1_2_test->Fill(energy);
+    }
+
+    for (int j = 0 ; j < event.n_labr[1] ; ++j){
+        double energy = CalibrateE(event.w_labr[1][j]);
+        energy_labr_crosstalk_1_2_test->Fill(energy);
+    }
+
+
+    if(event.n_labr[0] > 0 && event.n_labr[4] > 0){
+
+        for (int j = 0 ; j < event.n_labr[0] ; ++j){
+            double energy = CalibrateE(event.w_labr[0][j]);
+            energy_labr_crosstalk_1_5->Fill(energy);
+        }
+
+        for (int j = 0 ; j < event.n_labr[4] ; ++j){
+            double energy = CalibrateE(event.w_labr[4][j]);
+            energy_labr_crosstalk_1_5->Fill(energy);
+        }
+    }
+
+    if(event.n_labr[0] > 0 && event.n_labr[5] > 0){
+
+        for (int j = 0 ; j < event.n_labr[0] ; ++j){
+            double energy = CalibrateE(event.w_labr[0][j]);
+            energy_labr_crosstalk_1_6->Fill(energy);
+        }
+
+        for (int j = 0 ; j < event.n_labr[5] ; ++j){
+            double energy = CalibrateE(event.w_labr[5][j]);
+            energy_labr_crosstalk_1_6->Fill(energy);
+        }
+    }
+
+    if(event.n_labr[0] > 0 && event.n_labr[7] > 0){
+
+        for (int j = 0 ; j < event.n_labr[0] ; ++j){
+            double energy = CalibrateE(event.w_labr[0][j]);
+            energy_labr_crosstalk_1_8->Fill(energy);
+        }
+
+        for (int j = 0 ; j < event.n_labr[7] ; ++j){
+            double energy = CalibrateE(event.w_labr[7][j]);
+            energy_labr_crosstalk_1_8->Fill(energy);
+        }
+    }
+
+
+
+    if(event.n_labr[0] > 0 && event.n_labr[28] > 0){
+
+        for (int j = 0 ; j < event.n_labr[0] ; ++j){
+            double energy = CalibrateE(event.w_labr[0][j]);
+            energy_labr_crosstalk_1_29->Fill(energy);
+        }
+
+        for (int j = 0 ; j < event.n_labr[28] ; ++j){
+            double energy = CalibrateE(event.w_labr[28][j]);
+            energy_labr_crosstalk_1_29->Fill(energy);
+        }
+    }
+
+    if(event.n_labr[0] > 0 && event.n_labr[2] > 0){
+
+        for (int j = 0 ; j < event.n_labr[0] ; ++j){
+            double energy = CalibrateE(event.w_labr[0][j]);
+            energy_labr_crosstalk_1_3->Fill(energy);
+        }
+
+        for (int j = 0 ; j < event.n_labr[2] ; ++j){
+            double energy = CalibrateE(event.w_labr[2][j]);
+            energy_labr_crosstalk_1_3->Fill(energy);
+        }
+    }
+
+    if(event.n_labr[0] > 0 && event.n_labr[3] > 0){
+
+        for (int j = 0 ; j < event.n_labr[0] ; ++j){
+            double energy = CalibrateE(event.w_labr[0][j]);
+            energy_labr_crosstalk_1_4->Fill(energy);
+        }
+
+        for (int j = 0 ; j < event.n_labr[3] ; ++j){
+            double energy = CalibrateE(event.w_labr[3][j]);
+            energy_labr_crosstalk_1_4->Fill(energy);
+        }
+    }
+
     // We will loop over all gamma-rays.
     for (int i = 0 ; i < NUM_LABR_DETECTORS ; ++i){
         for (int j = 0 ; j < event.n_labr[i] ; ++j){
@@ -839,6 +981,112 @@ void UserSort::AnalyzeGammaPPAC(const word_t &de_word, const word_t &e_word, con
                 }
             }
 
+        }
+    }
+
+    //Checking crosstalk
+    if(event.n_labr[0] > 0 && event.n_labr[1] > 0){
+
+        for (int j = 0 ; j < event.n_labr[0] ; ++j){
+            double energy = CalibrateE(event.w_labr[0][j]);
+            energy_labr_crosstalk_1_2->Fill(energy);
+        }
+
+        for (int j = 0 ; j < event.n_labr[1] ; ++j){
+            double energy = CalibrateE(event.w_labr[1][j]);
+            energy_labr_crosstalk_1_2->Fill(energy);
+        }
+    }
+
+
+    for (int j = 0 ; j < event.n_labr[0] ; ++j){
+        double energy = CalibrateE(event.w_labr[0][j]);
+        energy_labr_crosstalk_1_2_test->Fill(energy);
+    }
+
+    for (int j = 0 ; j < event.n_labr[1] ; ++j){
+        double energy = CalibrateE(event.w_labr[1][j]);
+        energy_labr_crosstalk_1_2_test->Fill(energy);
+    }
+
+
+    if(event.n_labr[0] > 0 && event.n_labr[4] > 0){
+
+        for (int j = 0 ; j < event.n_labr[0] ; ++j){
+            double energy = CalibrateE(event.w_labr[0][j]);
+            energy_labr_crosstalk_1_5->Fill(energy);
+        }
+
+        for (int j = 0 ; j < event.n_labr[4] ; ++j){
+            double energy = CalibrateE(event.w_labr[4][j]);
+            energy_labr_crosstalk_1_5->Fill(energy);
+        }
+    }
+
+    if(event.n_labr[0] > 0 && event.n_labr[5] > 0){
+
+        for (int j = 0 ; j < event.n_labr[0] ; ++j){
+            double energy = CalibrateE(event.w_labr[0][j]);
+            energy_labr_crosstalk_1_6->Fill(energy);
+        }
+
+        for (int j = 0 ; j < event.n_labr[5] ; ++j){
+            double energy = CalibrateE(event.w_labr[5][j]);
+            energy_labr_crosstalk_1_6->Fill(energy);
+        }
+    }
+
+    if(event.n_labr[0] > 0 && event.n_labr[7] > 0){
+
+        for (int j = 0 ; j < event.n_labr[0] ; ++j){
+            double energy = CalibrateE(event.w_labr[0][j]);
+            energy_labr_crosstalk_1_8->Fill(energy);
+        }
+
+        for (int j = 0 ; j < event.n_labr[7] ; ++j){
+            double energy = CalibrateE(event.w_labr[7][j]);
+            energy_labr_crosstalk_1_8->Fill(energy);
+        }
+    }
+
+
+
+    if(event.n_labr[0] > 0 && event.n_labr[28] > 0){
+
+        for (int j = 0 ; j < event.n_labr[0] ; ++j){
+            double energy = CalibrateE(event.w_labr[0][j]);
+            energy_labr_crosstalk_1_29->Fill(energy);
+        }
+
+        for (int j = 0 ; j < event.n_labr[28] ; ++j){
+            double energy = CalibrateE(event.w_labr[28][j]);
+            energy_labr_crosstalk_1_29->Fill(energy);
+        }
+    }
+
+    if(event.n_labr[0] > 0 && event.n_labr[2] > 0){
+
+        for (int j = 0 ; j < event.n_labr[0] ; ++j){
+            double energy = CalibrateE(event.w_labr[0][j]);
+            energy_labr_crosstalk_1_3->Fill(energy);
+        }
+
+        for (int j = 0 ; j < event.n_labr[2] ; ++j){
+            double energy = CalibrateE(event.w_labr[2][j]);
+            energy_labr_crosstalk_1_3->Fill(energy);
+        }
+    }
+
+    if(event.n_labr[0] > 0 && event.n_labr[3] > 0){
+
+        for (int j = 0 ; j < event.n_labr[0] ; ++j){
+            double energy = CalibrateE(event.w_labr[0][j]);
+            energy_labr_crosstalk_1_4->Fill(energy);
+        }
+
+        for (int j = 0 ; j < event.n_labr[3] ; ++j){
+            double energy = CalibrateE(event.w_labr[3][j]);
+            energy_labr_crosstalk_1_4->Fill(energy);
         }
     }
 
