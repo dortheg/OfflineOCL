@@ -468,11 +468,11 @@ void UserSort::CreateSpectra()
 
     sprintf(tmp, "time_energy_labr");
     sprintf(tmp2, "t_{LaBr} - t_{dE ANY} : E_{LaBr}");
-    time_energy_labr = Mat(tmp, tmp2, 2000, -50, 50, "t_{LaBr} - t_{DE} [ns]", 5000, 0, 10000, "Energy LaBr [keV]");
+    time_energy_labr = Mat(tmp, tmp2, 4000, -150, 150, "t_{LaBr} - t_{DE} [ns]", 4000, 0, 10000, "Energy LaBr [keV]");
 
     sprintf(tmp, "time_energy_labr_fission");
     sprintf(tmp2, "t_{LaBr} - t_{dE ANY} : E_{LaBr}, fission");
-    time_energy_labr_fission = Mat(tmp, tmp2, 2000, -50, 50, "t_{LaBr} - t_{DE} [ns]", 5000, 0, 10000, "Energy LaBr [keV]");
+    time_energy_labr_fission = Mat(tmp, tmp2, 4000, -150, 150, "t_{LaBr} - t_{DE} [ns]", 4000, 0, 10000, "Energy LaBr [keV]");
 
     sprintf(tmp, "ede_all");
     sprintf(tmp2, "E : DE, all");
@@ -1039,178 +1039,178 @@ void UserSort::AnalyzeGammaPPAC(const word_t &de_word, const word_t &e_word, con
         }
     }
 
-    //Checking crosstalk 1&2
-    if(event.n_labr[0] > 0 && event.n_labr[1] > 0){
-        int prompt_0 = 0;
-        int prompt_1 = 0;
+//    //Checking crosstalk 1&2
+//    if(event.n_labr[0] > 0 && event.n_labr[1] > 0){
+//        int prompt_0 = 0;
+//        int prompt_1 = 0;
 
-        for (int i = 0 ; i < event.n_labr[0] ; ++i){
-            double tdiff= CalcTimediff(de_word, event.w_labr[0][i]);
-            switch ( CheckTimeStatus(tdiff, labr_time_cuts) ) {
-                case is_prompt : {
-                    prompt_0 = 1;
-                }
-            }
-        }
-        for (int i = 0 ; i < event.n_labr[1] ; ++i){
-            double tdiff= CalcTimediff(de_word, event.w_labr[1][i]);
-            switch ( CheckTimeStatus(tdiff, labr_time_cuts) ) {
-                case is_prompt : {
-                    prompt_1 = 1;
-                }
-            }
-        }
-        if(prompt_0==1 && prompt_1==1){
-            for (int i = 0 ; i < event.n_labr[0] ; ++i){
-                double tdiff= CalcTimediff(de_word, event.w_labr[0][i]);
-                switch ( CheckTimeStatus(tdiff, labr_time_cuts) ) {
-                    case is_prompt : {
-                        double energy = CalibrateE(event.w_labr[0][i]);
-                        energy_labr_crosstalk_1_2->Fill(energy);
-                    }
-                }
-            }
-            for (int i = 0 ; i < event.n_labr[1] ; ++i){
-                double tdiff= CalcTimediff(de_word, event.w_labr[1][i]);
-                switch ( CheckTimeStatus(tdiff, labr_time_cuts) ) {
-                    case is_prompt : {
-                        double energy = CalibrateE(event.w_labr[1][i]);
-                        energy_labr_crosstalk_1_2->Fill(energy);
-                    }
-                }
-            }
-        }
-    }
+//        for (int i = 0 ; i < event.n_labr[0] ; ++i){
+//            double tdiff= CalcTimediff(de_word, event.w_labr[0][i]);
+//            switch ( CheckTimeStatus(tdiff, labr_time_cuts) ) {
+//                case is_prompt : {
+//                    prompt_0 = 1;
+//                }
+//            }
+//        }
+//        for (int i = 0 ; i < event.n_labr[1] ; ++i){
+//            double tdiff= CalcTimediff(de_word, event.w_labr[1][i]);
+//            switch ( CheckTimeStatus(tdiff, labr_time_cuts) ) {
+//                case is_prompt : {
+//                    prompt_1 = 1;
+//                }
+//            }
+//        }
+//        if(prompt_0==1 && prompt_1==1){
+//            for (int i = 0 ; i < event.n_labr[0] ; ++i){
+//                double tdiff= CalcTimediff(de_word, event.w_labr[0][i]);
+//                switch ( CheckTimeStatus(tdiff, labr_time_cuts) ) {
+//                    case is_prompt : {
+//                        double energy = CalibrateE(event.w_labr[0][i]);
+//                        energy_labr_crosstalk_1_2->Fill(energy);
+//                    }
+//                }
+//            }
+//            for (int i = 0 ; i < event.n_labr[1] ; ++i){
+//                double tdiff= CalcTimediff(de_word, event.w_labr[1][i]);
+//                switch ( CheckTimeStatus(tdiff, labr_time_cuts) ) {
+//                    case is_prompt : {
+//                        double energy = CalibrateE(event.w_labr[1][i]);
+//                        energy_labr_crosstalk_1_2->Fill(energy);
+//                    }
+//                }
+//            }
+//        }
+//    }
 
-    //Checking crosstalk 1&5
-    if(event.n_labr[0] > 0 && event.n_labr[4] > 0){
-        int prompt_0 = 0;
-        int prompt_1 = 0;
+//    //Checking crosstalk 1&5
+//    if(event.n_labr[0] > 0 && event.n_labr[4] > 0){
+//        int prompt_0 = 0;
+//        int prompt_1 = 0;
 
-        for (int i = 0 ; i < event.n_labr[0] ; ++i){
-            double tdiff= CalcTimediff(de_word, event.w_labr[0][i]);
-            switch ( CheckTimeStatus(tdiff, labr_time_cuts) ) {
-                case is_prompt : {
-                    prompt_0 = 1;
-                }
-            }
-        }
-        for (int i = 0 ; i < event.n_labr[4] ; ++i){
-            double tdiff= CalcTimediff(de_word, event.w_labr[4][i]);
-            switch ( CheckTimeStatus(tdiff, labr_time_cuts) ) {
-                case is_prompt : {
-                    prompt_1 = 1;
-                }
-            }
-        }
-        if(prompt_0==1 && prompt_1==1){
-            for (int i = 0 ; i < event.n_labr[0] ; ++i){
-                double tdiff= CalcTimediff(de_word, event.w_labr[0][i]);
-                switch ( CheckTimeStatus(tdiff, labr_time_cuts) ) {
-                    case is_prompt : {
-                        double energy = CalibrateE(event.w_labr[0][i]);
-                        energy_labr_crosstalk_1_5->Fill(energy);
-                    }
-                }
-            }
-            for (int i = 0 ; i < event.n_labr[4] ; ++i){
-                double tdiff= CalcTimediff(de_word, event.w_labr[4][i]);
-                switch ( CheckTimeStatus(tdiff, labr_time_cuts) ) {
-                    case is_prompt : {
-                        double energy = CalibrateE(event.w_labr[4][i]);
-                        energy_labr_crosstalk_1_5->Fill(energy);
-                    }
-                }
-            }
-        }
-    }
+//        for (int i = 0 ; i < event.n_labr[0] ; ++i){
+//            double tdiff= CalcTimediff(de_word, event.w_labr[0][i]);
+//            switch ( CheckTimeStatus(tdiff, labr_time_cuts) ) {
+//                case is_prompt : {
+//                    prompt_0 = 1;
+//                }
+//            }
+//        }
+//        for (int i = 0 ; i < event.n_labr[4] ; ++i){
+//            double tdiff= CalcTimediff(de_word, event.w_labr[4][i]);
+//            switch ( CheckTimeStatus(tdiff, labr_time_cuts) ) {
+//                case is_prompt : {
+//                    prompt_1 = 1;
+//                }
+//            }
+//        }
+//        if(prompt_0==1 && prompt_1==1){
+//            for (int i = 0 ; i < event.n_labr[0] ; ++i){
+//                double tdiff= CalcTimediff(de_word, event.w_labr[0][i]);
+//                switch ( CheckTimeStatus(tdiff, labr_time_cuts) ) {
+//                    case is_prompt : {
+//                        double energy = CalibrateE(event.w_labr[0][i]);
+//                        energy_labr_crosstalk_1_5->Fill(energy);
+//                    }
+//                }
+//            }
+//            for (int i = 0 ; i < event.n_labr[4] ; ++i){
+//                double tdiff= CalcTimediff(de_word, event.w_labr[4][i]);
+//                switch ( CheckTimeStatus(tdiff, labr_time_cuts) ) {
+//                    case is_prompt : {
+//                        double energy = CalibrateE(event.w_labr[4][i]);
+//                        energy_labr_crosstalk_1_5->Fill(energy);
+//                    }
+//                }
+//            }
+//        }
+//    }
 
 
-    //Checking crosstalk 1&3
-    if(event.n_labr[0] > 0 && event.n_labr[2] > 0){
-        int prompt_0 = 0;
-        int prompt_1 = 0;
+//    //Checking crosstalk 1&3
+//    if(event.n_labr[0] > 0 && event.n_labr[2] > 0){
+//        int prompt_0 = 0;
+//        int prompt_1 = 0;
 
-        for (int i = 0 ; i < event.n_labr[0] ; ++i){
-            double tdiff= CalcTimediff(de_word, event.w_labr[0][i]);
-            switch ( CheckTimeStatus(tdiff, labr_time_cuts) ) {
-                case is_prompt : {
-                    prompt_0 = 1;
-                }
-            }
-        }
-        for (int i = 0 ; i < event.n_labr[2] ; ++i){
-            double tdiff= CalcTimediff(de_word, event.w_labr[2][i]);
-            switch ( CheckTimeStatus(tdiff, labr_time_cuts) ) {
-                case is_prompt : {
-                    prompt_1 = 1;
-                }
-            }
-        }
-        if(prompt_0==1 && prompt_1==1){
-            for (int i = 0 ; i < event.n_labr[0] ; ++i){
-                double tdiff= CalcTimediff(de_word, event.w_labr[0][i]);
-                switch ( CheckTimeStatus(tdiff, labr_time_cuts) ) {
-                    case is_prompt : {
-                        double energy = CalibrateE(event.w_labr[0][i]);
-                        energy_labr_crosstalk_1_3->Fill(energy);
-                    }
-                }
-            }
-            for (int i = 0 ; i < event.n_labr[2] ; ++i){
-                double tdiff= CalcTimediff(de_word, event.w_labr[2][i]);
-                switch ( CheckTimeStatus(tdiff, labr_time_cuts) ) {
-                    case is_prompt : {
-                        double energy = CalibrateE(event.w_labr[2][i]);
-                        energy_labr_crosstalk_1_3->Fill(energy);
-                    }
-                }
-            }
-        }
-    }
+//        for (int i = 0 ; i < event.n_labr[0] ; ++i){
+//            double tdiff= CalcTimediff(de_word, event.w_labr[0][i]);
+//            switch ( CheckTimeStatus(tdiff, labr_time_cuts) ) {
+//                case is_prompt : {
+//                    prompt_0 = 1;
+//                }
+//            }
+//        }
+//        for (int i = 0 ; i < event.n_labr[2] ; ++i){
+//            double tdiff= CalcTimediff(de_word, event.w_labr[2][i]);
+//            switch ( CheckTimeStatus(tdiff, labr_time_cuts) ) {
+//                case is_prompt : {
+//                    prompt_1 = 1;
+//                }
+//            }
+//        }
+//        if(prompt_0==1 && prompt_1==1){
+//            for (int i = 0 ; i < event.n_labr[0] ; ++i){
+//                double tdiff= CalcTimediff(de_word, event.w_labr[0][i]);
+//                switch ( CheckTimeStatus(tdiff, labr_time_cuts) ) {
+//                    case is_prompt : {
+//                        double energy = CalibrateE(event.w_labr[0][i]);
+//                        energy_labr_crosstalk_1_3->Fill(energy);
+//                    }
+//                }
+//            }
+//            for (int i = 0 ; i < event.n_labr[2] ; ++i){
+//                double tdiff= CalcTimediff(de_word, event.w_labr[2][i]);
+//                switch ( CheckTimeStatus(tdiff, labr_time_cuts) ) {
+//                    case is_prompt : {
+//                        double energy = CalibrateE(event.w_labr[2][i]);
+//                        energy_labr_crosstalk_1_3->Fill(energy);
+//                    }
+//                }
+//            }
+//        }
+//    }
 
-    //Checking crosstalk 1&4
-    if(event.n_labr[0] > 0 && event.n_labr[3] > 0){
-        int prompt_0 = 0;
-        int prompt_1 = 0;
+//    //Checking crosstalk 1&4
+//    if(event.n_labr[0] > 0 && event.n_labr[3] > 0){
+//        int prompt_0 = 0;
+//        int prompt_1 = 0;
 
-        for (int i = 0 ; i < event.n_labr[0] ; ++i){
-            double tdiff= CalcTimediff(de_word, event.w_labr[0][i]);
-            switch ( CheckTimeStatus(tdiff, labr_time_cuts) ) {
-                case is_prompt : {
-                    prompt_0 = 1;
-                }
-            }
-        }
-        for (int i = 0 ; i < event.n_labr[3] ; ++i){
-            double tdiff= CalcTimediff(de_word, event.w_labr[3][i]);
-            switch ( CheckTimeStatus(tdiff, labr_time_cuts) ) {
-                case is_prompt : {
-                    prompt_1 = 1;
-                }
-            }
-        }
-        if(prompt_0==1 && prompt_1==1){
-            for (int i = 0 ; i < event.n_labr[0] ; ++i){
-                double tdiff= CalcTimediff(de_word, event.w_labr[0][i]);
-                switch ( CheckTimeStatus(tdiff, labr_time_cuts) ) {
-                    case is_prompt : {
-                        double energy = CalibrateE(event.w_labr[0][i]);
-                        energy_labr_crosstalk_1_4->Fill(energy);
-                    }
-                }
-            }
-            for (int i = 0 ; i < event.n_labr[3] ; ++i){
-                double tdiff= CalcTimediff(de_word, event.w_labr[3][i]);
-                switch ( CheckTimeStatus(tdiff, labr_time_cuts) ) {
-                    case is_prompt : {
-                        double energy = CalibrateE(event.w_labr[3][i]);
-                        energy_labr_crosstalk_1_4->Fill(energy);
-                    }
-                }
-            }
-        }
-    }
+//        for (int i = 0 ; i < event.n_labr[0] ; ++i){
+//            double tdiff= CalcTimediff(de_word, event.w_labr[0][i]);
+//            switch ( CheckTimeStatus(tdiff, labr_time_cuts) ) {
+//                case is_prompt : {
+//                    prompt_0 = 1;
+//                }
+//            }
+//        }
+//        for (int i = 0 ; i < event.n_labr[3] ; ++i){
+//            double tdiff= CalcTimediff(de_word, event.w_labr[3][i]);
+//            switch ( CheckTimeStatus(tdiff, labr_time_cuts) ) {
+//                case is_prompt : {
+//                    prompt_1 = 1;
+//                }
+//            }
+//        }
+//        if(prompt_0==1 && prompt_1==1){
+//            for (int i = 0 ; i < event.n_labr[0] ; ++i){
+//                double tdiff= CalcTimediff(de_word, event.w_labr[0][i]);
+//                switch ( CheckTimeStatus(tdiff, labr_time_cuts) ) {
+//                    case is_prompt : {
+//                        double energy = CalibrateE(event.w_labr[0][i]);
+//                        energy_labr_crosstalk_1_4->Fill(energy);
+//                    }
+//                }
+//            }
+//            for (int i = 0 ; i < event.n_labr[3] ; ++i){
+//                double tdiff= CalcTimediff(de_word, event.w_labr[3][i]);
+//                switch ( CheckTimeStatus(tdiff, labr_time_cuts) ) {
+//                    case is_prompt : {
+//                        double energy = CalibrateE(event.w_labr[3][i]);
+//                        energy_labr_crosstalk_1_4->Fill(energy);
+//                    }
+//                }
+//            }
+//        }
+//    }
 
 
     //Creating fission spectra
