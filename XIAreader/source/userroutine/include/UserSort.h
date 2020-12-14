@@ -96,8 +96,8 @@ private:
     Histogram2Dp energy_time_labr_above[NUM_LABR_DETECTORS];
     Histogram2Dp excitation_time_ppac[NUM_PPAC];
     Histogram2Dp energy_time_ppac[NUM_PPAC];
-    Histogram2Dp time_energy_labr, time_energy_labr_fission, time_energy_labr_fission_cfdfail_e, time_energy_labr_fission_cfdfail_de;  // Energy vs. time in labr for all labr detectors.
-    Histogram2Dp excitation_vs_labr_time, E_energy_vs_labr_time;
+    Histogram2Dp time_energy_labr, time_energy_labr_fission, time_energy_labr_fission_cfdfail;  // Energy vs. time in labr for all labr detectors.
+    Histogram2Dp excitation_vs_labr_time, excitation_vs_ppac_time, E_energy_vs_labr_time;
 
     Histogram1Dp multiple_fission_events;
     Histogram2Dp multiple_fission_events_prompt_bg;
@@ -174,7 +174,7 @@ private:
     Parameter ede_time_cuts;
 
 
-    int n_fail_de, n_fail_e, cfdfail_true;
+    int n_fail_de, n_fail_e;
 
     int n_tot_e, n_tot_de;
     int tot;
