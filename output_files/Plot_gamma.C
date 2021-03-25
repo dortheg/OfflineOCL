@@ -1,6 +1,6 @@
 
 void Plot_gamma(){
-	TFile *file = TFile::Open("Si_all_gated_1ex29Si.root");
+	TFile *file = TFile::Open("Si_all.root");
 
 	TH2 *energy_labr_raw = (TH2 *)file->Get("energy_raw_labr_01");
 

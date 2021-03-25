@@ -9,8 +9,8 @@ void Plot_DEtime(){
 	//de_align_time->GetXaxis()->SetTitle("Photon multiplicity PM");
 	de_align_time->GetXaxis()->SetLabelSize(0.037);
 	de_align_time->GetYaxis()->SetLabelSize(0.037);
-	de_align_time->GetYaxis()->SetTitleSize(0.040);
-	de_align_time->GetXaxis()->SetTitleSize(0.040);
+	de_align_time->GetYaxis()->SetTitleSize(0.041);
+	de_align_time->GetXaxis()->SetTitleSize(0.041);
 	de_align_time->GetZaxis()->SetLabelSize(0.037);
 	gStyle->SetOptStat(0);
 	de_align_time->SetTitle(" ");

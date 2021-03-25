@@ -1,6 +1,6 @@
 
 void Plot_PFGvsfissions(){
-	TFile *file = TFile::Open("Pu_all_looseEDEtimegate_lowexcorr_bg1_softergammabgsub_17des2018/Pu_all_looseEDEtimegate_lowexcorr_bg1_softergammabgsub_17des2018.root");
+	TFile *file = TFile::Open("Pu_all_looseEDEtimegate_lowexcorr_bg1_allbgsub_3mar2019/Pu_all_looseEDEtimegate_lowexcorr_bg1_allbgsub_3mar2019.root");
 
 	//both number_of_fissions and exgam_ppac have ex-binwidths of 10keV
 	double scale_factor = 1000/10;
@@ -30,7 +30,7 @@ void Plot_PFGvsfissions(){
 	line->SetLineStyle(2);
 	line->Draw("same");
 	TLine *line_1 = new TLine(6100,0,6100,2000000);
-	line_1->SetLineStyle(3);
+	line_1->SetLineStyle(9);
 	line_1->Draw("same");
 
 	auto legend = new TLegend(0.5,0.6,0.88,0.9);

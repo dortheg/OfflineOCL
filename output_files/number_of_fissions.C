@@ -1,5 +1,5 @@
 void number_of_fissions(){
-	TFile *file = TFile::Open("Pu_all_properfisscount_bg1_Ecorr_lowexcorr_looseEDEtimegate_protongate_28nov2018/Pu_all_properfisscount_bg1_Ecorr_lowexcorr_looseEDEtimegate_protongate_28nov2018.root");
+	TFile *file = TFile::Open("Pu_all_looseEDEtimegate_lowexcorr_bg1_allbgsub_3mar2019/Pu_all_looseEDEtimegate_lowexcorr_bg1_allbgsub_3mar2019.root");
 
 	TH1 *number_of_fissions = (TH1 *)file->Get("number_of_fissions");
 
@@ -23,11 +23,12 @@ void number_of_fissions(){
 	myfile.close();
 
 	number_of_fissions->Draw();
-	number_of_fissions->GetXaxis()->SetLabelSize(0.037);
-	number_of_fissions->GetYaxis()->SetLabelSize(0.037);
-	number_of_fissions->GetYaxis()->SetTitleSize(0.040);
-	number_of_fissions->GetXaxis()->SetTitleSize(0.040);
-	number_of_fissions->GetZaxis()->SetLabelSize(0.037);
+	number_of_fissions->GetXaxis()->SetLabelSize(0.044);
+	number_of_fissions->GetYaxis()->SetLabelSize(0.044);
+	number_of_fissions->GetYaxis()->SetTitleSize(0.044);
+	number_of_fissions->GetXaxis()->SetTitleSize(0.044);
+	number_of_fissions->GetZaxis()->SetLabelSize(0.044);
+	number_of_fissions->GetYaxis()->SetTitleOffset(1.1);
 	gStyle->SetOptStat(0);
 	number_of_fissions->SetTitle(" ");
 	number_of_fissions->GetXaxis()->SetTitle("Excitation energy [keV]");

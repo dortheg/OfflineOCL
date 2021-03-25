@@ -5,13 +5,13 @@ P: checked total projection of time alignment
 
 SILICONE
 
-Calib file: total_gain_shift_20180416_142401.dat ->Borrowed E-DE from 20180416-173844
+XCalib file: total_gain_shift_20180416_142401.dat ->Borrowed E-DE from 20180416-173844
 data file sirius-20180416-142401_A.data
 
-Calib file: total_gain_shift_20180416_142401_big_000.dat ->Borrowed E-DE from 20180416-173844
+XCalib file: total_gain_shift_20180416_142401_big_000.dat ->Borrowed E-DE from 20180416-173844
 data file sirius-20180416-142401-big-000_A.data
 
-Calib file: total_gain_shift_20180416_145040.dat ->Borrowed E-DE from 20180416-173844
+XCalib file: total_gain_shift_20180416_145040.dat ->Borrowed E-DE from 20180416-173844
 data file sirius-20180416-145040_A.data
 data file sirius-20180416-145040-big-001_A.data
 data file sirius-20180416-145040-big-002_A.data
@@ -269,22 +269,24 @@ data file sirius-20180418-113054-big-035_A.data
 
 Data files as written in SortPu240_d_p.batch
 
-Gain file /Applications/OfflineOCL/Mine/OfflineOCL/input_files/Calib_files_all_detectors/total_gain_shift_20180416_173844.dat
+Gain file /Applications/OfflineOCL/Mine/OfflineOCL/input_files/Article/Calib_files_all_detectors_quadLabr/total_gain_shift_20180416_173844.dat
 data file sirius-20180416-173844_A.data
 
-Gain file /Applications/OfflineOCL/Mine/OfflineOCL/input_files/Calib_files_all_detectors/total_gain_shift_20180416_205209.dat
+Gain file /Applications/OfflineOCL/Mine/OfflineOCL/input_files/Article/Calib_files_all_detectors_quadLabr/total_gain_shift_20180416_205209.dat
 data file sirius-20180416-205209_A.data
 data file sirius-20180416-205209-big-000_A.data
+
+Gain file /Applications/OfflineOCL/Mine/OfflineOCL/input_files/Article/Calib_files_all_detectors_quadLabr/total_gain_shift_20180416_205209_big_001.dat
 data file sirius-20180416-205209-big-001_A.data
 
-Gain file /Applications/OfflineOCL/Mine/OfflineOCL/input_files/Calib_files_all_detectors/total_gain_shift_20180416_205209_big_002.dat
+Gain file /Applications/OfflineOCL/Mine/OfflineOCL/input_files/Article/Calib_files_all_detectors_quadLabr/total_gain_shift_20180416_205209_big_002.dat
 data file sirius-20180416-205209-big-002_A.data
 data file sirius-20180416-205209-big-003_A.data
 data file sirius-20180416-205209-big-004_A.data
 data file sirius-20180416-205209-big-005_A.data
 data file sirius-20180416-205209-big-006_A.data
 
-Gain file /Applications/OfflineOCL/Mine/OfflineOCL/input_files/Calib_files_all_detectors/total_gain_shift_20180416_234302.dat
+Gain file /Applications/OfflineOCL/Mine/OfflineOCL/input_files/Article/Calib_files_all_detectors_quadLabr/total_gain_shift_20180416_234302.dat
 data file sirius-20180416-234302_A.data
 data file sirius-20180416-234302-big-001_A.data
 data file sirius-20180416-234302-big-002_A.data
@@ -294,7 +296,7 @@ data file sirius-20180416-234302-big-005_A.data
 data file sirius-20180416-234302-big-006_A.data
 data file sirius-20180416-234302-big-007_A.data
 
-Gain file /Applications/OfflineOCL/Mine/OfflineOCL/input_files/Calib_files_all_detectors/total_gain_shift_20180417_065649.dat
+Gain file /Applications/OfflineOCL/Mine/OfflineOCL/input_files/Article/Calib_files_all_detectors_quadLabr/total_gain_shift_20180417_065649.dat
 data file sirius-20180417-065649_A.data
 data file sirius-20180417-065649-big-001_A.data
 data file sirius-20180417-065649-big-002_A.data
@@ -302,19 +304,19 @@ data file sirius-20180417-065649-big-003_A.data
 data file sirius-20180417-065649-big-004_A.data
 data file sirius-20180417-065649-big-005_A.data
 
-Gain file /Applications/OfflineOCL/Mine/OfflineOCL/input_files/Calib_files_all_detectors/total_gain_shift_20180417_100438.dat
+Gain file /Applications/OfflineOCL/Mine/OfflineOCL/input_files/Article/Calib_files_all_detectors_quadLabr/total_gain_shift_20180417_100438.dat
 data file sirius-20180417-100438_A.data
 data file sirius-20180417-100438-big-001_A.data
 data file sirius-20180417-100438-big-002_A.data
 data file sirius-20180417-100438-big-003_A.data
 
-Gain file /Applications/OfflineOCL/Mine/OfflineOCL/input_files/Calib_files_all_detectors/total_gain_shift_20180417_100438_big_003.dat
+Gain file /Applications/OfflineOCL/Mine/OfflineOCL/input_files/Article/Calib_files_all_detectors_quadLabr/total_gain_shift_20180417_100438_big_003.dat
 data file sirius-20180417-100438-big-003_B.data
 data file sirius-20180417-100438-big-004_A.data
 data file sirius-20180417-100438-big-005_A.data
 data file sirius-20180417-100438-big-006_A.data
 
-Gain file /Applications/OfflineOCL/Mine/OfflineOCL/input_files/Calib_files_all_detectors/total_gain_shift_20180417_100438_big_007.dat
+Gain file /Applications/OfflineOCL/Mine/OfflineOCL/input_files/Article/Calib_files_all_detectors_quadLabr/total_gain_shift_20180417_100438_big_007.dat
 data file sirius-20180417-100438-big-006_B.data
 data file sirius-20180417-100438-big-007_A.data
 data file sirius-20180417-100438-big-008_A.data
@@ -330,7 +332,7 @@ data file sirius-20180417-100438-big-017_A.data
 data file sirius-20180417-100438-big-018_A.data
 data file sirius-20180417-100438-big-019_A.data
 
-Gain file /Applications/OfflineOCL/Mine/OfflineOCL/input_files/Calib_files_all_detectors/total_gain_shift_20180417_100438_big_020.dat
+Gain file /Applications/OfflineOCL/Mine/OfflineOCL/input_files/Article/Calib_files_all_detectors_quadLabr/total_gain_shift_20180417_100438_big_020.dat
 data file sirius-20180417-100438-big-020_A.data
 data file sirius-20180417-100438-big-021_A.data
 data file sirius-20180417-100438-big-022_A.data
@@ -349,7 +351,7 @@ data file sirius-20180417-100438-big-034_A.data
 data file sirius-20180417-100438-big-035_A.data
 data file sirius-20180417-100438-big-036_A.data
 
-Gain file /Applications/OfflineOCL/Mine/OfflineOCL/input_files/Calib_files_all_detectors/total_gain_shift_20180417_155320.dat
+Gain file /Applications/OfflineOCL/Mine/OfflineOCL/input_files/Article/Calib_files_all_detectors_quadLabr/total_gain_shift_20180417_155320.dat
 data file sirius-20180417-155320_A.data
 data file sirius-20180417-155320-big-000_A.data
 data file sirius-20180417-155320-big-001_A.data
@@ -362,7 +364,7 @@ data file sirius-20180417-155320-big-007_A.data
 data file sirius-20180417-155320-big-008_A.data
 data file sirius-20180417-155320-big-009_A.data
 
-Gain file /Applications/OfflineOCL/Mine/OfflineOCL/input_files/Calib_files_all_detectors/total_gain_shift_20180417_192307.dat
+Gain file /Applications/OfflineOCL/Mine/OfflineOCL/input_files/Article/Calib_files_all_detectors_quadLabr/total_gain_shift_20180417_192307.dat
 data file sirius-20180417-192307_A.data
 data file sirius-20180417-192307-big-000_A.data
 data file sirius-20180417-192307-big-001_A.data
@@ -371,7 +373,7 @@ data file sirius-20180417-192307-big-003_A.data
 data file sirius-20180417-192307-big-004_A.data
 data file sirius-20180417-192307-big-005_A.data
 
-Gain file /Applications/OfflineOCL/Mine/OfflineOCL/input_files/Calib_files_all_detectors/total_gain_shift_20180417_201654.dat
+Gain file /Applications/OfflineOCL/Mine/OfflineOCL/input_files/Article/Calib_files_all_detectors_quadLabr/total_gain_shift_20180417_201654.dat
 data file sirius-20180417-201654_A.data
 data file sirius-20180417-201654-big-000_A.data
 data file sirius-20180417-201654-big-001_A.data
@@ -380,7 +382,7 @@ data file sirius-20180417-201654-big-003_A.data
 data file sirius-20180417-201654-big-004_A.data
 data file sirius-20180417-201654-big-005_A.data
 
-Gain file /Applications/OfflineOCL/Mine/OfflineOCL/input_files/Calib_files_all_detectors/total_gain_shift_20180417_211511.dat
+Gain file /Applications/OfflineOCL/Mine/OfflineOCL/input_files/Article/Calib_files_all_detectors_quadLabr/total_gain_shift_20180417_211511.dat
 data file sirius-20180417-211511_A.data
 data file sirius-20180417-211511-big-000_A.data
 data file sirius-20180417-211511-big-001_A.data
@@ -390,7 +392,7 @@ data file sirius-20180417-211511-big-004_A.data
 data file sirius-20180417-211511-big-005_A.data
 data file sirius-20180417-211511-big-006_A.data
 
-Gain file /Applications/OfflineOCL/Mine/OfflineOCL/input_files/Calib_files_all_detectors/total_gain_shift_20180417_224205.dat
+Gain file /Applications/OfflineOCL/Mine/OfflineOCL/input_files/Article/Calib_files_all_detectors_quadLabr/total_gain_shift_20180417_224205.dat
 data file sirius-20180417-224205_A.data
 data file sirius-20180417-224205-big-000_A.data
 data file sirius-20180417-224205-big-001_A.data
@@ -434,7 +436,7 @@ data file sirius-20180417-224205-big-038_A.data
 data file sirius-20180417-224205-big-039_A.data
 data file sirius-20180417-224205-big-040_A.data
 
-Gain file /Applications/OfflineOCL/Mine/OfflineOCL/input_files/Calib_files_all_detectors/total_gain_shift_20180418_062652.dat
+Gain file /Applications/OfflineOCL/Mine/OfflineOCL/input_files/Article/Calib_files_all_detectors_quadLabr/total_gain_shift_20180418_062652.dat
 data file sirius-20180418-062652_A.data
 data file sirius-20180418-062652-big-000_A.data
 data file sirius-20180418-062652-big-001_A.data
@@ -469,7 +471,7 @@ data file sirius-20180418-062652-big-029_A.data
 data file sirius-20180418-062652-big-030_A.data
 data file sirius-20180418-062652-big-031_A.data
 
-Gain file /Applications/OfflineOCL/Mine/OfflineOCL/input_files/Calib_files_all_detectors/total_gain_shift_20180418_113054.dat
+Gain file /Applications/OfflineOCL/Mine/OfflineOCL/input_files/Article/Calib_files_all_detectors_quadLabr/total_gain_shift_20180418_113054.dat
 data file sirius-20180418-113054_A.data
 data file sirius-20180418-113054-big-000_A.data
 data file sirius-20180418-113054-big-001_A.data
