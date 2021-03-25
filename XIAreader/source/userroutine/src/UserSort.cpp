@@ -477,7 +477,7 @@ void UserSort::CreateSpectra()
 
     sprintf(tmp, "time_energy_labr_fission");
     sprintf(tmp2, "t_{LaBr} - t_{dE ANY} : E_{LaBr}, fission");
-    time_energy_labr_fission = Mat(tmp, tmp2, 1000, -200, 200, "t_{LaBr} - t_{DE} [ns]", 1000, 0, 10000, "Energy LaBr [keV]");
+    time_energy_labr_fission = Mat(tmp, tmp2, 10000, -150, 150, "t_{LaBr} - t_{DE} [ns]", 10000, 0, 10000, "Energy LaBr [keV]");
 
     sprintf(tmp, "time_energy_labr_fission_cfdfail");
     sprintf(tmp2, "t_{LaBr} - t_{dE ANY} : E_{LaBr}, fission");
@@ -1044,7 +1044,6 @@ void UserSort::AnalyzeGammaPPAC(const word_t &de_word, const word_t &e_word, con
                     break;
                 }
             }
-
         }
     }
 
@@ -1174,15 +1173,13 @@ void UserSort::AnalyzeGammaPPAC(const word_t &de_word, const word_t &e_word, con
                         for (int j = 0 ; j < event.n_labr[i] ; ++j){
                             double tdiff = CalcTimediff(de_word, event.w_labr[i][j]) + 0.0000846*excitation - 0.59; //corrected tdiff, to get flat tdiff(ex) trend
                             labr_vs_ppac_time->Fill(tdiff, tdiff_ppac);
-
                         }
                     }
                 }
             }
-
         }
-
     }
+
     if(multiple_fission_counter > 0){
         multiple_fission_events->Fill(multiple_fission_counter);
     }
@@ -1225,7 +1222,6 @@ void UserSort::AnalyzeGammaPPAC(const word_t &de_word, const word_t &e_word, con
                             }
                         }
                     }
-
                     break;
                 }
                 case is_background : {
@@ -1263,9 +1259,7 @@ void UserSort::AnalyzeGammaPPAC(const word_t &de_word, const word_t &e_word, con
                 break;
                 }
             }
-
         }
-
     }
 
 
@@ -1324,7 +1318,6 @@ void UserSort::AnalyzeGammaPPAC(const word_t &de_word, const word_t &e_word, con
             }
         }
     }
-
 }
 
 
