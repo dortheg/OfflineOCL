@@ -316,31 +316,6 @@ void UserSort::CreateSpectra()
         energy_time_labr_above[i] = Mat(tmp, tmp, 1000, 0, 16000, "LaBr energy [keV]", 2000, -100, 100, "Time difference [ns]");
     }
 
-    sprintf(tmp, "energy_labr_crosstalk_1_2");
-    energy_labr_crosstalk_1_2 = Spec(tmp, tmp, 500, 0, 10000, "Energy [keV]");
-
-    sprintf(tmp, "energy_labr_crosstalk_1_5");
-    energy_labr_crosstalk_1_5 = Spec(tmp, tmp, 500, 0, 10000, "Energy [keV]");
-
-    sprintf(tmp, "energy_labr_crosstalk_1_3");
-    energy_labr_crosstalk_1_3 = Spec(tmp, tmp, 500, 0, 10000, "Energy [keV]");
-
-    sprintf(tmp, "energy_labr_crosstalk_1_4");
-    energy_labr_crosstalk_1_4 = Spec(tmp, tmp, 500, 0, 10000, "Energy [keV]");
-
-    //Needed to fill in root
-    sprintf(tmp, "energy_labr_crosstalk_A");
-    energy_labr_crosstalk_A = Spec(tmp, tmp, 500, 0, 10000, "Energy [keV]");
-
-    sprintf(tmp, "energy_labr_crosstalk_B");
-    energy_labr_crosstalk_B = Spec(tmp, tmp, 500, 0, 10000, "Energy [keV]");
-
-    sprintf(tmp, "energy_labr_crosstalk_C");
-    energy_labr_crosstalk_C = Spec(tmp, tmp, 500, 0, 10000, "Energy [keV]");
-
-    sprintf(tmp, "energy_labr_crosstalk_D");
-    energy_labr_crosstalk_D = Spec(tmp, tmp, 500, 0, 10000, "Energy [keV]");
-
 
     sprintf(tmp, "number_of_fissions");
     number_of_fissions = Spec(tmp, tmp, 1500, 0, 15000, "Ex energy [MeV]");
@@ -348,10 +323,6 @@ void UserSort::CreateSpectra()
     number_of_fissions_all = Spec(tmp, tmp, 1500, 0, 15000, "Ex energy [MeV]"); //before bg-sub
     sprintf(tmp, "number_of_fissions_bg");
     number_of_fissions_bg = Spec(tmp, tmp, 1500, 0, 15000, "Ex energy [MeV]"); //bg in number of fissions
-
-    sprintf(tmp, "PFG_mult");
-    sprintf(tmp2, "PFG multiplicity");
-    PFG_mult = Mat(tmp, tmp2, 16, 0, 15, "PFG multiplicity", 16, 0, 15000, "Ex energy [keV]");
 
     // Allocating the dE 'singles' spectra
     for (int i = 0 ; i < NUM_SI_DE_DET ; ++i){
@@ -390,18 +361,10 @@ void UserSort::CreateSpectra()
             sprintf(tmp2, "E : DE raw, pad %d, ring %d", i, j);
             ede_raw[i][j] = Mat(tmp, tmp2, 2048, 0, 32768, "Back energy [ch]", 2048, 0, 32768, "Front energy [ch]");
 
-            sprintf(tmp, "ede_raw_gated_b%d_f%d", i, j);
-            sprintf(tmp2, "E : DE raw, pad %d, ring %d", i, j);
-            ede_raw_gated[i][j] = Mat(tmp, tmp2, 2048, 0, 32768, "Back energy [ch]", 2048, 0, 32768, "Front energy [ch]");
-
             // Make 'calibrated' ede spectrum.
             sprintf(tmp, "ede_b%d_f%d", i, j);
             sprintf(tmp2, "E : DE calibrated, pad %d, ring %d", i, j);
             ede[i][j] = Mat(tmp, tmp2, 2000, 0, 20000, "Back energy [keV]", 500, 0, 5000, "Front energy [keV]");
-
-            sprintf(tmp, "ede_gated_b%d_f%d", i, j);
-            sprintf(tmp2, "E : DE calibrated, pad %d, ring %d", i, j);
-            ede_gated[i][j] = Mat(tmp, tmp2, 2000, 0, 20000, "Back energy [keV]", 500, 0, 5000, "Front energy [keV]");
 
             // Make total energy spectra.
             sprintf(tmp, "h_ede_b%d_f%d", i, j);
@@ -442,7 +405,6 @@ void UserSort::CreateSpectra()
     sprintf(tmp, "excitation_vs_ppac_time");
     sprintf(tmp2, "Excitation : t_{PPAC} - t_{dE ANY}");
     excitation_vs_ppac_time = Mat(tmp, tmp2, 2000, 0, 10000, "Excitation energy [keV]", 500, -100, 100, "t_{LaBr} - t_{DE} [ns]");
-
 
     sprintf(tmp, "E_energy_vs_labr_time");
     sprintf(tmp2, "E energy : t_{LaBr} - t_{dE ANY}");
@@ -574,8 +536,6 @@ void UserSort::CreateSpectra()
     sprintf(tmp, "multiple_fission_events_prompt_bg");
     multiple_fission_events_prompt_bg = Mat(tmp, tmp, 20, 0, 20, "prompt fission fragment", 20, 0, 20, "bg fission fragment");
 
-
-
     n_fail_e = 0;
     n_fail_de = 0;
     n_tot_e = 0;
@@ -610,7 +570,6 @@ bool UserSort::Sort(const Event &event)
         }
 
     }
-
 
     for ( i = 0 ; i < NUM_SI_DE_DET ; ++i ){
         for ( j = 0 ; j < event.n_dEdet[i] ; ++j ){
@@ -682,29 +641,10 @@ bool UserSort::Sort(const Event &event)
         // Fill DE - E matrices.
         ede_raw[tel][ring]->Fill(e_word.adcdata, de_word.adcdata);
 
-        //If energy gate
-        double E = e_word.adcdata;
-        double DE = de_word.adcdata;
-        double E1_E = 11500.0;
-        double E2_E = 11800.0;
-        double E1_DE = 830.0;
-        double E2_DE = 1050.0;
-        if (E>E1_E && E<E2_E && DE>E1_DE &&DE<E2_DE && GATING==1){
-            ede_raw_gated[tel][ring]->Fill(E, DE);
-        }
-
         double e_energy = CalibrateOnlyE(e_word, de_word);
         double de_energy = CalibrateE(de_word);
 
         ede[tel][ring]->Fill(e_energy, de_energy);
-
-        double E1 = 7700.0;
-        double E2 = 8000.0;
-        double DE1 = 1150.0;
-        double DE2 = 1500.0;
-        if (e_energy>E1 && e_energy<E2 && de_energy>DE1 && de_energy<DE2 && GATING==1){
-            ede_gated[tel][ring]->Fill(e_energy, de_energy);
-        }
 
         //EDE time gate
         tdiff_ede = CalcTimediff(e_word, de_word);
@@ -760,179 +700,6 @@ bool UserSort::Sort(const Event &event)
 void UserSort::AnalyzeGamma(const word_t &de_word, const double &excitation,const Event &event)
 {
 
-    //Checking crosstalk 1&2
-    if(event.n_labr[0] > 0 && event.n_labr[1] > 0){
-        int prompt_0 = 0;
-        int prompt_1 = 0;
-
-        for (int i = 0 ; i < event.n_labr[0] ; ++i){
-            double tdiff= CalcTimediff(de_word, event.w_labr[0][i]);
-            switch ( CheckTimeStatus(tdiff, labr_time_cuts) ) {
-                case is_prompt : {
-                    prompt_0 = 1;
-                }
-            }
-        }
-        for (int i = 0 ; i < event.n_labr[1] ; ++i){
-            double tdiff= CalcTimediff(de_word, event.w_labr[1][i]);
-            switch ( CheckTimeStatus(tdiff, labr_time_cuts) ) {
-                case is_prompt : {
-                    prompt_1 = 1;
-                }
-            }
-        }
-        if(prompt_0==1 && prompt_1==1){
-            for (int i = 0 ; i < event.n_labr[0] ; ++i){
-                double tdiff= CalcTimediff(de_word, event.w_labr[0][i]);
-                switch ( CheckTimeStatus(tdiff, labr_time_cuts) ) {
-                    case is_prompt : {
-                        double energy = CalibrateE(event.w_labr[0][i]);
-                        energy_labr_crosstalk_1_2->Fill(energy);
-                    }
-                }
-            }
-            for (int i = 0 ; i < event.n_labr[1] ; ++i){
-                double tdiff= CalcTimediff(de_word, event.w_labr[1][i]);
-                switch ( CheckTimeStatus(tdiff, labr_time_cuts) ) {
-                    case is_prompt : {
-                        double energy = CalibrateE(event.w_labr[1][i]);
-                        energy_labr_crosstalk_1_2->Fill(energy);
-                    }
-                }
-            }
-        }
-    }
-
-    //Checking crosstalk 1&5
-    if(event.n_labr[0] > 0 && event.n_labr[4] > 0){
-        int prompt_0 = 0;
-        int prompt_1 = 0;
-
-        for (int i = 0 ; i < event.n_labr[0] ; ++i){
-            double tdiff= CalcTimediff(de_word, event.w_labr[0][i]);
-            switch ( CheckTimeStatus(tdiff, labr_time_cuts) ) {
-                case is_prompt : {
-                    prompt_0 = 1;
-                }
-            }
-        }
-        for (int i = 0 ; i < event.n_labr[4] ; ++i){
-            double tdiff= CalcTimediff(de_word, event.w_labr[4][i]);
-            switch ( CheckTimeStatus(tdiff, labr_time_cuts) ) {
-                case is_prompt : {
-                    prompt_1 = 1;
-                }
-            }
-        }
-        if(prompt_0==1 && prompt_1==1){
-            for (int i = 0 ; i < event.n_labr[0] ; ++i){
-                double tdiff= CalcTimediff(de_word, event.w_labr[0][i]);
-                switch ( CheckTimeStatus(tdiff, labr_time_cuts) ) {
-                    case is_prompt : {
-                        double energy = CalibrateE(event.w_labr[0][i]);
-                        energy_labr_crosstalk_1_5->Fill(energy);
-                    }
-                }
-            }
-            for (int i = 0 ; i < event.n_labr[4] ; ++i){
-                double tdiff= CalcTimediff(de_word, event.w_labr[4][i]);
-                switch ( CheckTimeStatus(tdiff, labr_time_cuts) ) {
-                    case is_prompt : {
-                        double energy = CalibrateE(event.w_labr[4][i]);
-                        energy_labr_crosstalk_1_5->Fill(energy);
-                    }
-                }
-            }
-        }
-    }
-
-
-    //Checking crosstalk 1&3
-    if(event.n_labr[0] > 0 && event.n_labr[2] > 0){
-        int prompt_0 = 0;
-        int prompt_1 = 0;
-
-        for (int i = 0 ; i < event.n_labr[0] ; ++i){
-            double tdiff= CalcTimediff(de_word, event.w_labr[0][i]);
-            switch ( CheckTimeStatus(tdiff, labr_time_cuts) ) {
-                case is_prompt : {
-                    prompt_0 = 1;
-                }
-            }
-        }
-        for (int i = 0 ; i < event.n_labr[2] ; ++i){
-            double tdiff= CalcTimediff(de_word, event.w_labr[2][i]);
-            switch ( CheckTimeStatus(tdiff, labr_time_cuts) ) {
-                case is_prompt : {
-                    prompt_1 = 1;
-                }
-            }
-        }
-        if(prompt_0==1 && prompt_1==1){
-            for (int i = 0 ; i < event.n_labr[0] ; ++i){
-                double tdiff= CalcTimediff(de_word, event.w_labr[0][i]);
-                switch ( CheckTimeStatus(tdiff, labr_time_cuts) ) {
-                    case is_prompt : {
-                        double energy = CalibrateE(event.w_labr[0][i]);
-                        energy_labr_crosstalk_1_3->Fill(energy);
-                    }
-                }
-            }
-            for (int i = 0 ; i < event.n_labr[2] ; ++i){
-                double tdiff= CalcTimediff(de_word, event.w_labr[2][i]);
-                switch ( CheckTimeStatus(tdiff, labr_time_cuts) ) {
-                    case is_prompt : {
-                        double energy = CalibrateE(event.w_labr[2][i]);
-                        energy_labr_crosstalk_1_3->Fill(energy);
-                    }
-                }
-            }
-        }
-    }
-
-    //Checking crosstalk 1&4
-    if(event.n_labr[0] > 0 && event.n_labr[3] > 0){
-        int prompt_0 = 0;
-        int prompt_1 = 0;
-
-        for (int i = 0 ; i < event.n_labr[0] ; ++i){
-            double tdiff= CalcTimediff(de_word, event.w_labr[0][i]);
-            switch ( CheckTimeStatus(tdiff, labr_time_cuts) ) {
-                case is_prompt : {
-                    prompt_0 = 1;
-                }
-            }
-        }
-        for (int i = 0 ; i < event.n_labr[3] ; ++i){
-            double tdiff= CalcTimediff(de_word, event.w_labr[3][i]);
-            switch ( CheckTimeStatus(tdiff, labr_time_cuts) ) {
-                case is_prompt : {
-                    prompt_1 = 1;
-                }
-            }
-        }
-        if(prompt_0==1 && prompt_1==1){
-            for (int i = 0 ; i < event.n_labr[0] ; ++i){
-                double tdiff= CalcTimediff(de_word, event.w_labr[0][i]);
-                switch ( CheckTimeStatus(tdiff, labr_time_cuts) ) {
-                    case is_prompt : {
-                        double energy = CalibrateE(event.w_labr[0][i]);
-                        energy_labr_crosstalk_1_4->Fill(energy);
-                    }
-                }
-            }
-            for (int i = 0 ; i < event.n_labr[3] ; ++i){
-                double tdiff= CalcTimediff(de_word, event.w_labr[3][i]);
-                switch ( CheckTimeStatus(tdiff, labr_time_cuts) ) {
-                    case is_prompt : {
-                        double energy = CalibrateE(event.w_labr[3][i]);
-                        energy_labr_crosstalk_1_4->Fill(energy);
-                    }
-                }
-            }
-        }
-    }
-
     // We will loop over all gamma-rays.
     for (int i = 0 ; i < NUM_LABR_DETECTORS ; ++i){
         for (int j = 0 ; j < event.n_labr[i] ; ++j){
@@ -955,10 +722,12 @@ void UserSort::AnalyzeGamma(const word_t &de_word, const double &excitation,cons
                 case is_prompt : {
                     exgam->Fill(energy, excitation);
                     energy_labr_raw_particle[i]->Fill(event.w_labr[i][j].adcdata);
+
                     //Gate on event in e-de with given energy, only filling labr energy raw with these events
                     word_t e_word = event.trigger;
                     double E = CalibrateOnlyE(e_word, de_word);
                     double DE = CalibrateE(de_word);
+
                     //E and DE are calibrated, give energy!
                     double E1 = 12000.0;
                     double E2 = 17000.0;
@@ -1016,7 +785,7 @@ void UserSort::AnalyzeGammaPPAC(const word_t &de_word, const word_t &e_word, con
         for (int j = 0 ; j < event.n_labr[i] ; ++j){
 
             double energy = CalibrateE(event.w_labr[i][j]);
-            double tdiff = CalcTimediff(de_word, event.w_labr[i][j]) + 0.0000846*excitation - 0.59; //corrected tdiff, to get flat tdiff(ex) trend
+            double tdiff = CalcTimediff(de_word, event.w_labr[i][j]);//correct tdiff with ex, to get flat tdiff(ex) trend
 
             labr_align_time->Fill(tdiff, i);
             time_energy_labr->Fill(tdiff, energy);
@@ -1077,7 +846,7 @@ void UserSort::AnalyzeGammaPPAC(const word_t &de_word, const word_t &e_word, con
                     for (int i = 0 ; i < NUM_LABR_DETECTORS ; ++i){
                         for (int j = 0 ; j < event.n_labr[i] ; ++j){
                             double energy = CalibrateE(event.w_labr[i][j]);
-                            double tdiff = CalcTimediff(de_word, event.w_labr[i][j]) + 0.0000846*excitation - 0.59; //corrected tdiff, to get flat tdiff(ex) trend
+                            double tdiff = CalcTimediff(de_word, event.w_labr[i][j]);//correct tdiff with ex, to get flat tdiff(ex) trend
 
 
                             //check here if the CFD failed
@@ -1132,7 +901,7 @@ void UserSort::AnalyzeGammaPPAC(const word_t &de_word, const word_t &e_word, con
                     for (int i = 0 ; i < NUM_LABR_DETECTORS ; ++i){
                         for (int j = 0 ; j < event.n_labr[i] ; ++j){
                             double energy = CalibrateE(event.w_labr[i][j]);
-                            double tdiff = CalcTimediff(de_word, event.w_labr[i][j]) + 0.0000846*excitation - 0.59; //corrected tdiff, to get flat tdiff(ex) trend
+                            double tdiff = CalcTimediff(de_word, event.w_labr[i][j]);//correct tdiff with ex, to get flat tdiff(ex) trend
                             labr_vs_ppac_time->Fill(tdiff, tdiff_ppac);
 
 
@@ -1171,7 +940,7 @@ void UserSort::AnalyzeGammaPPAC(const word_t &de_word, const word_t &e_word, con
                 case ignore : {
                     for (int i = 0 ; i < NUM_LABR_DETECTORS ; ++i){
                         for (int j = 0 ; j < event.n_labr[i] ; ++j){
-                            double tdiff = CalcTimediff(de_word, event.w_labr[i][j]) + 0.0000846*excitation - 0.59; //corrected tdiff, to get flat tdiff(ex) trend
+                            double tdiff = CalcTimediff(de_word, event.w_labr[i][j]);//correct tdiff with ex, to get flat tdiff(ex) trend
                             labr_vs_ppac_time->Fill(tdiff, tdiff_ppac);
                         }
                     }
@@ -1200,7 +969,7 @@ void UserSort::AnalyzeGammaPPAC(const word_t &de_word, const word_t &e_word, con
 
                     for (int i = 0 ; i < NUM_LABR_DETECTORS ; ++i){
                         for (int j = 0 ; j < event.n_labr[i] ; ++j){
-                            double tdiff = CalcTimediff(de_word, event.w_labr[i][j]) + 0.0000846*excitation - 0.59; //corrected tdiff, to get flat tdiff(ex) trend
+                            double tdiff = CalcTimediff(de_word, event.w_labr[i][j]);//correct tdiff with ex, to get flat tdiff(ex) trend
                             double energy = CalibrateE(event.w_labr[i][j]);
 
                             switch ( CheckTimeStatus(tdiff, neutron_time_cuts) ) {
@@ -1228,7 +997,7 @@ void UserSort::AnalyzeGammaPPAC(const word_t &de_word, const word_t &e_word, con
                     for (int i = 0 ; i < NUM_LABR_DETECTORS ; ++i){
                         for (int j = 0 ; j < event.n_labr[i] ; ++j){
                             double energy = CalibrateE(event.w_labr[i][j]);
-                            double tdiff = CalcTimediff(de_word, event.w_labr[i][j]) + 0.0000846*excitation - 0.59; //corrected tdiff, to get flat tdiff(ex) trend
+                            double tdiff = CalcTimediff(de_word, event.w_labr[i][j]);//correct tdiff with ex, to get flat tdiff(ex) trend
 
 
                             switch ( CheckTimeStatus(tdiff, labr_time_cuts) ) {

@@ -83,8 +83,6 @@ private:
     Histogram1Dp energy_labr_all, energy_labr_gated_all;
     Histogram1Dp energy_dE_raw[NUM_SI_DE_DET], energy_dE[NUM_SI_DE_DET];
     Histogram1Dp energy_E_raw[NUM_SI_E_DET], energy_E[NUM_SI_E_DET], number_of_fissions, number_of_fissions_all, number_of_fissions_bg;
-    Histogram1Dp energy_labr_crosstalk_1_2, energy_labr_crosstalk_1_3, energy_labr_crosstalk_1_4, energy_labr_crosstalk_1_5;
-    Histogram1Dp energy_labr_crosstalk_A, energy_labr_crosstalk_B, energy_labr_crosstalk_C, energy_labr_crosstalk_D;
 
     // Time spectra.
     Histogram2Dp e_de_time[NUM_SI_RINGS]; // This will be a time : dE ring spectrum.
@@ -106,7 +104,7 @@ private:
     Histogram2Dp ede_raw[NUM_SI_RINGS][NUM_SI_RINGS], ede_raw_gated[NUM_SI_RINGS][NUM_SI_RINGS], ede[NUM_SI_RINGS][NUM_SI_RINGS], ede_gated[NUM_SI_RINGS][NUM_SI_RINGS];
     Histogram2Dp ede_all, ede_gate, ede_all_bg, energy_labr_time_e_de, energy_E_particle_time_e_de, ede_fission, ede_fission_bg, ede_fission_nobgsub,ede_all_nofission;
     Histogram2Dp ede_gamma_fission, ede_gamma_fission_nobgsub, ede_gamma_fission_bg;
-    Histogram2Dp PFG_mult;
+
     // Misc. dE/E coincidence spectra stuff.
     Histogram1Dp h_thick;   // "Apparent" thickness spectra.
     Histogram1Dp h_ede[NUM_SI_RINGS][NUM_SI_RINGS], h_ede_all; // Total energy deposited after particle gate.
